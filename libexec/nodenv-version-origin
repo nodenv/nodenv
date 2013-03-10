@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Summary: Explain how the current Node version is set
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+if [ -n "$NODENV_VERSION" ]; then
+  echo "NODENV_VERSION environment variable"
+else
+  nodenv-version-file
+fi

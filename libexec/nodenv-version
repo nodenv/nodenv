@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Summary: Show the current Node version and its origin
+#
+# Shows the currently selected Node version and how it was
+# selected. To obtain only the version string, use `nodenv
+# version-name'.
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+echo "$(nodenv-version-name) (set by $(nodenv-version-origin))"

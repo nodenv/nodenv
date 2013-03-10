@@ -1,4 +1,49 @@
 #!/usr/bin/env bash
-set -e
+#
+# Summary: Set or show the shell-specific Node version
+#
+# Usage: nodenv shell <version>
+#        nodenv shell --unset
+#
+# Sets a shell-specific Node version by setting the `NODENV_VERSION'
+# environment variable in your shell. This version overrides local
+# application-specific versions and the global version.
+#
+# <version> should be a string matching a Node version known to nodenv.
+# The special version string `system' will use your default system Node.
+# Run `nodenv versions' for a list of available Node versions.
 
-echo $1
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  echo --unset
+  echo system
+  exec nodenv-versions --bare
+fi
+
+version="$1"
+
+if [ -z "$version" ]; then
+  if [ -z "$NODENV_VERSION" ]; then
+    echo "nodenv: no shell-specific version configured" >&2
+    exit 1
+  else
+    echo "echo \"\$NODENV_VERSION\""
+    exit
+  fi
+fi
+
+if [ "$version" = "--unset" ]; then
+  echo "unset NODENV_VERSION"
+  exit
+fi
+
+# Make sure the specified version is installed.
+if nodenv-prefix "$version" >/dev/null; then
+  echo "export NODENV_VERSION=\"${version}\""
+else
+  echo "return 1"
+  exit 1
+fi

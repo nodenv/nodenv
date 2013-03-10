@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Summary: Show the current Node version
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+if [ -z "$NODENV_VERSION" ]; then
+  NODENV_VERSION_FILE="$(nodenv-version-file)"
+  NODENV_VERSION="$(nodenv-version-file-read "$NODENV_VERSION_FILE" || true)"
+fi
+
+if [ -z "$NODENV_VERSION" ] || [ "$NODENV_VERSION" = "system" ]; then
+  echo "system"
+  exit
+fi
+
+version_exists() {
+  local version="$1"
+  [ -d "${NODENV_ROOT}/versions/${version}" ]
+}
+
+if version_exists "$NODENV_VERSION"; then
+  echo "$NODENV_VERSION"
+elif version_exists "${NODENV_VERSION#ruby-}"; then
+  { echo "warning: ignoring extraneous \`ruby-' prefix in version \`${NODENV_VERSION}'"
+    echo "         (set by $(nodenv-version-origin))"
+  } >&2
+  echo "${NODENV_VERSION#ruby-}"
+else
+  echo "nodenv: version \`$NODENV_VERSION' is not installed" >&2
+  exit 1
+fi

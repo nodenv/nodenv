@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# Usage: nodenv commands
-# Summary: List all nodenv commands
-# Help: This command is mostly used for autocompletion in various shells, and for `nodenv help`.
-# Also, this command helps find commands that are named the same as potentially builtin shell commands (which, cd, etc)
+# Summary: List all available nodenv commands
+# Usage: nodenv commands [--sh|--no-sh]
 
 set -e
+[ -n "$NODENV_DEBUG" ] && set -x
 
 # Provide nodenv completions
 if [ "$1" = "--complete" ]; then

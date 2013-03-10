@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# Summary: Set or show the global Node version
+#
+# Usage: nodenv global <version>
+#
+# Sets the global Node version. You can override the global version at
+# any time by setting a directory-specific version with `nodenv local'
+# or by setting the `NODENV_VERSION' environment variable.
+#
+# <version> should be a string matching a Node version known to nodenv.
+# The special version string `system' will use your default system Node.
+# Run `nodenv versions' for a list of available Node versions.
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  echo system
+  exec nodenv-versions --bare
+fi
+
+NODENV_VERSION="$1"
+NODENV_VERSION_FILE="${NODENV_ROOT}/version"
+
+if [ -n "$NODENV_VERSION" ]; then
+  nodenv-version-file-write "$NODENV_VERSION_FILE" "$NODENV_VERSION"
+else
+  nodenv-version-file-read "$NODENV_VERSION_FILE" ||
+  nodenv-version-file-read "${NODENV_ROOT}/global" ||
+  nodenv-version-file-read "${NODENV_ROOT}/default" ||
+  echo system
+fi

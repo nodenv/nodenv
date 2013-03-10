@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+#
+# Summary: Display the full path to an executable
+#
+# Usage: nodenv which <command>
+#
+# Displays the full path to the executable that nodenv will invoke when
+# you run the given command.
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  exec nodenv shims --short
+fi
+
+expand_path() {
+  if [ ! -d "$1" ]; then
+    return 1
+  fi
+
+  local cwd="$(pwd)"
+  cd "$1"
+  pwd
+  cd "$cwd"
+}
+
+remove_from_path() {
+  local path_to_remove="$(expand_path "$1")"
+  local result=""
+
+  if [ -z "$path_to_remove" ]; then
+    echo "${PATH}"
+    return
+  fi
+
+  local paths
+  IFS=: paths=($PATH)
+
+  for path in "${paths[@]}"; do
+    path="$(expand_path "$path" || true)"
+    if [ -n "$path" ] && [ "$path" != "$path_to_remove" ]; then
+      result="${result}${path}:"
+    fi
+  done
+
+  echo "${result%:}"
+}
+
+NODENV_VERSION="$(nodenv-version-name)"
+NODENV_COMMAND="$1"
+
+if [ -z "$NODENV_COMMAND" ]; then
+  nodenv-help --usage which >&2
+  exit 1
+fi
+
+if [ "$NODENV_VERSION" = "system" ]; then
+  PATH="$(remove_from_path "${NODENV_ROOT}/shims")"
+  NODENV_COMMAND_PATH="$(command -v "$NODENV_COMMAND" || true)"
+else
+  NODENV_COMMAND_PATH="${NODENV_ROOT}/versions/${NODENV_VERSION}/bin/${NODENV_COMMAND}"
+fi
+
+for script in $(nodenv-hooks which); do
+  source "$script"
+done
+
+if [ -x "$NODENV_COMMAND_PATH" ]; then
+  echo "$NODENV_COMMAND_PATH"
+else
+  echo "nodenv: $NODENV_COMMAND: command not found" >&2
+
+  versions="$(nodenv-whence "$NODENV_COMMAND" || true)"
+  if [ -n "$versions" ]; then
+    { echo
+      echo "The \`$1' command exists in these Node versions:"
+      echo "$versions" | sed 's/^/  /g'
+      echo
+    } >&2
+  fi
+
+  exit 127
+fi

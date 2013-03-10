@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# Summary: List hook scripts for a given nodenv command
+# Usage: nodenv hooks <command>
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  echo exec
+  echo rehash
+  echo which
+  exit
+fi
+
+NODENV_COMMAND="$1"
+if [ -z "$NODENV_COMMAND" ]; then
+  nodenv-help --usage hooks >&2
+  exit 1
+fi
+
+resolve_link() {
+  $(type -p greadlink readlink | head -1) $1
+}
+
+realpath() {
+  local cwd="$(pwd)"
+  local path="$1"
+
+  while [ -n "$path" ]; do
+    cd "${path%/*}"
+    local name="${path##*/}"
+    path="$(resolve_link "$name" || true)"
+  done
+
+  echo "$(pwd)/$name"
+  cd "$cwd"
+}
+
+shopt -s nullglob
+for path in ${NODENV_HOOK_PATH//:/$'\n'}; do
+  for script in $path/"$NODENV_COMMAND"/*.bash; do
+    echo $(realpath $script)
+  done
+done
+shopt -u nullglob
