@@ -5,8 +5,10 @@ _nodenv() {
   if [ "$COMP_CWORD" -eq 1 ]; then
     COMPREPLY=( $(compgen -W "$(nodenv commands)" -- "$word") )
   else
-    local command="${COMP_WORDS[1]}"
-    local completions="$(nodenv completions "$command")"
+    local words=("${COMP_WORDS[@]}")
+    unset words[0]
+    unset words[$COMP_CWORD]
+    local completions=$(nodenv completions "${words[@]}")
     COMPREPLY=( $(compgen -W "$completions" -- "$word") )
   fi
 }

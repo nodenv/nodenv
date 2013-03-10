@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# Summary: Run an executable with the selected Node version
+#
+# Usage: nodenv exec <command> [arg1 arg2...]
+#
+# Runs an executable by first preparing PATH so that the selected Node
+# version's `bin' directory is at the front.
+#
+# For example, if the currently selected Node version is 1.9.3-p327:
+#   nodenv exec bundle install
+#
+# is equivalent to:
+#   PATH="$NODENV_ROOT/versions/1.9.3-p327/bin:$PATH" bundle install
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  exec nodenv shims --short
+fi
+
+export NODENV_VERSION="$(nodenv-version-name)"
+NODENV_COMMAND="$1"
+
+if [ -z "$NODENV_COMMAND" ]; then
+  nodenv-help --usage exec >&2
+  exit 1
+fi
+
+NODENV_COMMAND_PATH="$(nodenv-which "$NODENV_COMMAND")"
+NODENV_BIN_PATH="${NODENV_COMMAND_PATH%/*}"
+
+for script in $(nodenv-hooks exec); do
+  source "$script"
+done
+
+shift 1
+if [ "$NODENV_VERSION" != "system" ]; then
+  export PATH="${NODENV_BIN_PATH}:${PATH}"
+fi
+exec -a "$NODENV_COMMAND" "$NODENV_COMMAND_PATH" "$@"

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Summary: List all Node versions that contain the given executable
+# Usage: nodenv whence [--path] <command>
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  echo --path
+  exec nodenv shims --short
+fi
+
+if [ "$1" = "--path" ]; then
+  print_paths="1"
+  shift
+else
+  print_paths=""
+fi
+
+whence() {
+  local command="$1"
+  nodenv-versions --bare | while read version; do
+    path="$(nodenv-prefix "$version")/bin/${command}"
+    if [ -x "$path" ]; then
+      [ "$print_paths" ] && echo "$path" || echo "$version"
+    fi
+  done
+}
+
+NODENV_COMMAND="$1"
+if [ -z "$NODENV_COMMAND" ]; then
+  nodenv-help --usage whence >&2
+  exit 1
+fi
+
+result="$(whence "$NODENV_COMMAND")"
+[ -n "$result" ] && echo "$result"

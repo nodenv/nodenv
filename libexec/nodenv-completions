@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
+# Usage: nodenv completions <command> [arg1 arg2...]
+
 set -e
+[ -n "$NODENV_DEBUG" ] && set -x
 
 COMMAND="$1"
 if [ -z "$COMMAND" ]; then
-  echo "usage: nodenv completions COMMAND [arg1 arg2...]" >&2
+  nodenv-help --usage completions >&2
   exit 1
 fi
 
-COMMAND_PATH="$(command -v "nodenv-$COMMAND")"
+COMMAND_PATH="$(command -v "nodenv-$COMMAND" || command -v "nodenv-sh-$COMMAND")"
 if grep -i "^# provide nodenv completions" "$COMMAND_PATH" >/dev/null; then
   shift
   exec "$COMMAND_PATH" --complete "$@"

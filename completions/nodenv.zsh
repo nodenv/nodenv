@@ -5,14 +5,13 @@ fi
 compctl -K _nodenv nodenv
 
 _nodenv() {
-  local word words completions
+  local words completions
   read -cA words
-  word="${words[2]}"
 
   if [ "${#words}" -eq 2 ]; then
     completions="$(nodenv commands)"
   else
-    completions="$(nodenv completions "${word}")"
+    completions="$(nodenv completions ${words[2,-2]})"
   fi
 
   reply=("${(ps:\n:)completions}")
