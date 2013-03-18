@@ -22,7 +22,7 @@ elif [ -z "$NODENV_VERSION" ]; then
 fi
 
 if [ "$NODENV_VERSION" = "system" ]; then
-  RUBY_PATH="$(nodenv-which ruby)"
+  RUBY_PATH="$(nodenv-which node)"
   RUBY_PATH="${RUBY_PATH%/*}"
   echo "${RUBY_PATH%/bin}"
   exit
