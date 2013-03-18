@@ -6,9 +6,9 @@
 #        nodenv local --unset
 #
 # Sets the local application-specific Node version by writing the
-# version name to a file named `.ruby-version'.
+# version name to a file named `.node-version'.
 #
-# When you run a Node command, nodenv will look for a `.ruby-version'
+# When you run a Node command, nodenv will look for a `.node-version'
 # file in the current directory and each parent directory. If no such
 # file is found in the tree, nodenv will use the global Node version
 # specified with `nodenv global'. A version specified with the
@@ -16,7 +16,7 @@
 # and global versions.
 #
 # For backwards compatibility, nodenv will also read version
-# specifications from `.nodenv-version' files, but a `.ruby-version'
+# specifications from `.nodenv-version' files, but a `.node-version'
 # file in the same directory takes precedence.
 #
 # <version> should be a string matching a Node version known to nodenv.
@@ -36,17 +36,17 @@ fi
 NODENV_VERSION="$1"
 
 if [ "$NODENV_VERSION" = "--unset" ]; then
-  rm -f .ruby-version .nodenv-version
+  rm -f .node-version .nodenv-version
 elif [ -n "$NODENV_VERSION" ]; then
   if [ "$(NODENV_VERSION= nodenv-version-origin)" -ef .nodenv-version ]; then
     rm -f .nodenv-version
     { echo "nodenv: removed existing \`.nodenv-version' file and migrated"
-      echo "       local version specification to \`.ruby-version' file"
+      echo "       local version specification to \`.node-version' file"
     } >&2
   fi
-  nodenv-version-file-write .ruby-version "$NODENV_VERSION"
+  nodenv-version-file-write .node-version "$NODENV_VERSION"
 else
-  nodenv-version-file-read .ruby-version ||
+  nodenv-version-file-read .node-version ||
   nodenv-version-file-read .nodenv-version ||
   { echo "nodenv: no local version configured for this directory"
     exit 1

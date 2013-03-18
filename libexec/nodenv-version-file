@@ -6,8 +6,8 @@ set -e
 find_local_version_file() {
   local root="$1"
   while [ -n "$root" ]; do
-    if [ -e "${root}/.ruby-version" ]; then
-      echo "${root}/.ruby-version"
+    if [ -e "${root}/.node-version" ]; then
+      echo "${root}/.node-version"
       exit
     elif [ -e "${root}/.nodenv-version" ]; then
       echo "${root}/.nodenv-version"

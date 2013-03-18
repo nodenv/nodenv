@@ -46,7 +46,7 @@ set -e
 [ -n "\$NODENV_DEBUG" ] && set -x
 
 program="\${0##*/}"
-if [ "\$program" = "ruby" ]; then
+if [ "\$program" = "node" ]; then
   for arg; do
     case "\$arg" in
     -e* | -- ) break ;;

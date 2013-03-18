@@ -20,11 +20,11 @@ version_exists() {
 
 if version_exists "$NODENV_VERSION"; then
   echo "$NODENV_VERSION"
-elif version_exists "${NODENV_VERSION#ruby-}"; then
-  { echo "warning: ignoring extraneous \`ruby-' prefix in version \`${NODENV_VERSION}'"
+elif version_exists "${NODENV_VERSION#node-}"; then
+  { echo "warning: ignoring extraneous \`node-' prefix in version \`${NODENV_VERSION}'"
     echo "         (set by $(nodenv-version-origin))"
   } >&2
-  echo "${NODENV_VERSION#ruby-}"
+  echo "${NODENV_VERSION#node-}"
 else
   echo "nodenv: version \`$NODENV_VERSION' is not installed" >&2
   exit 1
