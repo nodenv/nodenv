@@ -1,2 +1,6 @@
-plugins
+plugins/
+shims/
+versions/
+version
 *.sublime-*
+.DS_Store
