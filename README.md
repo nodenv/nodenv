@@ -49,6 +49,7 @@ bulletproof deployments.
   * [nodenv whence](#nodenv-whence)
 * [Development](#development)
   * [Version History](#version-history)
+  * [Credits](#credits)
   * [License](#license)
 
 ## How It Works
@@ -378,7 +379,7 @@ Tests are executed using [Bats](https://github.com/sstephenson/bats):
 Please feel free to submit pull requests and file bugs on the [issue
 tracker](https://github.com/OiNutter/nodenv/issues).
 
-## Credits
+### Credits
 
 Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work for node.
 
