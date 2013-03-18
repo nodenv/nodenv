@@ -5,7 +5,7 @@ load test_helper
 @test "prefix" {
   mkdir -p "${NODENV_TEST_DIR}/myproject"
   cd "${NODENV_TEST_DIR}/myproject"
-  echo "1.2.3" > .ruby-version
+  echo "1.2.3" > .node-version
   mkdir -p "${NODENV_ROOT}/versions/1.2.3"
   run nodenv-prefix
   assert_success "${NODENV_ROOT}/versions/1.2.3"
@@ -18,8 +18,8 @@ load test_helper
 
 @test "prefix for system" {
   mkdir -p "${NODENV_TEST_DIR}/bin"
-  touch "${NODENV_TEST_DIR}/bin/ruby"
-  chmod +x "${NODENV_TEST_DIR}/bin/ruby"
+  touch "${NODENV_TEST_DIR}/bin/node"
+  chmod +x "${NODENV_TEST_DIR}/bin/node"
   NODENV_VERSION="system" run nodenv-prefix
   assert_success "$NODENV_TEST_DIR"
 }

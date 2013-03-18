@@ -5,7 +5,7 @@ load test_helper
 @test "no shell version" {
   mkdir -p "${NODENV_TEST_DIR}/myproject"
   cd "${NODENV_TEST_DIR}/myproject"
-  echo "1.2.3" > .ruby-version
+  echo "1.2.3" > .node-version
   NODENV_VERSION="" run nodenv-sh-shell
   assert_failure "nodenv: no shell-specific version configured"
 }
