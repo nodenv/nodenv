@@ -36,7 +36,6 @@ bulletproof deployments.
 * [Installation](#installation)
   * [Basic GitHub Checkout](#basic-github-checkout)
     * [Upgrading](#upgrading)
-  * [Homebrew on Mac OS X](#homebrew-on-mac-os-x)
   * [Neckbeard Configuration](#neckbeard-configuration)
   * [Uninstalling Node Versions](#uninstalling-node-versions)
 * [Command Reference](#command-reference)
@@ -215,26 +214,6 @@ $ cd ~/.nodenv
 $ git fetch
 $ git checkout v0.3.0
 ~~~
-
-### Homebrew on Mac OS X
-
-## (Coming Soon)
-
-You can also install nodenv using the
-[Homebrew](http://mxcl.github.com/homebrew/) package manager on Mac OS
-X.
-
-~~~
-$ brew update
-$ brew install nodenv
-$ brew install node-build
-~~~
-
-To later update these installs, use `upgrade` instead of `install`.
-
-Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
-profile as stated in the caveats. You'll only ever have to do this
-once.
 
 ### Neckbeard Configuration
 
