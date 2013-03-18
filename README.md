@@ -1,5 +1,7 @@
 # Groom your app’s Node environment with nodenv.
 
+[![Build Status](https://travis-ci.org/OiNutter/nodenv.png?branch=master)](https://travis-ci.org/OiNutter/nodenv)
+
 Use nodenv to pick a Node version for your application and guarantee
 that your development environment matches production. Put nodenv to work
 with [NPM](http://npmjs.org/) for painless Node upgrades and
