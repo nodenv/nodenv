@@ -192,7 +192,7 @@ easy to fork and contribute any changes back upstream.
 
 6. Rebuild the shim executables. You should do this any time you
    install a new Node executable (for example, when installing a new
-   Node version, or when installing a gem that provides a command).
+   Node version, or when installing a module that provides a command).
 
     ~~~
     $ nodenv rehash
@@ -344,7 +344,7 @@ how it was set.
 
 Installs shims for all Node executables known to nodenv (i.e.,
 `~/.nodenv/versions/*/bin/*`). Run this command after you install a new
-version of Node, or install a gem that provides commands.
+version of Node, or install a module that provides commands.
 
     $ nodenv rehash
 
