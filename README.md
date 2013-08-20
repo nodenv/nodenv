@@ -184,7 +184,7 @@ easy to fork and contribute any changes back upstream.
    process of installing new Node versions.
 
     ~~~
-    $ nodenv install 0.10.0
+    $ nodenv install v0.10.0
     ~~~
 
    As an alternative, you can download and compile Node yourself into
