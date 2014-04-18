@@ -1,4 +1,4 @@
 install: git clone https://github.com/sstephenson/bats.git
-script: bats/bin/bats test
-# skips unnecessary Ruby-specific setup
+script: bats/bin/bats --tap test
+# skips unnecessary Node-specific setup
 language: c

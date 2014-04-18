@@ -38,13 +38,14 @@ NODENV_VERSION="$1"
 if [ "$NODENV_VERSION" = "--unset" ]; then
   rm -f .node-version .nodenv-version
 elif [ -n "$NODENV_VERSION" ]; then
-  if [ "$(NODENV_VERSION= nodenv-version-origin)" -ef .nodenv-version ]; then
+  previous_file="$(NODENV_VERSION= nodenv-version-origin || true)"
+  nodenv-version-file-write .node-version "$NODENV_VERSION"
+  if [ "$previous_file" -ef .nodenv-version ]; then
     rm -f .nodenv-version
     { echo "nodenv: removed existing \`.nodenv-version' file and migrated"
       echo "       local version specification to \`.node-version' file"
     } >&2
   fi
-  nodenv-version-file-write .node-version "$NODENV_VERSION"
 else
   nodenv-version-file-read .node-version ||
   nodenv-version-file-read .nodenv-version ||
