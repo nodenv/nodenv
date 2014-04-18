@@ -7,7 +7,17 @@ if [ "$1" = "--complete" ]; then
   exec nodenv-rehash --complete
 fi
 
+shell="$(basename "${NODENV_SHELL:-$SHELL}")"
+
 # When nodenv shell integration is enabled, delegate to nodenv-rehash,
 # then tell the shell to empty its command lookup cache.
 nodenv-rehash
-echo "hash -r 2>/dev/null || true"
+
+case "$shell" in
+fish )
+  # no rehash support
+  ;;
+* )
+  echo "hash -r 2>/dev/null || true"
+  ;;
+esac

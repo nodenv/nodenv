@@ -22,10 +22,14 @@ elif [ -z "$NODENV_VERSION" ]; then
 fi
 
 if [ "$NODENV_VERSION" = "system" ]; then
-  RUBY_PATH="$(nodenv-which node)"
-  RUBY_PATH="${RUBY_PATH%/*}"
-  echo "${RUBY_PATH%/bin}"
-  exit
+  if NODE_PATH="$(nodenv-which node 2>/dev/null)"; then
+    NODE_PATH="${NODE_PATH%/*}"
+    echo "${NODE_PATH%/bin}"
+    exit
+  else
+    echo "nodenv: system version not found in PATH" >&2
+    exit 1
+  fi
 fi
 
 NODENV_PREFIX_PATH="${NODENV_ROOT}/versions/${NODENV_VERSION}"

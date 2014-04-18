@@ -24,6 +24,7 @@ if [ "$1" = "--complete" ]; then
 fi
 
 version="$1"
+shell="$(basename "${NODENV_SHELL:-$SHELL}")"
 
 if [ -z "$version" ]; then
   if [ -z "$NODENV_VERSION" ]; then
@@ -36,14 +37,28 @@ if [ -z "$version" ]; then
 fi
 
 if [ "$version" = "--unset" ]; then
-  echo "unset NODENV_VERSION"
+  case "$shell" in
+  fish )
+    echo "set -e NODENV_VERSION"
+    ;;
+  * )
+    echo "unset NODENV_VERSION"
+    ;;
+  esac
   exit
 fi
 
 # Make sure the specified version is installed.
 if nodenv-prefix "$version" >/dev/null; then
-  echo "export NODENV_VERSION=\"${version}\""
+  case "$shell" in
+  fish )
+    echo "setenv NODENV_VERSION \"${version}\""
+    ;;
+  * )
+    echo "export NODENV_VERSION=\"${version}\""
+    ;;
+  esac
 else
-  echo "return 1"
+  echo "false"
   exit 1
 fi

@@ -11,7 +11,7 @@ for args in "$@"
 do
   if [ "$args" = "-" ]; then
     print=1
-		shift
+    shift
   fi
 
   if [ "$args" = "--no-rehash" ]; then
@@ -22,11 +22,20 @@ done
 
 shell="$1"
 if [ -z "$shell" ]; then
-  shell="$(basename "$SHELL")"
+  shell="$(ps c -p "$PPID" -o 'ucomm=' 2>/dev/null || true)"
+  shell="${shell##-}"
+  shell="${shell%% *}"
+  shell="$(basename "${shell:-$SHELL}")"
+fi
+
+READLINK=$(type -p greadlink readlink | head -1)
+if [ -z "$READLINK" ]; then
+  echo "nodenv: cannot find readlink - are you missing GNU coreutils?" >&2
+  exit 1
 fi
 
 resolve_link() {
-  $(type -p greadlink readlink | head -1) $1
+  $READLINK "$1"
 }
 
 abs_dirname() {
@@ -56,6 +65,9 @@ if [ -z "$print" ]; then
   ksh )
     profile='~/.profile'
     ;;
+  fish )
+    profile='~/.config/fish/config.fish'
+    ;;
   * )
     profile='your profile'
     ;;
@@ -64,7 +76,14 @@ if [ -z "$print" ]; then
   { echo "# Load nodenv automatically by adding"
     echo "# the following to ${profile}:"
     echo
-    echo 'eval "$(nodenv init -)"'
+    case "$shell" in
+    fish )
+      echo 'status --is-interactive; and . (nodenv init -|psub)'
+      ;;
+    * )
+      echo 'eval "$(nodenv init -)"'
+      ;;
+    esac
     echo
   } >&2
 
@@ -73,23 +92,72 @@ fi
 
 mkdir -p "${NODENV_ROOT}/"{shims,versions}
 
-echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
+if [[ ":${PATH}:" != *:"${NODENV_ROOT}/shims":* ]]; then
+  case "$shell" in
+  fish )
+    echo "setenv PATH '${NODENV_ROOT}/shims' \$PATH"
+  ;;
+  * )
+    echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
+  ;;
+  esac
+fi
 
 case "$shell" in
-bash | zsh )
-  echo "source \"$root/completions/nodenv.${shell}\""
-  ;;
+fish )
+  echo "setenv NODENV_SHELL $shell"
+;;
+* )
+  echo "export NODENV_SHELL=$shell"
+;;
 esac
+
+completion="${root}/completions/nodenv.${shell}"
+if [ -r "$completion" ]; then
+  case "$shell" in
+  fish ) echo ". '$completion'" ;;
+  *    ) echo "source '$completion'" ;;
+  esac
+fi
 
 if [ -z "$no_rehash" ]; then
   echo 'nodenv rehash 2>/dev/null'
 fi
 
 commands=(`nodenv-commands --sh`)
+case "$shell" in
+fish )
+  cat <<EOS
+function nodenv
+  set command \$argv[1]
+  set -e argv[1]
+
+  switch "\$command"
+  case ${commands[*]}
+    eval (nodenv "sh-\$command" \$argv)
+  case '*'
+    command nodenv "\$command" \$argv
+  end
+end
+EOS
+  exit 0
+  ;;
+ksh )
+  cat <<EOS
+function nodenv {
+  typeset command
+EOS
+  ;;
+* )
+  cat <<EOS
+nodenv() {
+  local command
+EOS
+  ;;
+esac
+
 IFS="|"
 cat <<EOS
-nodenv() {
-  typeset command
   command="\$1"
   if [ "\$#" -gt 0 ]; then
     shift

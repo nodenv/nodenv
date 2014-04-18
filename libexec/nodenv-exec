@@ -7,11 +7,11 @@
 # Runs an executable by first preparing PATH so that the selected Node
 # version's `bin' directory is at the front.
 #
-# For example, if the currently selected Node version is 1.9.3-p327:
+# For example, if the currently selected Node version is 0.10.26:
 #   nodenv exec bundle install
 #
 # is equivalent to:
-#   PATH="$NODENV_ROOT/versions/1.9.3-p327/bin:$PATH" bundle install
+#   PATH="$NODENV_ROOT/versions/0.10.26/bin:$PATH" bundle install
 
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
@@ -21,7 +21,7 @@ if [ "$1" = "--complete" ]; then
   exec nodenv shims --short
 fi
 
-export NODENV_VERSION="$(nodenv-version-name)"
+NODENV_VERSION="$(nodenv-version-name)"
 NODENV_COMMAND="$1"
 
 if [ -z "$NODENV_COMMAND" ]; then
@@ -29,10 +29,14 @@ if [ -z "$NODENV_COMMAND" ]; then
   exit 1
 fi
 
+export NODENV_VERSION
 NODENV_COMMAND_PATH="$(nodenv-which "$NODENV_COMMAND")"
 NODENV_BIN_PATH="${NODENV_COMMAND_PATH%/*}"
 
-for script in $(nodenv-hooks exec); do
+OLDIFS="$IFS"
+IFS=$'\n' scripts=(`nodenv-hooks exec`)
+IFS="$OLDIFS"
+for script in "${scripts[@]}"; do
   source "$script"
 done
 

@@ -23,9 +23,25 @@ create_hook() {
 
   NODENV_HOOK_PATH="$path1:$path2" run nodenv-hooks exec
   assert_success
-  assert_line 0 "${NODENV_TEST_DIR}/nodenv.d/exec/ahoy.bash"
-  assert_line 1 "${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash"
-  assert_line 2 "${NODENV_TEST_DIR}/etc/nodenv_hooks/exec/bueno.bash"
+  assert_output <<OUT
+${NODENV_TEST_DIR}/nodenv.d/exec/ahoy.bash
+${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash
+${NODENV_TEST_DIR}/etc/nodenv_hooks/exec/bueno.bash
+OUT
+}
+
+@test "supports hook paths with spaces" {
+  path1="${NODENV_TEST_DIR}/my hooks/nodenv.d"
+  path2="${NODENV_TEST_DIR}/etc/nodenv hooks"
+  create_hook "$path1" exec "hello.bash"
+  create_hook "$path2" exec "ahoy.bash"
+
+  NODENV_HOOK_PATH="$path1:$path2" run nodenv-hooks exec
+  assert_success
+  assert_output <<OUT
+${NODENV_TEST_DIR}/my hooks/nodenv.d/exec/hello.bash
+${NODENV_TEST_DIR}/etc/nodenv hooks/exec/ahoy.bash
+OUT
 }
 
 @test "resolves relative paths" {
