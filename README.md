@@ -1,29 +1,29 @@
 # Groom your app’s Node environment with nodenv.
 
-[![Build Status](https://travis-ci.org/OiNutter/nodenv.png?branch=master)](https://travis-ci.org/OiNutter/nodenv)
-
 Use nodenv to pick a Node version for your application and guarantee
 that your development environment matches production. Put nodenv to work
-with [NPM](http://npmjs.org/) for painless Node upgrades and
+with [Bundler](http://gembundler.com/) for painless Node upgrades and
 bulletproof deployments.
 
 **Powerful in development.** Specify your app's Node version once,
   in a single file. Keep all your teammates on the same page. No
   headaches running apps on different versions of Node. Just Works™
-  from the command line. Override the Node version anytime: just set 
+  from the command line. Override the Node version anytime: just set
   an environment variable.
 
 **Rock-solid in production.** Your application's executables are its
-  interface with ops. With nodenv you'll never again need to `cd` in 
-  a cron job or Chef recipe to ensure you've selected the right runtime. 
-  The Node version dependency lives in one place—your app—so upgrades 
-  and rollbacks are atomic, even when you switch versions.
+  interface with ops. With nodenv and you'll never again need to `cd`
+  in a cron job or Chef recipe to ensure you've selected the right runtime.
+  The Node version dependency lives in one place—your app—so upgrades and
+  rollbacks are atomic, even when you switch versions.
 
 **One thing well.** nodenv is concerned solely with switching Node
   versions. It's simple and predictable. A rich plugin ecosystem lets
   you tailor it to suit your needs. Compile your own Node versions, or
-  use the [node-build](https://github.com/OiNutter/node-build)
-  plugin to automate the process. See more [plugins on the
+  use the [node-build][]
+  plugin to automate the process. Specify per-application environment
+  variables with [nodenv-vars](https://github.com/OiNutter/nodenv-vars).
+  See more [plugins on the
   wiki](https://github.com/OiNutter/nodenv/wiki/Plugins).
 
 ## Table of Contents
@@ -36,7 +36,9 @@ bulletproof deployments.
 * [Installation](#installation)
   * [Basic GitHub Checkout](#basic-github-checkout)
     * [Upgrading](#upgrading)
-  * [Neckbeard Configuration](#neckbeard-configuration)
+  * [Homebrew on Mac OS X](#homebrew-on-mac-os-x)
+  * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
+  * [Installing Node Versions](#installing-node-versions)
   * [Uninstalling Node Versions](#uninstalling-node-versions)
 * [Command Reference](#command-reference)
   * [nodenv local](#nodenv-local)
@@ -49,7 +51,6 @@ bulletproof deployments.
   * [nodenv whence](#nodenv-whence)
 * [Development](#development)
   * [Version History](#version-history)
-  * [Credits](#credits)
   * [License](#license)
 
 ## How It Works
@@ -61,7 +62,7 @@ to the correct Node installation.
 
 ### Understanding PATH
 
-When you run a command like `node`, your operating system
+When you run a command like `node` or `npm`, your operating system
 searches through a list of directories to find an executable file with
 that name. This list of directories lives in an environment variable
 called `PATH`, with each directory in the list separated by a colon:
@@ -103,13 +104,14 @@ reading it from the following sources, in this order:
    the [`nodenv shell`](#nodenv-shell) command to set this environment
    variable in your current shell session.
 
-2. The application-specific `.node-version` file in the current
-   directory, if present. You can modify the current directory's
-   `.node-version` file with the [`nodenv local`](#nodenv-local)
-   command.
+2. The first `.node-version` file found by searching the directory of the
+   script you are executing and each of its parent directories until reaching
+   the root of your filesystem.
 
-3. The first `.node-version` file found by searching each parent
-   directory until reaching the root of your filesystem, if any.
+3. The first `.node-version` file found by searching the current working
+   directory and each of its parent directories until reaching the root of your
+   filesystem. You can modify the `.node-version` file in the current working
+   directory with the [`nodenv local`](#nodenv-local) command.
 
 4. The global `~/.nodenv/version` file. You can modify this file using
    the [`nodenv global`](#nodenv-global) command. If the global version
@@ -127,20 +129,17 @@ Each Node version is installed into its own directory under
 `~/.nodenv/versions`. For example, you might have these versions
 installed:
 
-* `~/.nodenv/versions/0.8.22/`
-* `~/.nodenv/versions/0.10.0/`
+* `~/.nodenv/versions/1.8.7-p371/`
+* `~/.nodenv/versions/1.9.3-p327/`
+* `~/.nodenv/versions/jnode-1.7.1/`
 
 Version names to nodenv are simply the names of the directories in
 `~/.nodenv/versions`.
 
 ## Installation
 
-**Compatibility note**: nodenv is _incompatible_ with NVM. Please make
-  sure to fully uninstall NVM and remove any references to it from
-  your shell initialization files before installing nodenv.
-
 If you're on Mac OS X, consider
-[installing with Homebrew](#homebrew-on-mac-os-x). (Coming Soon)
+[installing with Homebrew](#homebrew-on-mac-os-x).
 
 ### Basic GitHub Checkout
 
@@ -150,7 +149,7 @@ easy to fork and contribute any changes back upstream.
 1. Check out nodenv into `~/.nodenv`.
 
     ~~~ sh
-    $ git clone git://github.com/OiNutter/nodenv.git ~/.nodenv
+    $ git clone https://github.com/OiNutter/nodenv.git ~/.nodenv
     ~~~
 
 2. Add `~/.nodenv/bin` to your `$PATH` for access to the `nodenv`
@@ -160,7 +159,7 @@ easy to fork and contribute any changes back upstream.
     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
     ~~~
 
-    **Ubuntu note**: Modify your `~/.profile` instead of `~/.bash_profile`.
+    **Ubuntu Desktop note**: Modify your `~/.bashrc` instead of `~/.bash_profile`.
 
     **Zsh note**: Modify your `~/.zshrc` file instead of `~/.bash_profile`.
 
@@ -170,33 +169,19 @@ easy to fork and contribute any changes back upstream.
     $ echo 'eval "$(nodenv init -)"' >> ~/.bash_profile
     ~~~
 
-    _Same as in previous step, use `~/.profile` on Ubuntu, `~/.zshrc` for Zsh._
+    _Same as in previous step, use `~/.bashrc` on Ubuntu, or `~/.zshrc` for Zsh._
 
-4. Restart your shell as a login shell so the path changes take effect.
-    You can now begin using nodenv.
+4. Restart your shell so that PATH changes take effect. (Opening a new
+   terminal tab will usually do it.) Now check if nodenv was set up:
 
     ~~~ sh
-    $ exec $SHELL -l
+    $ type nodenv
+    #=> "nodenv is a function"
     ~~~
 
-5. Install [node-build](https://github.com/OiNutter/node-build),
-   which provides an `nodenv install` command that simplifies the
-   process of installing new Node versions.
-
-    ~~~
-    $ nodenv install v0.10.0
-    ~~~
-
-   As an alternative, you can download and compile Node yourself into
-   `~/.nodenv/versions/`.
-
-6. Rebuild the shim executables. You should do this any time you
-   install a new Node executable (for example, when installing a new
-   Node version, or when installing a module that provides a command).
-
-    ~~~
-    $ nodenv rehash
-    ~~~
+5. _(Optional)_ Install [node-build][], which provides the
+   `nodenv install` command that simplifies the process of
+   [installing new Node versions](#installing-node-versions).
 
 #### Upgrading
 
@@ -216,14 +201,36 @@ $ git fetch
 $ git checkout v0.3.0
 ~~~
 
-### Neckbeard Configuration
+If you've [installed via Homebrew](#homebrew-on-mac-os-x), then upgrade
+via its `brew` command:
+
+~~~ sh
+$ brew update
+$ brew upgrade nodenv node-build
+~~~
+
+### Homebrew on Mac OS X
+
+As an alternative to installation via GitHub checkout, you can install
+nodenv and [node-build][] using the [Homebrew](http://brew.sh) package
+manager on Mac OS X:
+
+~~~
+$ brew update
+$ brew install nodenv node-build
+~~~
+
+Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
+profile as stated in the caveats. You'll only ever have to do this
+once.
+
+### How nodenv hooks into your shell
 
 Skip this section unless you must know what every line in your shell
 profile is doing.
 
 `nodenv init` is the only command that crosses the line of loading
-extra commands into your shell. Coming from RVM, some of you might be
-opposed to this idea. Here's what `nodenv init` actually does:
+extra commands into your shell. Here's what `nodenv init` actually does:
 
 1. Sets up your shims path. This is the only requirement for nodenv to
    function properly. You can do this by hand by prepending
@@ -248,6 +255,27 @@ opposed to this idea. Here's what `nodenv init` actually does:
 Run `nodenv init -` for yourself to see exactly what happens under the
 hood.
 
+### Installing Node Versions
+
+The `nodenv install` command doesn't ship with nodenv out of the box, but
+is provided by the [node-build][] project. If you installed it either
+as part of GitHub checkout process outlined above or via Homebrew, you
+should be able to:
+
+~~~ sh
+# list all available versions:
+$ nodenv install -l
+
+# install a Node version:
+$ nodenv install 0.10.26
+~~~
+
+Alternatively to the `install` command, you can download and compile
+Node manually as a subdirectory of `~/.nodenv/versions/`. An entry in
+that directory can also be a symlink to a Node version installed
+elsewhere on the filesystem. nodenv doesn't care; it will simply treat
+any entry in the `versions/` directory as a separate Node version.
+
 ### Uninstalling Node Versions
 
 As time goes on, Node versions you install will accumulate in your
@@ -256,11 +284,10 @@ As time goes on, Node versions you install will accumulate in your
 To remove old Node versions, simply `rm -rf` the directory of the
 version you want to remove. You can find the directory of a particular
 Node version with the `nodenv prefix` command, e.g. `nodenv prefix
-0.10.0`.
+0.8.22`.
 
-The [node-build](https://github.com/OiNutter/node-build) plugin
-provides an `nodenv uninstall` command to automate the removal
-process.
+The [node-build][] plugin provides an `nodenv uninstall` command to
+automate the removal process.
 
 ## Command Reference
 
@@ -294,7 +321,7 @@ the version name to the `~/.nodenv/version` file. This version can be
 overridden by an application-specific `.node-version` file, or by
 setting the `NODENV_VERSION` environment variable.
 
-    $ nodenv global 0.8.22
+    $ nodenv global 0.10.26
 
 The special version name `system` tells nodenv to use the system Node
 (detected by searching your `$PATH`).
@@ -308,7 +335,7 @@ Sets a shell-specific Node version by setting the `NODENV_VERSION`
 environment variable in your shell. This version overrides
 application-specific versions and the global version.
 
-    $ nodenv shell 0.9.12
+    $ nodenv shell 0.11.11
 
 When run without a version number, `nodenv shell` reports the current
 value of `NODENV_VERSION`. You can also unset the shell version:
@@ -320,7 +347,7 @@ the installation instructions) in order to use this command. If you
 prefer not to use shell integration, you may simply set the
 `NODENV_VERSION` variable yourself:
 
-    $ export NODENV_VERSION=0.10.0
+    $ export NODENV_VERSION=0.10.26
 
 ### nodenv versions
 
@@ -330,7 +357,7 @@ the currently active version.
     $ nodenv versions
       0.8.22
       0.9.12
-    * 0.10.0 (set by /Users/will/.nodenv/version)
+      * 0.10.0 (set by /Users/will/.nodenv/version)
 
 ### nodenv version
 
@@ -344,7 +371,7 @@ how it was set.
 
 Installs shims for all Node executables known to nodenv (i.e.,
 `~/.nodenv/versions/*/bin/*`). Run this command after you install a new
-version of Node, or install a module that provides commands.
+version of Node, or install a gem that provides commands.
 
     $ nodenv rehash
 
@@ -354,7 +381,7 @@ Displays the full path to the executable that nodenv will invoke when
 you run the given command.
 
     $ nodenv which npm
-    /Users/will/.nodenv/versions/0.10.0/bin/npm
+    /Users/will/.nodenv/versions/0.10.26/bin/npm
 
 ### nodenv whence
 
@@ -385,6 +412,11 @@ Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work f
 
 ### Version History
 
+**0.2.0** (April 18, 2014)
+
+* Updated to match latest version of [rbenv](https://github.com/sstephenson/rbenv). See there for
+changelog.
+
 **0.1.0** (March 18, 2013)
 
 * Initial public release. Copied from [rbenv](https://github.com/sstephenson/rbenv)
@@ -413,3 +445,6 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+  [node-build]: https://github.com/OiNutter/node-build#readme

@@ -63,7 +63,10 @@ else
   NODENV_COMMAND_PATH="${NODENV_ROOT}/versions/${NODENV_VERSION}/bin/${NODENV_COMMAND}"
 fi
 
-for script in $(nodenv-hooks which); do
+OLDIFS="$IFS"
+IFS=$'\n' scripts=(`nodenv-hooks which`)
+IFS="$OLDIFS"
+for script in "${scripts[@]}"; do
   source "$script"
 done
 
