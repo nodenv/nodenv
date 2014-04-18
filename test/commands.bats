@@ -19,6 +19,18 @@ load test_helper
   assert_line "shell"
 }
 
+@test "commands in path with spaces" {
+  path="${NODENV_TEST_DIR}/my commands"
+  cmd="${path}/nodenv-sh-hello"
+  mkdir -p "$path"
+  touch "$cmd"
+  chmod +x "$cmd"
+
+  PATH="${path}:$PATH" run nodenv-commands --sh
+  assert_success
+  assert_line "hello"
+}
+
 @test "commands --no-sh" {
   run nodenv-commands --no-sh
   assert_success

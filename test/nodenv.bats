@@ -5,7 +5,7 @@ load test_helper
 @test "blank invocation" {
   run nodenv
   assert_success
-  assert [ "${lines[0]}" = "nodenv 0.4.0" ]
+  assert [ "${lines[0]}" = "nodenv 0.2.0" ]
 }
 
 @test "invalid command" {
@@ -15,9 +15,9 @@ load test_helper
 }
 
 @test "default NODENV_ROOT" {
-  NODENV_ROOT="" HOME=/home/mislav run nodenv root
+  NODENV_ROOT="" HOME=/home/will run nodenv root
   assert_success
-  assert_output "/home/mislav/.nodenv"
+  assert_output "/home/will/.nodenv"
 }
 
 @test "inherited NODENV_ROOT" {
