@@ -39,8 +39,8 @@ create_executable() {
 
 @test "no executable found" {
   create_executable "1.8" "npm"
-  NODENV_VERSION=1.8 run nodenv-which npm
-  assert_failure "nodenv: npm: command not found"
+  NODENV_VERSION=1.8 run nodenv-which node
+  assert_failure "nodenv: node: command not found"
 }
 
 @test "executable found in other versions" {

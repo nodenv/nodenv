@@ -13,7 +13,6 @@ create_executable() {
   create_executable "1.8" "node"
   create_executable "1.8" "npm"
   create_executable "2.0" "node"
-  create_executable "2.0" "npm"
 
   run nodenv-whence node
   assert_success
@@ -25,6 +24,4 @@ OUT
   run nodenv-whence npm
   assert_success "1.8"
 
-  run nodenv-whence npm
-  assert_success "2.0"
 }
