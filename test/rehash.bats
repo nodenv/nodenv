@@ -56,7 +56,7 @@ OUT
   touch "${NODENV_ROOT}/shims/oldshim1"
   chmod +x "${NODENV_ROOT}/shims/oldshim1"
 
-  create_executable "2.0" "rake"
+  create_executable "2.0" "npm"
   create_executable "2.0" "node"
 
   run nodenv-rehash

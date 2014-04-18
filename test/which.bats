@@ -14,13 +14,13 @@ create_executable() {
 
 @test "outputs path to executable" {
   create_executable "1.8" "node"
-  create_executable "2.0" "rspec"
+  create_executable "2.0" "npm"
 
   NODENV_VERSION=1.8 run nodenv-which node
   assert_success "${NODENV_ROOT}/versions/1.8/bin/node"
 
-  NODENV_VERSION=2.0 run nodenv-which rspec
-  assert_success "${NODENV_ROOT}/versions/2.0/bin/rspec"
+  NODENV_VERSION=2.0 run nodenv-which npm
+  assert_success "${NODENV_ROOT}/versions/2.0/bin/npm"
 }
 
 @test "searches PATH for system version" {
@@ -32,28 +32,28 @@ create_executable() {
 }
 
 @test "version not installed" {
-  create_executable "2.0" "rspec"
-  NODENV_VERSION=1.9 run nodenv-which rspec
+  create_executable "2.0" "npm"
+  NODENV_VERSION=1.9 run nodenv-which npm
   assert_failure "nodenv: version \`1.9' is not installed"
 }
 
 @test "no executable found" {
-  create_executable "1.8" "rspec"
-  NODENV_VERSION=1.8 run nodenv-which rake
-  assert_failure "nodenv: rake: command not found"
+  create_executable "1.8" "npm"
+  NODENV_VERSION=1.8 run nodenv-which npm
+  assert_failure "nodenv: npm: command not found"
 }
 
 @test "executable found in other versions" {
   create_executable "1.8" "node"
-  create_executable "1.9" "rspec"
-  create_executable "2.0" "rspec"
+  create_executable "1.9" "npm"
+  create_executable "2.0" "npm"
 
-  NODENV_VERSION=1.8 run nodenv-which rspec
+  NODENV_VERSION=1.8 run nodenv-which npm
   assert_failure
   assert_output <<OUT
-nodenv: rspec: command not found
+nodenv: npm: command not found
 
-The \`rspec' command exists in these Node versions:
+The \`npm' command exists in these Node versions:
   1.9
   2.0
 OUT
