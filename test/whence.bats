@@ -11,9 +11,9 @@ create_executable() {
 
 @test "finds versions where present" {
   create_executable "1.8" "node"
-  create_executable "1.8" "rake"
+  create_executable "1.8" "npm"
   create_executable "2.0" "node"
-  create_executable "2.0" "rspec"
+  create_executable "2.0" "npm"
 
   run nodenv-whence node
   assert_success
@@ -22,9 +22,9 @@ create_executable() {
 2.0
 OUT
 
-  run nodenv-whence rake
+  run nodenv-whence npm
   assert_success "1.8"
 
-  run nodenv-whence rspec
+  run nodenv-whence npm
   assert_success "2.0"
 }
