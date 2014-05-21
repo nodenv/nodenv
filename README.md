@@ -2,7 +2,7 @@
 
 Use nodenv to pick a Node version for your application and guarantee
 that your development environment matches production. Put nodenv to work
-with [Bundler](http://gembundler.com/) for painless Node upgrades and
+with [NPM](http://npmjs.org/) for painless Node upgrades and
 bulletproof deployments.
 
 **Powerful in development.** Specify your app's Node version once,
