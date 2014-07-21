@@ -211,18 +211,7 @@ $ brew upgrade nodenv node-build
 
 ### Homebrew on Mac OS X
 
-As an alternative to installation via GitHub checkout, you can install
-nodenv and [node-build][] using the [Homebrew](http://brew.sh) package
-manager on Mac OS X:
-
-~~~
-$ brew update
-$ brew install nodenv node-build
-~~~
-
-Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
-profile as stated in the caveats. You'll only ever have to do this
-once.
+Coming Soon (Hopefully!)
 
 ### How nodenv hooks into your shell
 
