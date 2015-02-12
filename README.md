@@ -36,7 +36,6 @@ bulletproof deployments.
 * [Installation](#installation)
   * [Basic GitHub Checkout](#basic-github-checkout)
     * [Upgrading](#upgrading)
-  * [Homebrew on Mac OS X](#homebrew-on-mac-os-x)
   * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
   * [Installing Node Versions](#installing-node-versions)
   * [Uninstalling Node Versions](#uninstalling-node-versions)
@@ -138,8 +137,8 @@ Version names to nodenv are simply the names of the directories in
 
 ## Installation
 
-If you're on Mac OS X, consider
-[installing with Homebrew](#homebrew-on-mac-os-x).
+Please note that at this time, the `nodenv` package in homebrew is *NOT* this
+package. This package must be installed using the instructions below.
 
 ### Basic GitHub Checkout
 
@@ -201,18 +200,6 @@ $ git fetch
 $ git checkout v0.3.0
 ~~~
 
-If you've [installed via Homebrew](#homebrew-on-mac-os-x), then upgrade
-via its `brew` command:
-
-~~~ sh
-$ brew update
-$ brew upgrade nodenv node-build
-~~~
-
-### Homebrew on Mac OS X
-
-Coming Soon (Hopefully!)
-
 ### How nodenv hooks into your shell
 
 Skip this section unless you must know what every line in your shell
@@ -246,10 +233,9 @@ hood.
 
 ### Installing Node Versions
 
-The `nodenv install` command doesn't ship with nodenv out of the box, but
-is provided by the [node-build][] project. If you installed it either
-as part of GitHub checkout process outlined above or via Homebrew, you
-should be able to:
+The `nodenv install` command doesn't ship with nodenv out of the box, but is
+provided by the [node-build][] project. If you installed it as part of GitHub
+checkout process outlined above you should be able to:
 
 ~~~ sh
 # list all available versions:
