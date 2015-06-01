@@ -128,9 +128,9 @@ Each Node version is installed into its own directory under
 `~/.nodenv/versions`. For example, you might have these versions
 installed:
 
-* `~/.nodenv/versions/1.8.7-p371/`
-* `~/.nodenv/versions/1.9.3-p327/`
-* `~/.nodenv/versions/jnode-1.7.1/`
+* `~/.nodenv/versions/0.10.36/`
+* `~/.nodenv/versions/0.12.0/`
+* `~/.nodenv/versions/iojs-1.0.0/`
 
 Version names to nodenv are simply the names of the directories in
 `~/.nodenv/versions`.
