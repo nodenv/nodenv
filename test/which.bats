@@ -31,6 +31,31 @@ create_executable() {
   assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
 }
 
+@test "searches PATH for system version (shims prepended)" {
+  create_executable "${NODENV_TEST_DIR}/bin" "kill-all-humans"
+  create_executable "${NODENV_ROOT}/shims" "kill-all-humans"
+
+  PATH="${NODENV_ROOT}/shims:$PATH" NODENV_VERSION=system run nodenv-which kill-all-humans
+  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+}
+
+@test "searches PATH for system version (shims appended)" {
+  create_executable "${NODENV_TEST_DIR}/bin" "kill-all-humans"
+  create_executable "${NODENV_ROOT}/shims" "kill-all-humans"
+
+  PATH="$PATH:${NODENV_ROOT}/shims" NODENV_VERSION=system run nodenv-which kill-all-humans
+  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+}
+
+@test "searches PATH for system version (shims spread)" {
+  create_executable "${NODENV_TEST_DIR}/bin" "kill-all-humans"
+  create_executable "${NODENV_ROOT}/shims" "kill-all-humans"
+
+  PATH="${NODENV_ROOT}/shims:${NODENV_ROOT}/shims:/tmp/non-existent:$PATH:${NODENV_ROOT}/shims" \
+    NODENV_VERSION=system run nodenv-which kill-all-humans
+  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+}
+
 @test "version not installed" {
   create_executable "2.0" "npm"
   NODENV_VERSION=1.9 run nodenv-which npm
@@ -71,4 +96,13 @@ SH
   NODENV_HOOK_PATH="$hook_path" IFS=$' \t\n' run nodenv-which anything
   assert_success
   assert_output "HELLO=:hello:ugly:world:again"
+}
+
+@test "discovers version from nodenv-version-name" {
+  mkdir -p "$NODENV_ROOT"
+  cat > "${NODENV_ROOT}/version" <<<"1.8"
+  create_executable "1.8" "node"
+
+  NODENV_VERSION= run nodenv-which node
+  assert_success "${NODENV_ROOT}/versions/1.8/bin/node"
 }

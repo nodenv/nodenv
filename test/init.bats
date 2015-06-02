@@ -77,3 +77,20 @@ load test_helper
   assert_success
   refute_line 'setenv PATH "'${NODENV_ROOT}'/shims" $PATH ;'
 }
+
+@test "outputs sh-compatible syntax" {
+  run nodenv-init - bash
+  assert_success
+  assert_line '  case "$command" in'
+
+  run nodenv-init - zsh
+  assert_success
+  assert_line '  case "$command" in'
+}
+
+@test "outputs fish-specific syntax (fish)" {
+  run nodenv-init - fish
+  assert_success
+  assert_line '  switch "$command"'
+  refute_line '  case "$command" in'
+}

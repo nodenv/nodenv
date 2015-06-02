@@ -24,6 +24,12 @@ stub_system_node() {
   assert_success "* system (set by ${NODENV_ROOT}/version)"
 }
 
+@test "not even system node available" {
+  PATH="$(path_without node)" run nodenv-versions
+  assert_failure
+  assert_output "Warning: no Node detected on the system"
+}
+
 @test "bare output no versions installed" {
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-versions --bare
@@ -111,5 +117,25 @@ OUT
   system
 * 1.9.3 (set by ${NODENV_TEST_DIR}/.node-version)
   2.0.0
+OUT
+}
+
+@test "ignores non-directories under versions" {
+  create_version "1.9"
+  touch "${NODENV_ROOT}/versions/hello"
+
+  run nodenv-versions --bare
+  assert_success "1.9"
+}
+
+@test "lists symlinks under versions" {
+  create_version "1.8.7"
+  ln -s "1.8.7" "${NODENV_ROOT}/versions/1.8"
+
+  run nodenv-versions --bare
+  assert_success
+  assert_output <<OUT
+1.8
+1.8.7
 OUT
 }
