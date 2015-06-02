@@ -206,7 +206,8 @@ via its `brew` command:
 
 ~~~ sh
 $ brew update
-$ brew upgrade jawshooah/nodenv/nodenv node-build
+$ brew upgrade jawshooah/nodenv/nodenv
+$ brew reinstall --HEAD node-build
 ~~~
 
 ### Homebrew on Mac OS X
