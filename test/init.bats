@@ -64,11 +64,11 @@ load test_helper
   assert_line 0 "setenv PATH '${NODENV_ROOT}/shims' \$PATH"
 }
 
-@test "doesn't add shims to PATH more than once" {
+@test "can add shims to PATH more than once" {
   export PATH="${NODENV_ROOT}/shims:$PATH"
   run nodenv-init - bash
   assert_success
-  refute_line 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
+  assert_line 0 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
 }
 
 @test "doesn't add shims to PATH more than once (fish)" {

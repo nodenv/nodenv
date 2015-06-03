@@ -92,22 +92,13 @@ fi
 
 mkdir -p "${NODENV_ROOT}/"{shims,versions}
 
-if [[ ":${PATH}:" != *:"${NODENV_ROOT}/shims":* ]]; then
-  case "$shell" in
-  fish )
-    echo "setenv PATH '${NODENV_ROOT}/shims' \$PATH"
-  ;;
-  * )
-    echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
-  ;;
-  esac
-fi
-
 case "$shell" in
 fish )
+  echo "setenv PATH '${NODENV_ROOT}/shims' \$PATH"
   echo "setenv NODENV_SHELL $shell"
 ;;
 * )
+  echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
   echo "export NODENV_SHELL=$shell"
 ;;
 esac
