@@ -51,7 +51,7 @@ npm
 OUT
 }
 
-@test "removes stale shims" {
+@test "removes outdated shims" {
   mkdir -p "${NODENV_ROOT}/shims"
   touch "${NODENV_ROOT}/shims/oldshim1"
   chmod +x "${NODENV_ROOT}/shims/oldshim1"
@@ -63,6 +63,25 @@ OUT
   assert_success ""
 
   assert [ ! -e "${NODENV_ROOT}/shims/oldshim1" ]
+}
+
+@test "do exact matches when removing stale shims" {
+  create_executable "2.0" "unicorn_rails"
+  create_executable "2.0" "rspec-core"
+
+  nodenv-rehash
+
+  cp "$NODENV_ROOT"/shims/{rspec-core,rspec}
+  cp "$NODENV_ROOT"/shims/{rspec-core,rails}
+  cp "$NODENV_ROOT"/shims/{rspec-core,uni}
+  chmod +x "$NODENV_ROOT"/shims/{rspec,rails,uni}
+
+  run nodenv-rehash
+  assert_success ""
+
+  assert [ ! -e "${NODENV_ROOT}/shims/rails" ]
+  assert [ ! -e "${NODENV_ROOT}/shims/rake" ]
+  assert [ ! -e "${NODENV_ROOT}/shims/uni" ]
 }
 
 @test "binary install locations containing spaces" {
