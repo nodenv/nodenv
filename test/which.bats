@@ -93,7 +93,7 @@ echo HELLO="\$(printf ":%s" "\${hellos[@]}")"
 exit
 SH
 
-  NODENV_HOOK_PATH="$hook_path" IFS=$' \t\n' run nodenv-which anything
+  NODENV_HOOK_PATH="$hook_path" IFS=$' \t\n' NODENV_VERSION=system run nodenv-which anything
   assert_success
   assert_output "HELLO=:hello:ugly:world:again"
 }
@@ -102,6 +102,9 @@ SH
   mkdir -p "$NODENV_ROOT"
   cat > "${NODENV_ROOT}/version" <<<"1.8"
   create_executable "1.8" "node"
+
+  mkdir -p "$NODENV_TEST_DIR"
+  cd "$NODENV_TEST_DIR"
 
   NODENV_VERSION= run nodenv-which node
   assert_success "${NODENV_ROOT}/versions/1.8/bin/node"

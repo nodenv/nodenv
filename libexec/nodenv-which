@@ -12,7 +12,7 @@ set -e
 
 # Provide nodenv completions
 if [ "$1" = "--complete" ]; then
-  exec nodenv shims --short
+  exec nodenv-shims --short
 fi
 
 remove_from_path() {

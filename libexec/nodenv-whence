@@ -8,7 +8,7 @@ set -e
 # Provide nodenv completions
 if [ "$1" = "--complete" ]; then
   echo --path
-  exec nodenv shims --short
+  exec nodenv-shims --short
 fi
 
 if [ "$1" = "--path" ]; then

@@ -18,7 +18,7 @@ set -e
 
 # Provide nodenv completions
 if [ "$1" = "--complete" ]; then
-  exec nodenv shims --short
+  exec nodenv-shims --short
 fi
 
 NODENV_VERSION="$(nodenv-version-name)"
