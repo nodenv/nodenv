@@ -4,4 +4,6 @@
 /versions
 /sources
 /cache
-.DS_Store
+/libexec/*.dylib
+/src/Makefile
+/src/*.o

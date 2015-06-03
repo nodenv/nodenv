@@ -1,7 +1,15 @@
 unset NODENV_VERSION
 unset NODENV_DIR
 
-NODENV_TEST_DIR="${BATS_TMPDIR}/nodenv"
+if enable -f "${BATS_TEST_DIRNAME}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
+  NODENV_TEST_DIR="$(realpath "$BATS_TMPDIR")/nodenv"
+else
+  if [ -n "$NODENV_NATIVE_EXT" ]; then
+    echo "nodenv: failed to load \`realpath' builtin" >&2
+    exit 1
+  fi
+  NODENV_TEST_DIR="${BATS_TMPDIR}/nodenv"
+fi
 
 # guard against executing this block twice due to bats internals
 if [ "$NODENV_ROOT" != "${NODENV_TEST_DIR}/root" ]; then
