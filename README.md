@@ -340,7 +340,7 @@ Displays the currently active Node version, along with information on
 how it was set.
 
     $ nodenv version
-    0.10.0 (set by /Volumes/OiNutter/hubot/.node-version)
+    0.10.0 (set by /Users/OiNutter/.nodenv/version)
 
 ### nodenv rehash
 

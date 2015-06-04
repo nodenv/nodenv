@@ -57,9 +57,5 @@ setup() {
   cat > ".node-version" <<<"node-1.8.7"
   run nodenv-version-name
   assert_success
-  assert_output <<OUT
-warning: ignoring extraneous \`node-' prefix in version \`node-1.8.7'
-         (set by ${PWD}/.node-version)
-1.8.7
-OUT
+  assert_output "1.8.7"
 }
