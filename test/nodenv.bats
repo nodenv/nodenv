@@ -57,8 +57,8 @@ load test_helper
   run nodenv echo -F: "PATH"
   assert_success
   assert_line 0 "${BATS_TEST_DIRNAME%/*}/libexec"
-  assert_line 1 "${NODENV_ROOT}/plugins/node-build/bin"
-  assert_line 2 "${NODENV_ROOT}/plugins/nodenv-each/bin"
+  assert_line 1 "${NODENV_ROOT}/plugins/nodenv-each/bin"
+  assert_line 2 "${NODENV_ROOT}/plugins/node-build/bin"
 }
 
 @test "NODENV_HOOK_PATH preserves value from environment" {
