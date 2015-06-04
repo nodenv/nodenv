@@ -49,8 +49,6 @@ bulletproof deployments.
   * [nodenv which](#nodenv-which)
   * [nodenv whence](#nodenv-whence)
 * [Development](#development)
-  * [Version History](#version-history)
-  * [License](#license)
 
 ## How It Works
 
@@ -384,42 +382,6 @@ tracker](https://github.com/OiNutter/nodenv/issues).
 ### Credits
 
 Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work for node.
-
-### Version History
-
-**0.2.0** (April 18, 2014)
-
-* Updated to match latest version of [rbenv](https://github.com/sstephenson/rbenv). See there for
-changelog.
-
-**0.1.0** (March 18, 2013)
-
-* Initial public release. Copied from [rbenv](https://github.com/sstephenson/rbenv)
-
-### License
-
-(The MIT license)
-
-Copyright (c) 2013 Will McKenzie
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
   [node-build]: https://github.com/OiNutter/node-build#readme
