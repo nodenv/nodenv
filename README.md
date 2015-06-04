@@ -48,6 +48,7 @@ bulletproof deployments.
   * [nodenv rehash](#nodenv-rehash)
   * [nodenv which](#nodenv-which)
   * [nodenv whence](#nodenv-whence)
+* [Environment variables](#environment-variables)
 * [Development](#development)
 
 ## How It Works
@@ -365,6 +366,18 @@ Lists all Node versions with the given command installed.
     0.9.12
     0.8.22
 
+## Environment variables
+
+You can affect how nodenv operates with the following settings:
+
+name | default | description
+-----|---------|------------
+`NODENV_VERSION` | | Specifies the Node version to be used.<br>Also see [`nodenv shell`](#nodenv-shell)
+`NODENV_ROOT` | `~/.nodenv` | Defines the directory under which Node versions and shims reside.<br>Also see `nodenv root`
+`NODENV_DEBUG` | | Outputs debug information.<br>Also as: `nodenv --debug <subcommand>`
+`NODENV_HOOK_PATH` | [_see wiki_][hooks] | Colon-separated list of paths searched for nodenv hooks.
+`NODENV_DIR` | `$PWD` | Directory to start searching for `.node-version` files.
+
 ## Development
 
 The nodenv source code is [hosted on
@@ -385,3 +398,4 @@ Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work f
 
 
   [node-build]: https://github.com/OiNutter/node-build#readme
+  [hooks]: https://github.com/sstephenson/nodenv/wiki/Authoring-plugins#nodenv-hooks
