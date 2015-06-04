@@ -398,4 +398,4 @@ Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work f
 
 
   [node-build]: https://github.com/OiNutter/node-build#readme
-  [hooks]: https://github.com/sstephenson/nodenv/wiki/Authoring-plugins#nodenv-hooks
+  [hooks]: https://github.com/sstephenson/rbenv/wiki/Authoring-plugins#rbenv-hooks
