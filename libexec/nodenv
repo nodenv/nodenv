@@ -71,15 +71,20 @@ shopt -s nullglob
 
 bin_path="$(abs_dirname "$0")"
 for plugin_bin in "${NODENV_ROOT}/plugins/"*/bin; do
-  bin_path="${bin_path}:${plugin_bin}"
+  PATH="${plugin_bin}:${PATH}"
 done
 export PATH="${bin_path}:${PATH}"
 
-hook_path="${NODENV_HOOK_PATH}:${NODENV_ROOT}/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
+NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${NODENV_ROOT}/nodenv.d"
+if [ "${bin_path%/*}" != "$NODENV_ROOT" ]; then
+  # Add nodenv's own `nodenv.d` unless nodenv was cloned to NODENV_ROOT
+  NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${bin_path%/*}/nodenv.d"
+fi
+NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
 for plugin_hook in "${NODENV_ROOT}/plugins/"*/etc/nodenv.d; do
-  hook_path="${hook_path}:${plugin_hook}"
+  NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${plugin_hook}"
 done
-export NODENV_HOOK_PATH="$hook_path"
+export NODENV_HOOK_PATH
 
 shopt -u nullglob
 
