@@ -35,6 +35,7 @@ bulletproof deployments.
   * [Locating the Node Installation](#locating-the-node-installation)
 * [Installation](#installation)
   * [Basic GitHub Checkout](#basic-github-checkout)
+  * [Homebrew on Mac OS X](#homebrew-on-mac-os-x)
     * [Upgrading](#upgrading)
   * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
   * [Installing Node Versions](#installing-node-versions)
@@ -137,8 +138,8 @@ Version names to nodenv are simply the names of the directories in
 
 ## Installation
 
-Please note that at this time, the `nodenv` package in homebrew is *NOT* this
-package. This package must be installed using the instructions below.
+If you're on Mac OS X, consider
+[installing with Homebrew](#homebrew-on-mac-os-x).
 
 ### Basic GitHub Checkout
 
@@ -199,6 +200,36 @@ $ cd ~/.nodenv
 $ git fetch
 $ git checkout v0.3.0
 ~~~
+
+If you've [installed via Homebrew](#homebrew-on-mac-os-x), then upgrade
+via its `brew` command:
+
+~~~ sh
+$ brew update
+$ brew upgrade jawshooah/nodenv/nodenv
+$ brew reinstall --HEAD node-build
+~~~
+
+### Homebrew on Mac OS X
+
+Please note that at this time, the `nodenv` package in Homebrew's main
+repository is *NOT* this package. This package must be installed using the
+instructions below.
+
+As an alternative to installation via GitHub checkout, you can install
+nodenv and [node-build][] using the [Homebrew](http://brew.sh) package
+manager on Mac OS X:
+
+~~~
+$ brew update
+$ brew tap jawshooah/nodenv
+$ brew install jawshooah/nodenv/nodenv
+$ brew install --HEAD node-build
+~~~
+
+Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
+profile as stated in the caveats. You'll only ever have to do this
+once.
 
 ### How nodenv hooks into your shell
 
