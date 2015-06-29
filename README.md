@@ -39,6 +39,7 @@ bulletproof deployments.
   * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
   * [Installing Node Versions](#installing-node-versions)
   * [Uninstalling Node Versions](#uninstalling-node-versions)
+  * [Uninstalling nodenv](#uninstalling-nodenv)
 * [Command Reference](#command-reference)
   * [nodenv local](#nodenv-local)
   * [nodenv global](#nodenv-global)
@@ -262,6 +263,30 @@ Node version with the `nodenv prefix` command, e.g. `nodenv prefix
 
 The [node-build][] plugin provides an `nodenv uninstall` command to
 automate the removal process.
+
+### Uninstalling nodenv
+
+The simplicity of nodenv makes it easy to temporarily disable it, or
+uninstall from the system.
+
+1. To **disable** nodenv managing your Node versions, simply remove the
+  `nodenv init` line from your shell startup configuration. This will
+  remove nodenv shims directory from `$PATH`, and future invocations like
+  `node` will execute the system Node version, as before nodenv.
+
+  `nodenv` will still be accessible on the command line, but your Node
+  apps won't be affected by version switching.
+
+2. To completely **uninstall** nodenv, perform step (1) and then remove
+   its root directory. This will **delete all Node versions** that were
+   installed under `` `nodenv root`/versions/ `` directory:
+
+        rm -rf `nodenv root`
+
+   If you've installed nodenv using a package manager, as a final step
+   perform the nodenv package removal. For instance, for Homebrew:
+
+        brew uninstall nodenv
 
 ## Command Reference
 
