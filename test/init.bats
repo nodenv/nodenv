@@ -14,7 +14,7 @@ load test_helper
 @test "auto rehash" {
   run nodenv-init -
   assert_success
-  assert_line "nodenv rehash 2>/dev/null"
+  assert_line "command nodenv rehash 2>/dev/null"
 }
 
 @test "setup shell completions" {

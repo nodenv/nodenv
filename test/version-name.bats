@@ -49,7 +49,7 @@ setup() {
 
 @test "missing version" {
   NODENV_VERSION=1.2 run nodenv-version-name
-  assert_failure "nodenv: version \`1.2' is not installed"
+  assert_failure "nodenv: version \`1.2' is not installed (set by NODENV_VERSION environment variable)"
 }
 
 @test "version with prefix in name" {

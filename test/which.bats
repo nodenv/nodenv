@@ -59,7 +59,7 @@ create_executable() {
 @test "version not installed" {
   create_executable "2.0" "npm"
   NODENV_VERSION=1.9 run nodenv-which npm
-  assert_failure "nodenv: version \`1.9' is not installed"
+  assert_failure "nodenv: version \`1.9' is not installed (set by NODENV_VERSION environment variable)"
 }
 
 @test "no executable found" {
