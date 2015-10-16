@@ -59,3 +59,27 @@ setup() {
   assert_success
   assert_output "1.8.7"
 }
+
+@test "version with 'v' prefix in name" {
+  create_version "4.1.0"
+  cat > ".node-version" <<<"v4.1.0"
+  run nodenv-version-name
+  assert_success
+  assert_output "4.1.0"
+}
+
+@test "version with 'node-v' prefix in name" {
+  create_version "4.1.0"
+  cat > ".node-version" <<<"node-v4.1.0"
+  run nodenv-version-name
+  assert_success
+  assert_output "4.1.0"
+}
+
+@test "iojs version with 'v' prefix in name" {
+  create_version "iojs-3.1.0"
+  cat > ".node-version" <<<"iojs-v3.1.0"
+  run nodenv-version-name
+  assert_success
+  assert_output "iojs-3.1.0"
+}
