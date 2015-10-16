@@ -24,6 +24,8 @@ elif version_exists "${NODENV_VERSION/v/}"; then
   echo "${NODENV_VERSION/v/}"
 elif version_exists "${NODENV_VERSION#node-}"; then
   echo "${NODENV_VERSION#node-}"
+elif version_exists "${NODENV_VERSION#node-v}"; then
+  echo "${NODENV_VERSION#node-v}"
 else
   echo "nodenv: version \`$NODENV_VERSION' is not installed (set by $(nodenv-version-origin))" >&2
   exit 1
