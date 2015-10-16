@@ -20,6 +20,8 @@ version_exists() {
 
 if version_exists "$NODENV_VERSION"; then
   echo "$NODENV_VERSION"
+elif version_exists "${NODENV_VERSION/v/}"; then
+  echo "${NODENV_VERSION/v/}"
 elif version_exists "${NODENV_VERSION#node-}"; then
   echo "${NODENV_VERSION#node-}"
 else
