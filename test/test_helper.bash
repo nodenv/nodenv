@@ -1,18 +1,20 @@
 unset NODENV_VERSION
 unset NODENV_DIR
 
-if enable -f "${BATS_TEST_DIRNAME}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
-  NODENV_TEST_DIR="$(realpath "$BATS_TMPDIR")/nodenv"
-else
-  if [ -n "$NODENV_NATIVE_EXT" ]; then
-    echo "nodenv: failed to load \`realpath' builtin" >&2
-    exit 1
-  fi
-  NODENV_TEST_DIR="${BATS_TMPDIR}/nodenv"
-fi
-
 # guard against executing this block twice due to bats internals
-if [ "$NODENV_ROOT" != "${NODENV_TEST_DIR}/root" ]; then
+if [ -z "$NODENV_TEST_DIR" ]; then
+  NODENV_TEST_DIR="${BATS_TMPDIR}/nodenv"
+  export NODENV_TEST_DIR="$(mktemp -d "${NODENV_TEST_DIR}.XXX" 2>/dev/null || echo "$NODENV_TEST_DIR")"
+
+  if enable -f "${BATS_TEST_DIRNAME}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
+    export NODENV_TEST_DIR="$(realpath "$NODENV_TEST_DIR")"
+  else
+    if [ -n "$NODENV_NATIVE_EXT" ]; then
+      echo "nodenv: failed to load \`realpath' builtin" >&2
+      exit 1
+    fi
+  fi
+
   export NODENV_ROOT="${NODENV_TEST_DIR}/root"
   export HOME="${NODENV_TEST_DIR}/home"
 
@@ -22,6 +24,9 @@ if [ "$NODENV_ROOT" != "${NODENV_TEST_DIR}/root" ]; then
   PATH="${BATS_TEST_DIRNAME}/libexec:$PATH"
   PATH="${NODENV_ROOT}/shims:$PATH"
   export PATH
+
+  for xdg_var in `env 2>/dev/null | grep ^XDG_ | cut -d= -f1`; do unset "$xdg_var"; done
+  unset xdg_var
 fi
 
 teardown() {

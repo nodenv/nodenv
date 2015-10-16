@@ -6,6 +6,7 @@ set -e
 find_local_version_file() {
   local root="$1"
   while true; do
+    [[ "$root" =~ ^//[^/]*$ ]] && break
     if [ -e "${root}/.node-version" ]; then
       echo "${root}/.node-version"
       exit

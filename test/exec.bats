@@ -17,7 +17,7 @@ create_executable() {
 @test "fails with invalid version" {
   export NODENV_VERSION="2.0"
   run nodenv-exec node -v
-  assert_failure "nodenv: version \`2.0' is not installed"
+  assert_failure "nodenv: version \`2.0' is not installed (set by NODENV_VERSION environment variable)"
 }
 
 @test "completes with names of executables" {

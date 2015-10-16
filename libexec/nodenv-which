@@ -52,7 +52,7 @@ done
 if [ -x "$NODENV_COMMAND_PATH" ]; then
   echo "$NODENV_COMMAND_PATH"
 elif ! [ -d "${NODENV_ROOT}/versions/${NODENV_VERSION}" ]; then
-  echo "nodenv: version \`$NODENV_VERSION' is not installed" >&2
+  echo "nodenv: version \`$NODENV_VERSION' is not installed (set by $(nodenv-version-origin))" >&2
   exit 1
 else
   echo "nodenv: $NODENV_COMMAND: command not found" >&2

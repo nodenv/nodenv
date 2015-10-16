@@ -25,7 +25,8 @@ if [ -z "$shell" ]; then
   shell="$(ps c -p "$PPID" -o 'ucomm=' 2>/dev/null || true)"
   shell="${shell##-}"
   shell="${shell%% *}"
-  shell="$(basename "${shell:-$SHELL}")"
+  shell="${shell:-$SHELL}"
+  shell="${shell##*/}"
 fi
 
 root="${0%/*}/.."
@@ -49,7 +50,7 @@ if [ -z "$print" ]; then
     ;;
   esac
 
-  { echo "# Load nodenv automatically by adding"
+  { echo "# Load nodenv automatically by appending"
     echo "# the following to ${profile}:"
     echo
     case "$shell" in
@@ -88,7 +89,7 @@ if [ -r "$completion" ]; then
 fi
 
 if [ -z "$no_rehash" ]; then
-  echo 'nodenv rehash 2>/dev/null'
+  echo 'command nodenv rehash 2>/dev/null'
 fi
 
 commands=(`nodenv-commands --sh`)
@@ -101,7 +102,7 @@ function nodenv
 
   switch "\$command"
   case ${commands[*]}
-    eval (nodenv "sh-\$command" \$argv)
+    . (nodenv "sh-\$command" \$argv|psub)
   case '*'
     command nodenv "\$command" \$argv
   end
@@ -132,7 +133,7 @@ cat <<EOS
 
   case "\$command" in
   ${commands[*]})
-    eval "\`nodenv "sh-\$command" "\$@"\`";;
+    eval "\$(nodenv "sh-\$command" "\$@")";;
   *)
     command nodenv "\$command" "\$@";;
   esac
