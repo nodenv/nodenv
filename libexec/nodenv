@@ -12,7 +12,7 @@ if [ -n "$NODENV_DEBUG" ]; then
   set -x
 fi
 
-if enable -f "${0%/*}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
+if enable -f "${BASH_SOURCE%/*}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
   abs_dirname() {
     local path="$(realpath "$1")"
     echo "${path%/*}"

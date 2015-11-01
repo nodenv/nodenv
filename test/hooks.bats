@@ -59,7 +59,13 @@ OUT
   mkdir -p "$HOME"
   touch "${HOME}/hola.bash"
   ln -s "../../home/hola.bash" "${path}/exec/hello.bash"
+  touch "${path}/exec/bright.sh"
+  ln -s "bright.sh" "${path}/exec/world.bash"
 
   NODENV_HOOK_PATH="$path" run nodenv-hooks exec
-  assert_success "${HOME}/hola.bash"
+  assert_success
+  assert_output <<OUT
+${HOME}/hola.bash
+${NODENV_TEST_DIR}/nodenv.d/exec/bright.sh
+OUT
 }
