@@ -1,3 +1,5 @@
+load helpers/assertions/all
+
 unset NODENV_VERSION
 unset NODENV_DIR
 
