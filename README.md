@@ -35,8 +35,8 @@ bulletproof deployments.
   * [Locating the Node Installation](#locating-the-node-installation)
 * [Installation](#installation)
   * [Basic GitHub Checkout](#basic-github-checkout)
-    * [Upgrading](#upgrading)
   * [Homebrew on Mac OS X](#homebrew-on-mac-os-x)
+  * [Upgrading](#upgrading)
   * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
   * [Installing Node Versions](#installing-node-versions)
   * [Uninstalling Node Versions](#uninstalling-node-versions)
@@ -183,32 +183,6 @@ easy to fork and contribute any changes back upstream.
    `nodenv install` command that simplifies the process of
    [installing new Node versions](#installing-node-versions).
 
-#### Upgrading
-
-If you've installed nodenv manually using git, you can upgrade your
-installation to the cutting-edge version at any time.
-
-~~~ sh
-$ cd ~/.nodenv
-$ git pull
-~~~
-
-To use a specific release of nodenv, check out the corresponding tag:
-
-~~~ sh
-$ cd ~/.nodenv
-$ git fetch
-$ git checkout v0.3.0
-~~~
-
-If you've [installed via Homebrew](#homebrew-on-mac-os-x), then upgrade
-via its `brew` command:
-
-~~~ sh
-$ brew update
-$ brew upgrade nodenv node-build
-~~~
-
 ### Homebrew on Mac OS X
 
 As an alternative to installation via GitHub checkout, you can install
@@ -226,6 +200,39 @@ node-build, pass `--without-node-build`.
 Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
 profile as stated in the caveats. You'll only ever have to do this
 once.
+
+### Upgrading
+
+If you've installed nodenv manually using git, you can upgrade your
+installation to the cutting-edge version at any time.
+
+~~~ sh
+$ cd ~/.nodenv
+$ git pull
+~~~
+
+To use a specific release of nodenv, check out the corresponding tag:
+
+~~~ sh
+$ cd ~/.nodenv
+$ git fetch
+$ git checkout v0.3.0
+~~~
+
+Alternatively, check out the [nodenv-update][] plugin which provides a
+command to update nodenv as well as all installed plugins.
+
+~~~ sh
+$ nodenv update
+~~~
+
+If you've [installed via Homebrew](#homebrew-on-mac-os-x), then upgrade
+via its `brew` command:
+
+~~~ sh
+$ brew update
+$ brew upgrade nodenv node-build
+~~~
 
 ### How nodenv hooks into your shell
 
@@ -451,3 +458,4 @@ Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work f
 
   [node-build]: https://github.com/OiNutter/node-build#readme
   [hooks]: https://github.com/sstephenson/rbenv/wiki/Authoring-plugins#rbenv-hooks
+  [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
