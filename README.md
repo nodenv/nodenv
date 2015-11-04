@@ -206,15 +206,10 @@ via its `brew` command:
 
 ~~~ sh
 $ brew update
-$ brew upgrade jawshooah/nodenv/nodenv
-$ brew reinstall --HEAD node-build
+$ brew upgrade nodenv node-build
 ~~~
 
 ### Homebrew on Mac OS X
-
-Please note that at this time, the `nodenv` package in Homebrew's main
-repository is *NOT* this package. This package must be installed using the
-instructions below.
 
 As an alternative to installation via GitHub checkout, you can install
 nodenv and [node-build][] using the [Homebrew](http://brew.sh) package
@@ -222,10 +217,11 @@ manager on Mac OS X:
 
 ~~~
 $ brew update
-$ brew tap jawshooah/nodenv
-$ brew install jawshooah/nodenv/nodenv
-$ brew install --HEAD node-build
+$ brew install nodenv
 ~~~
+
+**Note:** node-build is installed with nodenv by default. To skip
+node-build, pass `--without-node-build`.
 
 Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
 profile as stated in the caveats. You'll only ever have to do this
