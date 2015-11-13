@@ -52,6 +52,7 @@ bulletproof deployments.
   * [nodenv whence](#nodenv-whence)
 * [Environment variables](#environment-variables)
 * [Development](#development)
+* [Credits](#credits)
 
 ## How It Works
 
