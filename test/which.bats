@@ -68,6 +68,12 @@ create_executable() {
   assert_failure "nodenv: node: command not found"
 }
 
+@test "no executable found for system version" {
+  export PATH="$(path_without "mocha")"
+  NODENV_VERSION=system run nodenv-which mocha
+  assert_failure "nodenv: mocha: command not found"
+}
+
 @test "executable found in other versions" {
   create_executable "1.8" "node"
   create_executable "1.9" "npm"

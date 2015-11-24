@@ -5,6 +5,17 @@
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
 
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  echo -
+  echo --no-rehash
+  echo bash
+  echo fish
+  echo ksh
+  echo zsh
+  exit
+fi
+
 print=""
 no_rehash=""
 for args in "$@"

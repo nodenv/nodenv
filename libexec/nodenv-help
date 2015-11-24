@@ -15,6 +15,12 @@
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
 
+# Provide nodenv completions
+if [ "$1" = "--complete" ]; then
+  echo --usage
+  exec nodenv-commands
+fi
+
 command_path() {
   local command="$1"
   command -v nodenv-"$command" || command -v nodenv-sh-"$command" || true

@@ -4,9 +4,8 @@ load test_helper
 
 @test "blank invocation" {
   run nodenv
-  assert_success
-  # assert line starts with
-  assert [ "${lines[0]}" != "${lines[0]#nodenv 0.4.0}" ]
+  assert_failure
+  assert_line 0 "$(nodenv---version)"
 }
 
 @test "invalid command" {
