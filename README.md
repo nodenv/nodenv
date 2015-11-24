@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OiNutter/nodenv.svg?branch=master)](https://travis-ci.org/OiNutter/nodenv)
+
 # Groom your app’s Node environment with nodenv.
 
 Use nodenv to pick a Node version for your application and guarantee
