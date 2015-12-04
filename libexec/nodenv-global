@@ -17,6 +17,7 @@ set -e
 
 # Provide nodenv completions
 if [ "$1" = "--complete" ]; then
+  echo --unset
   echo system
   exec nodenv-versions --bare
 fi
