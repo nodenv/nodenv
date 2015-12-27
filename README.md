@@ -155,6 +155,13 @@ easy to fork and contribute any changes back upstream.
     $ git clone https://github.com/OiNutter/nodenv.git ~/.nodenv
     ~~~
 
+    Optionally, try to compile dynamic bash extension to speed up nodenv. Don't
+    worry if it fails; nodenv will still work normally:
+
+    ~~~
+    $ cd ~/.nodenv && src/configure && make -C src
+    ~~~
+
 2. Add `~/.nodenv/bin` to your `$PATH` for access to the `nodenv`
    command-line utility.
 

@@ -27,7 +27,7 @@ done
 
 versions_dir="${NODENV_ROOT}/versions"
 
-if ! enable -f "${BASH_SOURCE%/*}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
+if ! enable -f "${BASH_SOURCE%/*}"/nodenv-realpath.dylib realpath 2>/dev/null; then
   if [ -n "$NODENV_NATIVE_EXT" ]; then
     echo "nodenv: failed to load \`realpath' builtin" >&2
     exit 1
