@@ -3,7 +3,7 @@
 load test_helper
 
 @test "default" {
-  run nodenv global
+  run nodenv-global
   assert_success
   assert_output "system"
 }
@@ -28,4 +28,16 @@ load test_helper
   mkdir -p "$NODENV_ROOT"
   run nodenv-global "1.2.3"
   assert_failure "nodenv: version \`1.2.3' not installed"
+}
+
+@test "unset (remove) NODENV_ROOT/version" {
+  mkdir -p "$NODENV_ROOT"
+  echo "1.2.3" > "$NODENV_ROOT/version"
+
+  run nodenv-global --unset
+  assert_success
+
+  refute [ -e $NODENV_ROOT/version ]
+  run nodenv-global
+  assert_output "system"
 }
