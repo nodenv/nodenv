@@ -26,7 +26,7 @@ NODENV_VERSION="$1"
 NODENV_VERSION_FILE="${NODENV_ROOT}/version"
 
 if [ "$1" = "--unset" ]; then
-  exec rm -rf "$NODENV_VERSION_FILE" "${NODENV_ROOT}/global" "${NODENV_ROOT}/default"
+  exec rm -f "$NODENV_VERSION_FILE" "${NODENV_ROOT}/global" "${NODENV_ROOT}/default"
 fi
 
 if [ -n "$NODENV_VERSION" ]; then
