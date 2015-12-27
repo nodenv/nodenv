@@ -22,6 +22,19 @@ setup() {
   assert_success "system"
 }
 
+@test "NODENV_VERSION can be overridden by hook" {
+  create_version "1.8.7"
+  create_version "1.9.3"
+
+  mkdir -p "${NODENV_ROOT}/nodenv.d/version-name"
+  cat > "${NODENV_ROOT}/nodenv.d/version-name/test.bash" <<HOOK
+NODENV_VERSION=1.9.3
+HOOK
+
+  NODENV_VERSION=1.8.7 NODENV_HOOK_PATH="${NODENV_ROOT}/nodenv.d" run nodenv-version-name
+  assert_success "1.9.3"
+}
+
 @test "NODENV_VERSION has precedence over local" {
   create_version "1.8.7"
   create_version "1.9.3"

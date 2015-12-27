@@ -40,8 +40,8 @@ bulletproof deployments.
   * [Homebrew on Mac OS X](#homebrew-on-mac-os-x)
   * [Upgrading](#upgrading)
   * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
-  * [Installing Node Versions](#installing-node-versions)
-  * [Uninstalling Node Versions](#uninstalling-node-versions)
+  * [Installing Node versions](#installing-node-versions)
+  * [Uninstalling Node versions](#uninstalling-node-versions)
   * [Uninstalling nodenv](#uninstalling-nodenv)
 * [Command Reference](#command-reference)
   * [nodenv local](#nodenv-local)
@@ -153,6 +153,13 @@ easy to fork and contribute any changes back upstream.
 
     ~~~ sh
     $ git clone https://github.com/OiNutter/nodenv.git ~/.nodenv
+    ~~~
+
+    Optionally, try to compile dynamic bash extension to speed up nodenv. Don't
+    worry if it fails; nodenv will still work normally:
+
+    ~~~
+    $ cd ~/.nodenv && src/configure && make -C src
     ~~~
 
 2. Add `~/.nodenv/bin` to your `$PATH` for access to the `nodenv`
@@ -268,7 +275,7 @@ extra commands into your shell. Here's what `nodenv init` actually does:
 Run `nodenv init -` for yourself to see exactly what happens under the
 hood.
 
-### Installing Node Versions
+### Installing Node versions
 
 The `nodenv install` command doesn't ship with nodenv out of the box, but is
 provided by the [node-build][] project. If you installed it as part of GitHub
@@ -288,7 +295,7 @@ that directory can also be a symlink to a Node version installed
 elsewhere on the filesystem. nodenv doesn't care; it will simply treat
 any entry in the `versions/` directory as a separate Node version.
 
-### Uninstalling Node Versions
+### Uninstalling Node versions
 
 As time goes on, Node versions you install will accumulate in your
 `~/.nodenv/versions` directory.
@@ -456,9 +463,9 @@ tracker](https://github.com/OiNutter/nodenv/issues).
 
 ### Credits
 
-Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work for node.
+Copied from [rbenv](https://github.com/rbenv/rbenv) and modified to work for node.
 
 
   [node-build]: https://github.com/OiNutter/node-build#readme
-  [hooks]: https://github.com/sstephenson/rbenv/wiki/Authoring-plugins#rbenv-hooks
+  [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update

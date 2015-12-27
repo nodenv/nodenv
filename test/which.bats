@@ -56,6 +56,16 @@ create_executable() {
   assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
 }
 
+@test "doesn't include current directory in PATH search" {
+  export PATH="$(path_without "kill-all-humans")"
+  mkdir -p "$NODENV_TEST_DIR"
+  cd "$NODENV_TEST_DIR"
+  touch kill-all-humans
+  chmod +x kill-all-humans
+  NODENV_VERSION=system run nodenv-which kill-all-humans
+  assert_failure "nodenv: kill-all-humans: command not found"
+}
+
 @test "version not installed" {
   create_executable "2.0" "npm"
   NODENV_VERSION=1.9 run nodenv-which npm

@@ -8,6 +8,13 @@ if [ -z "$NODENV_VERSION" ]; then
   NODENV_VERSION="$(nodenv-version-file-read "$NODENV_VERSION_FILE" || true)"
 fi
 
+OLDIFS="$IFS"
+IFS=$'\n' scripts=(`nodenv-hooks version-name`)
+IFS="$OLDIFS"
+for script in "${scripts[@]}"; do
+  source "$script"
+done
+
 if [ -z "$NODENV_VERSION" ] || [ "$NODENV_VERSION" = "system" ]; then
   echo "system"
   exit

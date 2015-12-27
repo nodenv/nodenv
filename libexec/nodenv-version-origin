@@ -3,7 +3,18 @@
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
 
-if [ -n "$NODENV_VERSION" ]; then
+unset NODENV_VERSION_ORIGIN
+
+OLDIFS="$IFS"
+IFS=$'\n' scripts=(`nodenv-hooks version-origin`)
+IFS="$OLDIFS"
+for script in "${scripts[@]}"; do
+  source "$script"
+done
+
+if [ -n "$NODENV_VERSION_ORIGIN" ]; then
+  echo "$NODENV_VERSION_ORIGIN"
+elif [ -n "$NODENV_VERSION" ]; then
   echo "NODENV_VERSION environment variable"
 else
   nodenv-version-file

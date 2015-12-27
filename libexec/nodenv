@@ -84,6 +84,7 @@ NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr
 for plugin_hook in "${NODENV_ROOT}/plugins/"*/etc/nodenv.d; do
   NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${plugin_hook}"
 done
+NODENV_HOOK_PATH="${NODENV_HOOK_PATH#:}"
 export NODENV_HOOK_PATH
 
 shopt -u nullglob

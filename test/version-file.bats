@@ -97,3 +97,14 @@ create_file() {
   NODENV_DIR="${NODENV_TEST_DIR}/widget/blank" run nodenv-version-file
   assert_success "${NODENV_TEST_DIR}/project/.node-version"
 }
+
+@test "finds version file in target directory" {
+  create_file "project/.node-version"
+  run nodenv-version-file "${PWD}/project"
+  assert_success "${NODENV_TEST_DIR}/project/.node-version"
+}
+
+@test "fails when no version file in target directory" {
+  run nodenv-version-file "$PWD"
+  assert_failure ""
+}

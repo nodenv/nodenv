@@ -25,10 +25,22 @@ load test_helper
 }
 
 @test "detect parent shell" {
-  root="$(cd $BATS_TEST_DIRNAME/.. && pwd)"
   SHELL=/bin/false run nodenv-init -
   assert_success
   assert_line "export NODENV_SHELL=bash"
+}
+
+@test "detect parent shell from script" {
+  mkdir -p "$NODENV_TEST_DIR"
+  cd "$NODENV_TEST_DIR"
+  cat > myscript.sh <<OUT
+#!/bin/sh
+eval "\$(nodenv-init -)"
+echo \$NODENV_SHELL
+OUT
+  chmod +x myscript.sh
+  run ./myscript.sh /bin/zsh
+  assert_success "sh"
 }
 
 @test "setup shell completions (fish)" {

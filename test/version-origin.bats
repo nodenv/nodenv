@@ -36,3 +36,18 @@ setup() {
   run nodenv-version-origin
   assert_success "${PWD}/.nodenv-version"
 }
+
+@test "reports from hook" {
+  mkdir -p "${NODENV_ROOT}/nodenv.d/version-origin"
+  cat > "${NODENV_ROOT}/nodenv.d/version-origin/test.bash" <<HOOK
+NODENV_VERSION_ORIGIN=plugin
+HOOK
+
+  NODENV_VERSION=1 NODENV_HOOK_PATH="${NODENV_ROOT}/nodenv.d" run nodenv-version-origin
+  assert_success "plugin"
+}
+
+@test "doesn't inherit NODENV_VERSION_ORIGIN from environment" {
+  NODENV_VERSION_ORIGIN=ignored run nodenv-version-origin
+  assert_success "${NODENV_ROOT}/version"
+}
