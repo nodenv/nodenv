@@ -456,9 +456,9 @@ tracker](https://github.com/OiNutter/nodenv/issues).
 
 ### Credits
 
-Copied from [rbenv](https://github.com/sstephenson/rbenv) and modified to work for node.
+Copied from [rbenv](https://github.com/rbenv/rbenv) and modified to work for node.
 
 
   [node-build]: https://github.com/OiNutter/node-build#readme
-  [hooks]: https://github.com/sstephenson/rbenv/wiki/Authoring-plugins#rbenv-hooks
+  [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update

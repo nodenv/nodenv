@@ -47,9 +47,10 @@ elif [ -n "$NODENV_VERSION" ]; then
     } >&2
   fi
 else
-  nodenv-version-file-read .node-version ||
-  nodenv-version-file-read .nodenv-version ||
-  { echo "nodenv: no local version configured for this directory"
+  if version_file="$(nodenv-version-file "$PWD")"; then
+    nodenv-version-file-read "$version_file"
+  else
+    echo "nodenv: no local version configured for this directory" >&2
     exit 1
-  } >&2
+  fi
 fi

@@ -16,7 +16,7 @@ export NODENV_DIR="${1%/*}"
 
 [ -n "$NODENV_SILENCE_WARNINGS" ] || {
   echo "nodenv: \`node-local-exec' is deprecated and will be removed in the next release."
-  echo "       To upgrade: https://github.com/sstephenson/rbenv/wiki/ruby-local-exec"
+  echo "       To upgrade: https://github.com/rbenv/rbenv/wiki/ruby-local-exec"
   echo
 } >&2
 
