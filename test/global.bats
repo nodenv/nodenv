@@ -20,7 +20,7 @@ load test_helper
   mkdir -p "$NODENV_ROOT/versions/1.2.3"
   run nodenv-global "1.2.3"
   assert_success
-  run nodenv global
+  run nodenv-global
   assert_success "1.2.3"
 }
 

@@ -12,9 +12,6 @@ find_local_version_file() {
     if [ -e "${root}/.node-version" ]; then
       echo "${root}/.node-version"
       return 0
-    elif [ -e "${root}/.nodenv-version" ]; then
-      echo "${root}/.nodenv-version"
-      return 0
     fi
     [ -n "$root" ] || break
     root="${root%/*}"
@@ -22,24 +19,10 @@ find_local_version_file() {
   return 1
 }
 
-find_global_version_file() {
-  local global_version_file="${NODENV_ROOT}/version"
-
-  if [ -e "$global_version_file" ]; then
-    echo "$global_version_file"
-  elif [ -e "${NODENV_ROOT}/global" ]; then
-    echo "${NODENV_ROOT}/global"
-  elif [ -e "${NODENV_ROOT}/default" ]; then
-    echo "${NODENV_ROOT}/default"
-  else
-    echo "$global_version_file"
-  fi
-}
-
 if [ -n "$target_dir" ]; then
   find_local_version_file "$target_dir"
 else
   find_local_version_file "$NODENV_DIR" || {
     [ "$NODENV_DIR" != "$PWD" ] && find_local_version_file "$PWD"
-  } || find_global_version_file
+  } || echo "${NODENV_ROOT}/version"
 fi

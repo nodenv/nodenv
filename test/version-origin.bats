@@ -31,12 +31,6 @@ setup() {
   assert_success "${PWD}/.node-version"
 }
 
-@test "detects alternate version file" {
-  touch .nodenv-version
-  run nodenv-version-origin
-  assert_success "${PWD}/.nodenv-version"
-}
-
 @test "reports from hook" {
   mkdir -p "${NODENV_ROOT}/nodenv.d/version-origin"
   cat > "${NODENV_ROOT}/nodenv.d/version-origin/test.bash" <<HOOK

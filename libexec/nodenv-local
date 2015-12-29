@@ -15,10 +15,6 @@
 # `NODENV_VERSION' environment variable takes precedence over local
 # and global versions.
 #
-# For backwards compatibility, nodenv will also read version
-# specifications from `.nodenv-version' files, but a `.node-version'
-# file in the same directory takes precedence.
-#
 # <version> should be a string matching a Node version known to nodenv.
 # The special version string `system' will use your default system Node.
 # Run `nodenv versions' for a list of available Node versions.
@@ -36,16 +32,9 @@ fi
 NODENV_VERSION="$1"
 
 if [ "$NODENV_VERSION" = "--unset" ]; then
-  rm -f .node-version .nodenv-version
+  rm -f .node-version
 elif [ -n "$NODENV_VERSION" ]; then
-  previous_file="$(NODENV_VERSION= nodenv-version-origin || true)"
   nodenv-version-file-write .node-version "$NODENV_VERSION"
-  if [ "$previous_file" -ef .nodenv-version ]; then
-    rm -f .nodenv-version
-    { echo "nodenv: removed existing \`.nodenv-version' file and migrated"
-      echo "       local version specification to \`.node-version' file"
-    } >&2
-  fi
 else
   if version_file="$(nodenv-version-file "$PWD")"; then
     nodenv-version-file-read "$version_file"
