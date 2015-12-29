@@ -352,11 +352,6 @@ configured local version. You can also unset the local version:
 
     $ nodenv local --unset
 
-Previous versions of nodenv stored local version specifications in a
-file named `.nodenv-version`. For backwards compatibility, nodenv will
-read a local version specified in an `.nodenv-version` file, but a
-`.node-version` file in the same directory will take precedence.
-
 ### nodenv global
 
 Sets the global version of Node to be used in all shells by writing
