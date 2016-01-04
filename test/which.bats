@@ -101,15 +101,13 @@ OUT
 }
 
 @test "carries original IFS within hooks" {
-  hook_path="${NODENV_TEST_DIR}/nodenv.d"
-  mkdir -p "${hook_path}/which"
-  cat > "${hook_path}/which/hello.bash" <<SH
+  create_hook which hello.bash <<SH
 hellos=(\$(printf "hello\\tugly world\\nagain"))
 echo HELLO="\$(printf ":%s" "\${hellos[@]}")"
 exit
 SH
 
-  NODENV_HOOK_PATH="$hook_path" IFS=$' \t\n' NODENV_VERSION=system run nodenv-which anything
+  IFS=$' \t\n' NODENV_VERSION=system run nodenv-which anything
   assert_success
   assert_output "HELLO=:hello:ugly:world:again"
 }

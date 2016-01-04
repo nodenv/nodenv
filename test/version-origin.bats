@@ -32,13 +32,22 @@ setup() {
 }
 
 @test "reports from hook" {
-  mkdir -p "${NODENV_ROOT}/nodenv.d/version-origin"
-  cat > "${NODENV_ROOT}/nodenv.d/version-origin/test.bash" <<HOOK
-NODENV_VERSION_ORIGIN=plugin
-HOOK
+  create_hook version-origin test.bash <<<"NODENV_VERSION_ORIGIN=plugin"
 
-  NODENV_VERSION=1 NODENV_HOOK_PATH="${NODENV_ROOT}/nodenv.d" run nodenv-version-origin
+  NODENV_VERSION=1 run nodenv-version-origin
   assert_success "plugin"
+}
+
+@test "carries original IFS within hooks" {
+  create_hook version-origin hello.bash <<SH
+hellos=(\$(printf "hello\\tugly world\\nagain"))
+echo HELLO="\$(printf ":%s" "\${hellos[@]}")"
+SH
+
+  export NODENV_VERSION=system
+  IFS=$' \t\n' run nodenv-version-origin env
+  assert_success
+  assert_line "HELLO=:hello:ugly:world:again"
 }
 
 @test "doesn't inherit NODENV_VERSION_ORIGIN from environment" {

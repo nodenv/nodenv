@@ -103,15 +103,13 @@ OUT
 }
 
 @test "carries original IFS within hooks" {
-  hook_path="${NODENV_TEST_DIR}/nodenv.d"
-  mkdir -p "${hook_path}/rehash"
-  cat > "${hook_path}/rehash/hello.bash" <<SH
+  create_hook rehash hello.bash <<SH
 hellos=(\$(printf "hello\\tugly world\\nagain"))
 echo HELLO="\$(printf ":%s" "\${hellos[@]}")"
 exit
 SH
 
-  NODENV_HOOK_PATH="$hook_path" IFS=$' \t\n' run nodenv-rehash
+  IFS=$' \t\n' run nodenv-rehash
   assert_success
   assert_output "HELLO=:hello:ugly:world:again"
 }

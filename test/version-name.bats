@@ -25,14 +25,22 @@ setup() {
 @test "NODENV_VERSION can be overridden by hook" {
   create_version "1.8.7"
   create_version "1.9.3"
+  create_hook version-name test.bash <<<"NODENV_VERSION=1.9.3"
 
-  mkdir -p "${NODENV_ROOT}/nodenv.d/version-name"
-  cat > "${NODENV_ROOT}/nodenv.d/version-name/test.bash" <<HOOK
-NODENV_VERSION=1.9.3
-HOOK
-
-  NODENV_VERSION=1.8.7 NODENV_HOOK_PATH="${NODENV_ROOT}/nodenv.d" run nodenv-version-name
+  NODENV_VERSION=1.8.7 run nodenv-version-name
   assert_success "1.9.3"
+}
+
+@test "carries original IFS within hooks" {
+  create_hook version-name hello.bash <<SH
+hellos=(\$(printf "hello\\tugly world\\nagain"))
+echo HELLO="\$(printf ":%s" "\${hellos[@]}")"
+SH
+
+  export NODENV_VERSION=system
+  IFS=$' \t\n' run nodenv-version-name env
+  assert_success
+  assert_line "HELLO=:hello:ugly:world:again"
 }
 
 @test "NODENV_VERSION has precedence over local" {
