@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nodenv/nodenv/issues"
   },
+  "devDependencies": {
+    "bats": "^0.4.2"
+  },
   "license": "MIT"
 }
