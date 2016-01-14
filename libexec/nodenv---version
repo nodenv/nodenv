@@ -12,12 +12,14 @@
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
 
-version="1.0.0"
-git_revision=""
+cd "${BASH_SOURCE%/*}" 2>/dev/null
 
-if cd "${BASH_SOURCE%/*}" 2>/dev/null && git remote -v 2>/dev/null | grep -q nodenv; then
+git_revision=""
+pkg_version="$(grep -e '"version":' ../package.json | awk -v FS=': ' '{v=$2; gsub(/[",]/,"",v); print v}')"
+
+if git remote -v 2>/dev/null | grep -q nodenv; then
   git_revision="$(git describe --tags HEAD 2>/dev/null || true)"
   git_revision="${git_revision#v}"
 fi
 
-echo "nodenv ${git_revision:-$version}"
+echo "nodenv ${git_revision:-$pkg_version}"
