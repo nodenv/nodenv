@@ -16,7 +16,8 @@
     "url": "https://github.com/nodenv/nodenv/issues"
   },
   "devDependencies": {
-    "bats": "^0.4.2"
+    "bats": "^0.4.2",
+    "bats-assert": "^1.0.1"
   },
   "license": "MIT"
 }
