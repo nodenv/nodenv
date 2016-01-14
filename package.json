@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/nodenv/nodenv/issues"
   },
+  "scripts": {
+    "test": "bats ${CI:+--tap} test"
+  },
   "devDependencies": {
     "bats": "^0.4.2",
     "bats-assert": "^1.0.1"
