@@ -16,6 +16,7 @@
     "url": "https://github.com/nodenv/nodenv/issues"
   },
   "scripts": {
+    "pretest": "script/build-native-ext",
     "test": "bats ${CI:+--tap} test"
   },
   "devDependencies": {

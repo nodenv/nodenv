@@ -5,5 +5,3 @@ if [ -n "$NODENV_NATIVE_EXT" ]; then
   src/configure
   make -C src
 fi
-
-exec bats ${CI:+--tap} test
