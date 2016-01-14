@@ -1,0 +1,19 @@
+{
+  "name": "nodenv",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Manage multiple NodeJS versions",
+  "author": "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)",
+  "contributors": [
+    "Jason Karns <jason@karns.name> (http://jason.karns.name/)"
+  ],
+  "homepage": "https://github.com/nodenv/nodenv#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodenv/nodenv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nodenv/nodenv/issues"
+  },
+  "license": "MIT"
+}
