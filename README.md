@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/OiNutter/nodenv.svg?branch=master)](https://travis-ci.org/OiNutter/nodenv)
+[![Build Status](https://travis-ci.org/nodenv/nodenv.svg?branch=master)](https://travis-ci.org/nodenv/nodenv)
 
 # Groom your app’s Node environment with nodenv.
 
@@ -24,9 +24,9 @@ bulletproof deployments.
   you tailor it to suit your needs. Compile your own Node versions, or
   use the [node-build][]
   plugin to automate the process. Specify per-application environment
-  variables with [nodenv-vars](https://github.com/OiNutter/nodenv-vars).
+  variables with [nodenv-vars](https://github.com/nodenv/nodenv-vars).
   See more [plugins on the
-  wiki](https://github.com/OiNutter/nodenv/wiki/Plugins).
+  wiki](https://github.com/nodenv/nodenv/wiki/Plugins).
 
 ## Table of Contents
 
@@ -152,7 +152,7 @@ easy to fork and contribute any changes back upstream.
 1. Check out nodenv into `~/.nodenv`.
 
     ~~~ sh
-    $ git clone https://github.com/OiNutter/nodenv.git ~/.nodenv
+    $ git clone https://github.com/nodenv/nodenv.git ~/.nodenv
     ~~~
 
     Optionally, try to compile dynamic bash extension to speed up nodenv. Don't
@@ -445,7 +445,7 @@ name | default | description
 ## Development
 
 The nodenv source code is [hosted on
-GitHub](https://github.com/OiNutter/nodenv). It's clean, modular,
+GitHub](https://github.com/nodenv/nodenv). It's clean, modular,
 and easy to understand, even if you're not a shell hacker.
 
 Tests are executed using [Bats](https://github.com/sstephenson/bats):
@@ -454,13 +454,15 @@ Tests are executed using [Bats](https://github.com/sstephenson/bats):
     $ bats test/<file>.bats
 
 Please feel free to submit pull requests and file bugs on the [issue
-tracker](https://github.com/OiNutter/nodenv/issues).
+tracker](https://github.com/nodenv/nodenv/issues).
 
 ### Credits
 
-Copied from [rbenv](https://github.com/rbenv/rbenv) and modified to work for node.
+Copied from [@sstephenson](https://github.com/sstephenson)'s
+[rbenv](https://github.com/rbenv/rbenv) by [Will
+McKenzie](https://github.com/oinutter) and modified to work for node.
 
 
-  [node-build]: https://github.com/OiNutter/node-build#readme
+  [node-build]: https://github.com/nodenv/node-build#readme
   [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
