@@ -17,11 +17,13 @@
   },
   "scripts": {
     "pretest": "script/build-native-ext",
-    "test": "bats ${CI:+--tap} test"
+    "test": "bats ${CI:+--tap} test",
+    "publish:brew": "brew-publish $npm_package_name"
   },
   "devDependencies": {
     "bats": "^0.4.2",
-    "bats-assert": "^1.0.1"
+    "bats-assert": "^1.0.1",
+    "brew-publish": "git+https://github.com/jasonkarns/brew-publish.git"
   },
   "license": "MIT"
 }
