@@ -1,10 +1,12 @@
 sudo: false
-branches:
-  only:
-    - master
-install: git clone --depth 1 https://github.com/sstephenson/bats.git
-script: PATH="./bats/bin:$PATH" test/run
-language: c
+language: node_js
+node_js: node
 env:
   - NODENV_NATIVE_EXT=
   - NODENV_NATIVE_EXT=1
+branches:
+  only:
+    - master
+notifications:
+  email:
+    on_success: never

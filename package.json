@@ -1,0 +1,30 @@
+{
+  "name": "nodenv",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Manage multiple NodeJS versions",
+  "author": "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)",
+  "contributors": [
+    "Jason Karns <jason@karns.name> (http://jason.karns.name/)"
+  ],
+  "homepage": "https://github.com/nodenv/nodenv#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodenv/nodenv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nodenv/nodenv/issues"
+  },
+  "scripts": {
+    "pretest": "script/build-native-ext",
+    "test": "bats ${CI:+--tap} test",
+    "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
+    "postversion": "git push origin master v$npm_package_version && npm run publish:brew"
+  },
+  "devDependencies": {
+    "bats": "^0.4.2",
+    "bats-assert": "^1.0.1",
+    "brew-publish": "git+https://github.com/jasonkarns/brew-publish.git"
+  },
+  "license": "MIT"
+}
