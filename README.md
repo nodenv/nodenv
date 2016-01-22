@@ -458,7 +458,9 @@ tracker](https://github.com/nodenv/nodenv/issues).
 
 ### Credits
 
-Copied from [rbenv](https://github.com/rbenv/rbenv) and modified to work for node.
+Copied from [@sstephenson](https://github.com/sstephenson)'s
+[rbenv](https://github.com/rbenv/rbenv) by [Will
+McKenzie](https://github.com/oinutter) and modified to work for node.
 
 
   [node-build]: https://github.com/nodenv/node-build#readme
