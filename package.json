@@ -3,17 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "description": "Manage multiple NodeJS versions",
+  "homepage": "https://github.com/nodenv/nodenv#readme",
+  "license": "MIT",
   "author": "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)",
   "contributors": [
     "Jason Karns <jason@karns.name> (http://jason.karns.name/)"
   ],
-  "homepage": "https://github.com/nodenv/nodenv#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/nodenv/nodenv.git"
   },
   "bugs": {
     "url": "https://github.com/nodenv/nodenv/issues"
+  },
+  "directories": {
+    "bin": "bin",
+    "lib": "libexec",
+    "test": "test"
   },
   "scripts": {
     "pretest": "script/build-native-ext",
@@ -26,5 +32,12 @@
     "bats-assert": "^1.0.1",
     "brew-publish": "git+https://github.com/jasonkarns/brew-publish.git"
   },
-  "license": "MIT"
+  "keywords": [
+    "node",
+    "nodejs",
+    "iojs",
+    "jxcore",
+    "versions",
+    "version manager"
+  ]
 }
