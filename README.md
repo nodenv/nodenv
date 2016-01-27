@@ -458,7 +458,7 @@ tracker](https://github.com/nodenv/nodenv/issues).
 
 ### Credits
 
-Forked from [@sstephenson](https://github.com/sstephenson)'s
+Forked from [Sam Stephenson](https://github.com/sstephenson)'s
 [rbenv](https://github.com/rbenv/rbenv) by [Will
 McKenzie](https://github.com/oinutter) and modified for node.
 
