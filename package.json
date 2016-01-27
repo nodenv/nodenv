@@ -5,9 +5,10 @@
   "description": "Manage multiple NodeJS versions",
   "homepage": "https://github.com/nodenv/nodenv#readme",
   "license": "MIT",
-  "author": "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)",
+  "author": "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us)",
   "contributors": [
-    "Jason Karns <jason@karns.name> (http://jason.karns.name/)"
+    "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)",
+    "Jason Karns <jason@karns.name> (http://jason.karns.name)"
   ],
   "repository": {
     "type": "git",
@@ -31,13 +32,5 @@
     "bats": "^0.4.2",
     "bats-assert": "^1.0.1",
     "brew-publish": "git+https://github.com/jasonkarns/brew-publish.git"
-  },
-  "keywords": [
-    "node",
-    "nodejs",
-    "iojs",
-    "jxcore",
-    "versions",
-    "version manager"
-  ]
+  }
 }
