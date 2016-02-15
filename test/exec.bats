@@ -107,5 +107,6 @@ SH
 
   nodenv-rehash
   run node -S npm
-  assert_success "hello npm"
+  assert_success
+  assert_output "hello npm"
 }

@@ -13,22 +13,26 @@ load test_helper
 
 @test "shell version" {
   NODENV_SHELL=bash NODENV_VERSION="1.2.3" run nodenv-sh-shell
-  assert_success 'echo "$NODENV_VERSION"'
+  assert_success
+  assert_output 'echo "$NODENV_VERSION"'
 }
 
 @test "shell version (fish)" {
   NODENV_SHELL=fish NODENV_VERSION="1.2.3" run nodenv-sh-shell
-  assert_success 'echo "$NODENV_VERSION"'
+  assert_success
+  assert_output 'echo "$NODENV_VERSION"'
 }
 
 @test "shell unset" {
   NODENV_SHELL=bash run nodenv-sh-shell --unset
-  assert_success "unset NODENV_VERSION"
+  assert_success
+  assert_output "unset NODENV_VERSION"
 }
 
 @test "shell unset (fish)" {
   NODENV_SHELL=fish run nodenv-sh-shell --unset
-  assert_success "set -e NODENV_VERSION"
+  assert_success
+  assert_output "set -e NODENV_VERSION"
 }
 
 @test "shell change invalid version" {
@@ -43,11 +47,13 @@ SH
 @test "shell change version" {
   mkdir -p "${NODENV_ROOT}/versions/1.2.3"
   NODENV_SHELL=bash run nodenv-sh-shell 1.2.3
-  assert_success 'export NODENV_VERSION="1.2.3"'
+  assert_success
+  assert_output 'export NODENV_VERSION="1.2.3"'
 }
 
 @test "shell change version (fish)" {
   mkdir -p "${NODENV_ROOT}/versions/1.2.3"
   NODENV_SHELL=fish run nodenv-sh-shell 1.2.3
-  assert_success 'setenv NODENV_VERSION "1.2.3"'
+  assert_success
+  assert_output 'setenv NODENV_VERSION "1.2.3"'
 }

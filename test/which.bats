@@ -17,10 +17,12 @@ create_executable() {
   create_executable "2.0" "npm"
 
   NODENV_VERSION=1.8 run nodenv-which node
-  assert_success "${NODENV_ROOT}/versions/1.8/bin/node"
+  assert_success
+  assert_output "${NODENV_ROOT}/versions/1.8/bin/node"
 
   NODENV_VERSION=2.0 run nodenv-which npm
-  assert_success "${NODENV_ROOT}/versions/2.0/bin/npm"
+  assert_success
+  assert_output "${NODENV_ROOT}/versions/2.0/bin/npm"
 }
 
 @test "searches PATH for system version" {
@@ -28,7 +30,8 @@ create_executable() {
   create_executable "${NODENV_ROOT}/shims" "kill-all-humans"
 
   NODENV_VERSION=system run nodenv-which kill-all-humans
-  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+  assert_success
+  assert_output "${NODENV_TEST_DIR}/bin/kill-all-humans"
 }
 
 @test "searches PATH for system version (shims prepended)" {
@@ -36,7 +39,8 @@ create_executable() {
   create_executable "${NODENV_ROOT}/shims" "kill-all-humans"
 
   PATH="${NODENV_ROOT}/shims:$PATH" NODENV_VERSION=system run nodenv-which kill-all-humans
-  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+  assert_success
+  assert_output "${NODENV_TEST_DIR}/bin/kill-all-humans"
 }
 
 @test "searches PATH for system version (shims appended)" {
@@ -44,7 +48,8 @@ create_executable() {
   create_executable "${NODENV_ROOT}/shims" "kill-all-humans"
 
   PATH="$PATH:${NODENV_ROOT}/shims" NODENV_VERSION=system run nodenv-which kill-all-humans
-  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+  assert_success
+  assert_output "${NODENV_TEST_DIR}/bin/kill-all-humans"
 }
 
 @test "searches PATH for system version (shims spread)" {
@@ -53,7 +58,8 @@ create_executable() {
 
   PATH="${NODENV_ROOT}/shims:${NODENV_ROOT}/shims:/tmp/non-existent:$PATH:${NODENV_ROOT}/shims" \
     NODENV_VERSION=system run nodenv-which kill-all-humans
-  assert_success "${NODENV_TEST_DIR}/bin/kill-all-humans"
+  assert_success
+  assert_output "${NODENV_TEST_DIR}/bin/kill-all-humans"
 }
 
 @test "doesn't include current directory in PATH search" {
@@ -125,5 +131,6 @@ SH
   cd "$NODENV_TEST_DIR"
 
   NODENV_VERSION= run nodenv-which node
-  assert_success "${NODENV_ROOT}/versions/1.8/bin/node"
+  assert_success
+  assert_output "${NODENV_ROOT}/versions/1.8/bin/node"
 }

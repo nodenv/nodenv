@@ -21,7 +21,8 @@ load test_helper
   run nodenv-global "1.2.3"
   assert_success
   run nodenv-global
-  assert_success "1.2.3"
+  assert_success
+  assert_output "1.2.3"
 }
 
 @test "fail setting invalid NODENV_ROOT/version" {

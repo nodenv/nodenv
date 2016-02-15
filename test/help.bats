@@ -63,7 +63,8 @@ echo hello
 SH
 
   run nodenv-help --usage hello
-  assert_success "Usage: nodenv hello <world>"
+  assert_success
+  assert_output "Usage: nodenv hello <world>"
 }
 
 @test "multiline usage section" {

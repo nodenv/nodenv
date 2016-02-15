@@ -27,6 +27,7 @@ setup() {
   mkdir -p "${NODENV_ROOT}/versions/1.8.7"
   assert [ ! -e "my-version" ]
   run nodenv-version-file-write "${PWD}/my-version" "1.8.7"
-  assert_success ""
+  assert_success
+  assert_output ""
   assert [ "$(cat my-version)" = "1.8.7" ]
 }

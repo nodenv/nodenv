@@ -14,12 +14,14 @@ setup() {
 @test "no version selected" {
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-version-name
-  assert_success "system"
+  assert_success
+  assert_output "system"
 }
 
 @test "system version is not checked for existance" {
   NODENV_VERSION=system run nodenv-version-name
-  assert_success "system"
+  assert_success
+  assert_output "system"
 }
 
 @test "NODENV_VERSION can be overridden by hook" {
@@ -28,7 +30,8 @@ setup() {
   create_hook version-name test.bash <<<"NODENV_VERSION=1.9.3"
 
   NODENV_VERSION=1.8.7 run nodenv-version-name
-  assert_success "1.9.3"
+  assert_success
+  assert_output "1.9.3"
 }
 
 @test "carries original IFS within hooks" {
@@ -49,10 +52,12 @@ SH
 
   cat > ".node-version" <<<"1.8.7"
   run nodenv-version-name
-  assert_success "1.8.7"
+  assert_success
+  assert_output "1.8.7"
 
   NODENV_VERSION=1.9.3 run nodenv-version-name
-  assert_success "1.9.3"
+  assert_success
+  assert_output "1.9.3"
 }
 
 @test "local file has precedence over global" {
@@ -61,11 +66,13 @@ SH
 
   cat > "${NODENV_ROOT}/version" <<<"1.8.7"
   run nodenv-version-name
-  assert_success "1.8.7"
+  assert_success
+  assert_output "1.8.7"
 
   cat > ".node-version" <<<"1.9.3"
   run nodenv-version-name
-  assert_success "1.9.3"
+  assert_success
+  assert_output "1.9.3"
 }
 
 @test "missing version" {

@@ -22,6 +22,6 @@ create_executable() {
 OUT
 
   run nodenv-whence npm
-  assert_success "1.8"
-
+  assert_success
+  assert_output "1.8"
 }

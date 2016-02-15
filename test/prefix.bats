@@ -8,7 +8,8 @@ load test_helper
   echo "1.2.3" > .node-version
   mkdir -p "${NODENV_ROOT}/versions/1.2.3"
   run nodenv-prefix
-  assert_success "${NODENV_ROOT}/versions/1.2.3"
+  assert_success
+  assert_output "${NODENV_ROOT}/versions/1.2.3"
 }
 
 @test "prefix for invalid version" {
@@ -22,7 +23,8 @@ load test_helper
   touch "${NODENV_TEST_DIR}/bin/node"
   chmod +x "${NODENV_TEST_DIR}/bin/node"
   NODENV_VERSION="system" run nodenv-prefix
-  assert_success "$NODENV_TEST_DIR"
+  assert_success
+  assert_output "$NODENV_TEST_DIR"
 }
 
 @test "prefix for invalid system" {

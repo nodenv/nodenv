@@ -50,7 +50,8 @@ OUT
   mkdir -p "$HOME"
 
   NODENV_HOOK_PATH="${HOME}/../nodenv.d" run nodenv-hooks exec
-  assert_success "${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash"
+  assert_success
+  assert_output "${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash"
 }
 
 @test "resolves symlinks" {

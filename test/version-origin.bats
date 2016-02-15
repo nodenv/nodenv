@@ -10,32 +10,37 @@ setup() {
 @test "reports global file even if it doesn't exist" {
   assert [ ! -e "${NODENV_ROOT}/version" ]
   run nodenv-version-origin
-  assert_success "${NODENV_ROOT}/version"
+  assert_success
+  assert_output "${NODENV_ROOT}/version"
 }
 
 @test "detects global file" {
   mkdir -p "$NODENV_ROOT"
   touch "${NODENV_ROOT}/version"
   run nodenv-version-origin
-  assert_success "${NODENV_ROOT}/version"
+  assert_success
+  assert_output "${NODENV_ROOT}/version"
 }
 
 @test "detects NODENV_VERSION" {
   NODENV_VERSION=1 run nodenv-version-origin
-  assert_success "NODENV_VERSION environment variable"
+  assert_success
+  assert_output "NODENV_VERSION environment variable"
 }
 
 @test "detects local file" {
   touch .node-version
   run nodenv-version-origin
-  assert_success "${PWD}/.node-version"
+  assert_success
+  assert_output "${PWD}/.node-version"
 }
 
 @test "reports from hook" {
   create_hook version-origin test.bash <<<"NODENV_VERSION_ORIGIN=plugin"
 
   NODENV_VERSION=1 run nodenv-version-origin
-  assert_success "plugin"
+  assert_success
+  assert_output "plugin"
 }
 
 @test "carries original IFS within hooks" {
@@ -52,5 +57,6 @@ SH
 
 @test "doesn't inherit NODENV_VERSION_ORIGIN from environment" {
   NODENV_VERSION_ORIGIN=ignored run nodenv-version-origin
-  assert_success "${NODENV_ROOT}/version"
+  assert_success
+  assert_output "${NODENV_ROOT}/version"
 }

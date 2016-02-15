@@ -48,7 +48,8 @@ load test_helper
 
 @test "adds its own libexec to PATH" {
   run nodenv echo "PATH"
-  assert_success "${BATS_TEST_DIRNAME%/*}/libexec:$PATH"
+  assert_success
+  assert_output "${BATS_TEST_DIRNAME%/*}/libexec:$PATH"
 }
 
 @test "adds plugin bin dirs to PATH" {
@@ -72,5 +73,6 @@ load test_helper
 @test "NODENV_HOOK_PATH includes nodenv built-in plugins" {
   unset NODENV_HOOK_PATH
   run nodenv echo "NODENV_HOOK_PATH"
-  assert_success "${NODENV_ROOT}/nodenv.d:${BATS_TEST_DIRNAME%/*}/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
+  assert_success
+  assert_output "${NODENV_ROOT}/nodenv.d:${BATS_TEST_DIRNAME%/*}/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
 }
