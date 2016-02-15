@@ -1,4 +1,5 @@
-load ../node_modules/bats-assert/all
+load ../node_modules/bats-core/load
+load ../node_modules/bats-assert/load
 
 unset NODENV_VERSION
 unset NODENV_DIR
