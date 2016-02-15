@@ -5,7 +5,7 @@ load test_helper
 @test "blank invocation" {
   run nodenv
   assert_failure
-  assert_line 0 "$(nodenv---version)"
+  assert_line -n 0 "$(nodenv---version)"
 }
 
 @test "invalid command" {
@@ -56,17 +56,17 @@ load test_helper
   mkdir -p "$NODENV_ROOT"/plugins/nodenv-each/bin
   run nodenv echo -F: "PATH"
   assert_success
-  assert_line 0 "${BATS_TEST_DIRNAME%/*}/libexec"
-  assert_line 1 "${NODENV_ROOT}/plugins/nodenv-each/bin"
-  assert_line 2 "${NODENV_ROOT}/plugins/node-build/bin"
+  assert_line -n 0 "${BATS_TEST_DIRNAME%/*}/libexec"
+  assert_line -n 1 "${NODENV_ROOT}/plugins/nodenv-each/bin"
+  assert_line -n 2 "${NODENV_ROOT}/plugins/node-build/bin"
 }
 
 @test "NODENV_HOOK_PATH preserves value from environment" {
   NODENV_HOOK_PATH=/my/hook/path:/other/hooks run nodenv echo -F: "NODENV_HOOK_PATH"
   assert_success
-  assert_line 0 "/my/hook/path"
-  assert_line 1 "/other/hooks"
-  assert_line 2 "${NODENV_ROOT}/nodenv.d"
+  assert_line -n 0 "/my/hook/path"
+  assert_line -n 1 "/other/hooks"
+  assert_line -n 2 "${NODENV_ROOT}/nodenv.d"
 }
 
 @test "NODENV_HOOK_PATH includes nodenv built-in plugins" {
