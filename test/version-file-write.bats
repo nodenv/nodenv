@@ -9,7 +9,8 @@ setup() {
 
 @test "invocation without 2 arguments prints usage" {
   run nodenv-version-file-write
-  assert_failure "Usage: nodenv version-file-write <file> <version>"
+  assert_failure
+  assert_output "Usage: nodenv version-file-write <file> <version>"
   run nodenv-version-file-write "one" ""
   assert_failure
 }
@@ -17,7 +18,8 @@ setup() {
 @test "setting nonexistent version fails" {
   assert [ ! -e ".node-version" ]
   run nodenv-version-file-write ".node-version" "1.8.7"
-  assert_failure "nodenv: version \`1.8.7' not installed"
+  assert_failure
+  assert_output "nodenv: version \`1.8.7' not installed"
   assert [ ! -e ".node-version" ]
 }
 

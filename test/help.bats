@@ -11,7 +11,8 @@ load test_helper
 
 @test "invalid command" {
   run nodenv-help hello
-  assert_failure "nodenv: no such command \`hello'"
+  assert_failure
+  assert_output "nodenv: no such command \`hello'"
 }
 
 @test "shows help for a specific command" {

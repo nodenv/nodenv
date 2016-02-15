@@ -27,7 +27,8 @@ load test_helper
 @test "fail setting invalid NODENV_ROOT/version" {
   mkdir -p "$NODENV_ROOT"
   run nodenv-global "1.2.3"
-  assert_failure "nodenv: version \`1.2.3' not installed"
+  assert_failure
+  assert_output "nodenv: version \`1.2.3' not installed"
 }
 
 @test "unset (remove) NODENV_ROOT/version" {

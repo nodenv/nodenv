@@ -10,7 +10,8 @@ setup() {
 @test "no version" {
   assert [ ! -e "${PWD}/.node-version" ]
   run nodenv-local
-  assert_failure "nodenv: no local version configured for this directory"
+  assert_failure
+  assert_output "nodenv: no local version configured for this directory"
 }
 
 @test "local version" {

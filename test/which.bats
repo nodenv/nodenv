@@ -63,25 +63,29 @@ create_executable() {
   touch kill-all-humans
   chmod +x kill-all-humans
   NODENV_VERSION=system run nodenv-which kill-all-humans
-  assert_failure "nodenv: kill-all-humans: command not found"
+  assert_failure
+  assert_output "nodenv: kill-all-humans: command not found"
 }
 
 @test "version not installed" {
   create_executable "2.0" "npm"
   NODENV_VERSION=1.9 run nodenv-which npm
-  assert_failure "nodenv: version \`1.9' is not installed (set by NODENV_VERSION environment variable)"
+  assert_failure
+  assert_output "nodenv: version \`1.9' is not installed (set by NODENV_VERSION environment variable)"
 }
 
 @test "no executable found" {
   create_executable "1.8" "npm"
   NODENV_VERSION=1.8 run nodenv-which node
-  assert_failure "nodenv: node: command not found"
+  assert_failure
+  assert_output "nodenv: node: command not found"
 }
 
 @test "no executable found for system version" {
   export PATH="$(path_without "mocha")"
   NODENV_VERSION=system run nodenv-which mocha
-  assert_failure "nodenv: mocha: command not found"
+  assert_failure
+  assert_output "nodenv: mocha: command not found"
 }
 
 @test "executable found in other versions" {

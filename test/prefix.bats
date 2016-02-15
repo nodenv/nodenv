@@ -13,7 +13,8 @@ load test_helper
 
 @test "prefix for invalid version" {
   NODENV_VERSION="1.2.3" run nodenv-prefix
-  assert_failure "nodenv: version \`1.2.3' not installed"
+  assert_failure
+  assert_output "nodenv: version \`1.2.3' not installed"
 }
 
 @test "prefix for system" {
@@ -26,5 +27,6 @@ load test_helper
 
 @test "prefix for invalid system" {
   PATH="$(path_without node)" run nodenv-prefix system
-  assert_failure "nodenv: system version not found in PATH"
+  assert_failure
+  assert_output "nodenv: system version not found in PATH"
 }

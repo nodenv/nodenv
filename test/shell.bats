@@ -7,7 +7,8 @@ load test_helper
   cd "${NODENV_TEST_DIR}/myproject"
   echo "1.2.3" > .node-version
   NODENV_VERSION="" run nodenv-sh-shell
-  assert_failure "nodenv: no shell-specific version configured"
+  assert_failure
+  assert_output "nodenv: no shell-specific version configured"
 }
 
 @test "shell version" {

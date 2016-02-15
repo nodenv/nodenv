@@ -71,5 +71,6 @@ create_file() {
 
 @test "fails when no version file in target directory" {
   run nodenv-version-file "$PWD"
-  assert_failure ""
+  assert_failure
+  assert_output ""
 }

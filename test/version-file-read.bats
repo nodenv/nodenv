@@ -9,18 +9,21 @@ setup() {
 
 @test "fails without arguments" {
   run nodenv-version-file-read
-  assert_failure ""
+  assert_failure
+  assert_output ""
 }
 
 @test "fails for invalid file" {
   run nodenv-version-file-read "non-existent"
-  assert_failure ""
+  assert_failure
+  assert_output ""
 }
 
 @test "fails for blank file" {
   echo > my-version
   run nodenv-version-file-read my-version
-  assert_failure ""
+  assert_failure
+  assert_output ""
 }
 
 @test "reads simple version file" {

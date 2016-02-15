@@ -4,7 +4,8 @@ load test_helper
 
 @test "prints usage help given no argument" {
   run nodenv-hooks
-  assert_failure "Usage: nodenv hooks <command>"
+  assert_failure
+  assert_output "Usage: nodenv hooks <command>"
 }
 
 @test "prints list of hooks" {
