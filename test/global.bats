@@ -39,7 +39,7 @@ load test_helper
   run nodenv-global --unset
   assert_success
 
-  refute [ -e $NODENV_ROOT/version ]
+  assert [ ! -e $NODENV_ROOT/version ]
   run nodenv-global
   assert_output "system"
 }

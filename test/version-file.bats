@@ -20,8 +20,8 @@ create_file() {
 }
 
 @test "prints global file if no version files exist" {
-  refute [ -e "${NODENV_ROOT}/version" ]
-  refute [ -e ".ruby-version" ]
+  assert [ ! -e "${NODENV_ROOT}/version" ]
+  assert [ ! -e ".ruby-version" ]
   run nodenv-version-file
   assert_success
   assert_output "${NODENV_ROOT}/version"

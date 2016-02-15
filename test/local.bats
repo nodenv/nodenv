@@ -63,5 +63,5 @@ setup() {
   run nodenv-local --unset
   assert_success
   assert_output ""
-  refute [ -e .node-version ]
+  assert [ ! -e .node-version ]
 }
