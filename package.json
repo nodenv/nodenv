@@ -30,7 +30,8 @@
   },
   "devDependencies": {
     "bats": "^0.4.2",
-    "bats-assert": "^1.0.1",
+    "bats-assert": "git+https://github.com/jasonkarns/bats-assert-1.git#npm",
+    "bats-core": "git+https://github.com/jasonkarns/bats-core.git#npm",
     "brew-publish": "git+https://github.com/jasonkarns/brew-publish.git"
   }
 }
