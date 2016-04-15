@@ -41,7 +41,5 @@ for script in "${scripts[@]}"; do
 done
 
 shift 1
-if [ "$NODENV_VERSION" != "system" ]; then
-  export PATH="${NODENV_BIN_PATH}:${PATH}"
-fi
+export PATH="${NODENV_BIN_PATH}:${PATH}"
 exec -a "$NODENV_COMMAND" "$NODENV_COMMAND_PATH" "$@"
