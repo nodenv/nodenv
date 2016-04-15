@@ -42,16 +42,24 @@ remove_prototype_shim() {
 create_prototype_shim() {
   cat > "$PROTOTYPE_SHIM_PATH" <<SH
 #!/usr/bin/env bash
+true /* # */ && require('child_process'). \
+  spawn(__filename, process.argv.slice(2), { stdio: 'inherit' }) \
+  .on('exit', process.exit); (function() { {/*
+# this file is a polyglot for Node.js > 0.12 and bash since some programs
+# rely on 'npm' being a JS file
+
 set -e
 [ -n "\$NODENV_DEBUG" ] && set -x
 
-program="\${0##*/}"
+program="\${0##*/}" # " /*
 if [ "\$program" = "node" ]; then
   for arg; do
     case "\$arg" in
     -e* | -- ) break ;;
+    # */ \`
     */* )
       if [ -f "\$arg" ]; then
+        # \` /*
         export NODENV_DIR="\${arg%/*}"
         break
       fi
@@ -62,6 +70,8 @@ fi
 
 export NODENV_ROOT="$NODENV_ROOT"
 exec "$(command -v nodenv)" exec "\$program" "\$@"
+
+# */ })
 SH
   chmod +x "$PROTOTYPE_SHIM_PATH"
 }
