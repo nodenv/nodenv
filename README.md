@@ -409,7 +409,7 @@ how it was set.
 
 Installs shims for all Node executables known to nodenv (i.e.,
 `~/.nodenv/versions/*/bin/*`). Run this command after you install a new
-version of Node, or install a gem that provides commands.
+version of Node, or install an npm package that provides an executable binary.
 
     $ nodenv rehash
 
