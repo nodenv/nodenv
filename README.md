@@ -412,6 +412,8 @@ Installs shims for all Node executables known to nodenv (i.e.,
 version of Node, or install an npm package that provides an executable binary.
 
     $ nodenv rehash
+    
+_**note:** the [package-rehash plugin][package-rehash-plugin] automatically runs `nodenv rehash` whenever an npm package is installed globally_
 
 ### nodenv which
 
@@ -466,3 +468,4 @@ McKenzie](https://github.com/oinutter) and modified for node.
   [node-build]: https://github.com/nodenv/node-build#readme
   [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
+  [package-rehash-plugin]: https://github.com/nodenv/nodenv-package-rehash
