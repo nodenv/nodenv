@@ -24,6 +24,18 @@ load test_helper
   assert_success "$NODENV_TEST_DIR"
 }
 
+@test "prefix for system in /" {
+  mkdir -p "${BATS_TEST_DIRNAME}/libexec"
+  cat >"${BATS_TEST_DIRNAME}/libexec/nodenv-which" <<OUT
+#!/bin/sh
+echo /bin/node
+OUT
+  chmod +x "${BATS_TEST_DIRNAME}/libexec/nodenv-which"
+  NODENV_VERSION="system" run nodenv-prefix
+  assert_success "/"
+  rm -f "${BATS_TEST_DIRNAME}/libexec/nodenv-which"
+}
+
 @test "prefix for invalid system" {
   PATH="$(path_without node)" run nodenv-prefix system
   assert_failure "nodenv: system version not found in PATH"

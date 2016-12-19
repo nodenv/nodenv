@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-export -n CDPATH
+unset CDPATH
 
 if [ "$1" = "--debug" ]; then
   export NODENV_DEBUG=1
@@ -109,7 +109,11 @@ case "$command" in
 
   shift 1
   if [ "$1" = --help ]; then
-    exec nodenv-help "$command"
+    if [[ "$command" == "sh-"* ]]; then
+      echo "nodenv help \"$command\""
+    else
+      exec nodenv-help "$command"
+    fi
   else
     exec "$command_path" "$@"
   fi
