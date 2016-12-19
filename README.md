@@ -173,13 +173,8 @@ easy to fork and contribute any changes back upstream.
 
     **Zsh note**: Modify your `~/.zshrc` file instead of `~/.bash_profile`.
 
-3. Add `nodenv init` to your shell to enable shims and autocompletion.
-
-    ~~~ sh
-    $ echo 'eval "$(nodenv init -)"' >> ~/.bash_profile
-    ~~~
-
-    _Same as in previous step, use `~/.bashrc` on Ubuntu, or `~/.zshrc` for Zsh._
+3. Run `~/.nodenv/bin/nodenv init` for shell-specific instructions on how to
+   initialize nodenv to enable shims and autocompletion.
 
 4. Restart your shell so that PATH changes take effect. (Opening a new
    terminal tab will usually do it.) Now check if nodenv was set up:
@@ -207,9 +202,8 @@ $ brew install nodenv
 **Note:** node-build is installed with nodenv by default. To skip
 node-build, pass `--without-node-build`.
 
-Afterwards you'll still need to add `eval "$(nodenv init -)"` to your
-profile as stated in the caveats. You'll only ever have to do this
-once.
+Afterwards you'll still need to run `nodenv init` for instructions
+as stated in the caveats. You'll only ever have to do this once.
 
 ### Upgrading
 

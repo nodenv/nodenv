@@ -24,7 +24,8 @@ fi
 if [ "$NODENV_VERSION" = "system" ]; then
   if NODE_PATH="$(nodenv-which node 2>/dev/null)"; then
     NODE_PATH="${NODE_PATH%/*}"
-    echo "${NODE_PATH%/bin}"
+    NODENV_PREFIX_PATH="${NODE_PATH%/bin}"
+    echo "${NODENV_PREFIX_PATH:-/}"
     exit
   else
     echo "nodenv: system version not found in PATH" >&2

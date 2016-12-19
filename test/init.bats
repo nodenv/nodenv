@@ -47,13 +47,13 @@ OUT
   root="$(cd $BATS_TEST_DIRNAME/.. && pwd)"
   run nodenv-init - fish
   assert_success
-  assert_line ". '${root}/test/../libexec/../completions/nodenv.fish'"
+  assert_line "source '${root}/test/../libexec/../completions/nodenv.fish'"
 }
 
 @test "fish instructions" {
   run nodenv-init fish
   assert [ "$status" -eq 1 ]
-  assert_line 'status --is-interactive; and . (nodenv init -|psub)'
+  assert_line 'status --is-interactive; and source (nodenv init -|psub)'
 }
 
 @test "option to skip rehash" {
