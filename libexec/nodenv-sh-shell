@@ -45,11 +45,11 @@ fi
 if [ "$version" = "--unset" ]; then
   case "$shell" in
   fish )
-    echo 'set -gu OLD_NODENV_VERSION "$NODENV_VERSION"'
+    echo 'set -gu NODENV_VERSION_OLD "$NODENV_VERSION"'
     echo "set -e NODENV_VERSION"
     ;;
   * )
-    echo 'OLD_NODENV_VERSION="$NODENV_VERSION"'
+    echo 'NODENV_VERSION_OLD="$NODENV_VERSION"'
     echo "unset NODENV_VERSION"
     ;;
   esac
@@ -60,36 +60,36 @@ if [ "$version" = "-" ]; then
   case "$shell" in
   fish )
     cat <<EOS
-if set -q OLD_NODENV_VERSION
-  if [ -n "\$OLD_NODENV_VERSION" ]
-    set OLD_NODENV_VERSION_ "\$NODENV_VERSION"
-    set -gx NODENV_VERSION "\$OLD_NODENV_VERSION"
-    set -gu OLD_NODENV_VERSION "\$OLD_NODENV_VERSION_"
-    set -e OLD_NODENV_VERSION_
+if set -q NODENV_VERSION_OLD
+  if [ -n "\$NODENV_VERSION_OLD" ]
+    set NODENV_VERSION_OLD_ "\$NODENV_VERSION"
+    set -gx NODENV_VERSION "\$NODENV_VERSION_OLD"
+    set -gu NODENV_VERSION_OLD "\$NODENV_VERSION_OLD_"
+    set -e NODENV_VERSION_OLD_
   else
-    set -gu OLD_NODENV_VERSION "\$NODENV_VERSION"
+    set -gu NODENV_VERSION_OLD "\$NODENV_VERSION"
     set -e NODENV_VERSION
   end
 else
-  echo "nodenv: OLD_NODENV_VERSION is not set" >&2
+  echo "nodenv: NODENV_VERSION_OLD is not set" >&2
   false
 end
 EOS
     ;;
   * )
     cat <<EOS
-if [ -n "\${OLD_NODENV_VERSION+x}" ]; then
-  if [ -n "\$OLD_NODENV_VERSION" ]; then
-    OLD_NODENV_VERSION_="\$NODENV_VERSION"
-    export NODENV_VERSION="\$OLD_NODENV_VERSION"
-    OLD_NODENV_VERSION="\$OLD_NODENV_VERSION_"
-    unset OLD_NODENV_VERSION_
+if [ -n "\${NODENV_VERSION_OLD+x}" ]; then
+  if [ -n "\$NODENV_VERSION_OLD" ]; then
+    NODENV_VERSION_OLD_="\$NODENV_VERSION"
+    export NODENV_VERSION="\$NODENV_VERSION_OLD"
+    NODENV_VERSION_OLD="\$NODENV_VERSION_OLD_"
+    unset NODENV_VERSION_OLD_
   else
-    OLD_NODENV_VERSION="\$NODENV_VERSION"
+    NODENV_VERSION_OLD="\$NODENV_VERSION"
     unset NODENV_VERSION
   fi
 else
-  echo "nodenv: OLD_NODENV_VERSION is not set" >&2
+  echo "nodenv: NODENV_VERSION_OLD is not set" >&2
   false
 fi
 EOS
@@ -103,11 +103,11 @@ if nodenv-prefix "$version" >/dev/null; then
   if [ "$version" != "$NODENV_VERSION" ]; then
     case "$shell" in
     fish )
-      echo 'set -gu OLD_NODENV_VERSION "$NODENV_VERSION"'
+      echo 'set -gu NODENV_VERSION_OLD "$NODENV_VERSION"'
       echo "set -gx NODENV_VERSION \"$version\""
       ;;
     * )
-      echo 'OLD_NODENV_VERSION="$NODENV_VERSION"'
+      echo 'NODENV_VERSION_OLD="$NODENV_VERSION"'
       echo "export NODENV_VERSION=\"$version\""
       ;;
     esac

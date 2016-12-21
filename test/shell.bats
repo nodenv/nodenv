@@ -23,20 +23,20 @@ load test_helper
 @test "shell revert" {
   NODENV_SHELL=bash run nodenv-sh-shell -
   assert_success
-  assert_line 0 'if [ -n "${OLD_NODENV_VERSION+x}" ]; then'
+  assert_line 0 'if [ -n "${NODENV_VERSION_OLD+x}" ]; then'
 }
 
 @test "shell revert (fish)" {
   NODENV_SHELL=fish run nodenv-sh-shell -
   assert_success
-  assert_line 0 'if set -q OLD_NODENV_VERSION'
+  assert_line 0 'if set -q NODENV_VERSION_OLD'
 }
 
 @test "shell unset" {
   NODENV_SHELL=bash run nodenv-sh-shell --unset
   assert_success
   assert_output <<OUT
-OLD_NODENV_VERSION="\$NODENV_VERSION"
+NODENV_VERSION_OLD="\$NODENV_VERSION"
 unset NODENV_VERSION
 OUT
 }
@@ -45,7 +45,7 @@ OUT
   NODENV_SHELL=fish run nodenv-sh-shell --unset
   assert_success
   assert_output <<OUT
-set -gu OLD_NODENV_VERSION "\$NODENV_VERSION"
+set -gu NODENV_VERSION_OLD "\$NODENV_VERSION"
 set -e NODENV_VERSION
 OUT
 }
@@ -64,7 +64,7 @@ SH
   NODENV_SHELL=bash run nodenv-sh-shell 1.2.3
   assert_success
   assert_output <<OUT
-OLD_NODENV_VERSION="\$NODENV_VERSION"
+NODENV_VERSION_OLD="\$NODENV_VERSION"
 export NODENV_VERSION="1.2.3"
 OUT
 }
@@ -74,7 +74,7 @@ OUT
   NODENV_SHELL=fish run nodenv-sh-shell 1.2.3
   assert_success
   assert_output <<OUT
-set -gu OLD_NODENV_VERSION "\$NODENV_VERSION"
+set -gu NODENV_VERSION_OLD "\$NODENV_VERSION"
 set -gx NODENV_VERSION "1.2.3"
 OUT
 }
