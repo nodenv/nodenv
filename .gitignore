@@ -8,3 +8,4 @@
 /src/Makefile
 /src/*.o
 /node_modules
+/default-packages
