@@ -8,4 +8,6 @@
 /src/Makefile
 /src/*.o
 /node_modules
+
+# from nodenv-default-packages plugin: https://github.com/nodenv/nodenv-default-packages
 /default-packages
