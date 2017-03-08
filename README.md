@@ -165,13 +165,23 @@ easy to fork and contribute any changes back upstream.
 2. Add `~/.nodenv/bin` to your `$PATH` for access to the `nodenv`
    command-line utility.
 
+   **Mac OS X**:
+
     ~~~ sh
     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
     ~~~
 
-    **Ubuntu Desktop note**: Modify your `~/.bashrc` instead of `~/.bash_profile`.
+    **Linux**:
 
-    **Zsh note**: Modify your `~/.zshrc` file instead of `~/.bash_profile`.
+    ~~~ sh
+    $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bashrc
+    ~~~
+
+    **Zsh**:
+
+    ~~~ sh
+    $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.zshrc
+    ~~~
 
 3. Run `~/.nodenv/bin/nodenv init` for shell-specific instructions on how to
    initialize nodenv to enable shims and autocompletion.
@@ -406,7 +416,7 @@ Installs shims for all Node executables known to nodenv (i.e.,
 version of Node, or install an npm package that provides an executable binary.
 
     $ nodenv rehash
-    
+
 _**note:** the [package-rehash plugin][package-rehash-plugin] automatically runs `nodenv rehash` whenever an npm package is installed globally_
 
 ### nodenv which
