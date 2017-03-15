@@ -106,3 +106,19 @@ OUT
   assert_line '  switch "$command"'
   refute_line '  case "$command" in'
 }
+
+@test "autoload instructions for bash login startup scripts" {
+  mkdir -p "$HOME"
+  touch "$HOME/.profile"
+  run nodenv-init
+  assert_failure
+  assert_line "# the following to ~/.profile:"
+  touch "$HOME/.bash_login"
+  run nodenv-init
+  assert_failure
+  assert_line "# the following to ~/.bash_login:"
+  touch "$HOME/.bash_profile"
+  run nodenv-init
+  assert_failure
+  assert_line "# the following to ~/.bash_profile:"
+}

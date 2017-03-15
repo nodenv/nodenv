@@ -45,10 +45,12 @@ root="${0%/*}/.."
 if [ -z "$print" ]; then
   case "$shell" in
   bash )
-    if [ -f "${HOME}/.bashrc" ] && [ ! -f "${HOME}/.bash_profile" ]; then
-      profile='~/.bashrc'
+    if [ -f "${HOME}/.bash_profile" ]; then
+        profile='~/.bash_profile'
+    elif [ -f "${HOME}/.bash_login" ]; then
+        profile='~/.bash_login'
     else
-      profile='~/.bash_profile'
+      profile='~/.profile'
     fi
     ;;
   zsh )
