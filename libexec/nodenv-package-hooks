@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+#
+# Summary: Install npm hooks to automatically rehash after package install/uninstall
+#
+# Usage: nodenv package-hooks list [ --all | <version>...]
+#        nodenv package-hooks install [ --all | <version>...]
+#        nodenv package-hooks uninstall [ --all | <version>...]
+#
+# Install, Uninstall or List npm postinstall/postuninstall hooks.
+# Without arguments, it will list, install or uninstall into the currently
+# active node version. Alternatively, you may provide an explicit list of
+# node versions to list/install/uninstall to. Or, --all will list/install/uninstall
+# against all installed node versions.
+
+set -e
+[ -n "$NODENV_DEBUG" ] && set -x
+
+REHASH="${BASH_SOURCE%/*}/../nodenv.d/install/npm-rehash/nodenv-rehash"
+HOOKS_DIR="lib/node_modules/.hooks"
+POSTINSTALL_HOOK="$HOOKS_DIR/postinstall"
+POSTUNINSTALL_HOOK="$HOOKS_DIR/postuninstall"
+
+
+versions() {
+  case "$1" in
+    "")    nodenv-version-name    ;; # list active version
+    --all) nodenv-versions --bare ;; # list all installed versions
+    *)     echo "$@"              ;; # list specififed versions
+  esac
+}
+
+for_versions() {
+  cmd="$1"
+  shift
+
+  for v in $(versions "$@"); do
+    eval "$cmd" "$(nodenv-prefix "$v")"
+  done
+}
+
+list_hooks() {
+  version_prefix="$1"
+
+  basename "$version_prefix"
+
+  if [ -d "$version_prefix/$HOOKS_DIR" ]; then
+    ls "$version_prefix/$HOOKS_DIR"
+  else
+    echo "no hooks installed"
+  fi
+}
+
+install_hooks() {
+  version_prefix="$1"
+
+  mkdir -p "${version_prefix?needs set}/$HOOKS_DIR"
+
+  # install the postinstall/postuninstall hook scripts by symlinking them
+
+  ln -nsf "$REHASH" "$version_prefix/$POSTINSTALL_HOOK"
+  ln -nsf "$REHASH" "$version_prefix/$POSTUNINSTALL_HOOK"
+}
+
+uninstall_hooks() {
+  version_prefix="$1"
+
+  # remove postinstall/postuninstall hook scripts
+  if [ -f "$version_prefix/$POSTINSTALL_HOOK" ]; then
+    rm "$version_prefix/$POSTINSTALL_HOOK"
+  fi
+  if [ -f "$version_prefix/$POSTUNINSTALL_HOOK" ]; then
+    rm "$version_prefix/$POSTUNINSTALL_HOOK"
+  fi
+}
+
+unset cmd
+
+case "$1" in
+# Provide nodenv completions
+  --complete )
+    echo list
+    echo install
+    echo uninstall
+    echo --all
+    nodenv-versions --bare
+    exit
+    ;;
+  list | install | uninstall )
+    cmd="$1"
+    shift
+    ;;
+  *)
+    nodenv-help --usage package-hooks
+    exit 1
+    ;;
+esac
+
+for_versions "${cmd}_hooks" "$@"

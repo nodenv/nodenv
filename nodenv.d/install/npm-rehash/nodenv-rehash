@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [[ ! $npm_config_argv =~ \[\"$npm_package_name\"\] ]]; then
+  echo "NOT ROOT $npm_config_argv $npm_package_name"
+  exit
+fi
+
+echo "ROOT. REHASHING $npm_package_name"
+
+nodenv rehash
