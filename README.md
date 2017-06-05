@@ -169,7 +169,7 @@ easy to fork and contribute any changes back upstream.
     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
     ~~~
 
-    **Ubuntu Desktop note**: Modify your `~/.bashrc` instead of `~/.bash_profile`.
+    **Note:** Replace `.bash_profile` with `.bash_login` or `.profile` depending on [your login startup file](https://linux.die.net/man/1/bash).
 
     **Zsh note**: Modify your `~/.zshrc` file instead of `~/.bash_profile`.
 
