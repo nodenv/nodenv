@@ -197,13 +197,13 @@ manager on Mac OS X:
 ~~~
 $ brew update
 $ brew install nodenv
+$ nodenv init
 ~~~
 
 **Note:** node-build is installed with nodenv by default. To skip
 node-build, pass `--without-node-build`.
 
-Afterwards you'll still need to run `nodenv init` for instructions
-as stated in the caveats. You'll only ever have to do this once.
+You'll only ever have to run `nodenv init` once.
 
 ### Upgrading
 
