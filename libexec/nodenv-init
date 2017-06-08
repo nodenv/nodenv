@@ -86,8 +86,8 @@ mkdir -p "${NODENV_ROOT}/"{shims,versions}
 
 case "$shell" in
 fish )
-  echo "setenv PATH '${NODENV_ROOT}/shims' \$PATH"
-  echo "setenv NODENV_SHELL $shell"
+  echo "set -gx PATH '${NODENV_ROOT}/shims' \$PATH"
+  echo "set -gx NODENV_SHELL $shell"
 ;;
 * )
   echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
