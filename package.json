@@ -27,6 +27,8 @@
     "test": "bats ${CI:+--tap} test",
     "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
     "publish:github": "git push --follow-tags",
+    "stamp-version": "perl -pi -e 's/^(pkg_version=).*$/$1$ENV{npm_package_version}/' -- libexec/nodenv---version && git add -- libexec/nodenv---version",
+    "version": "npm run stamp-version",
     "postversion": "npm run publish:github && npm run publish:brew"
   },
   "devDependencies": {
