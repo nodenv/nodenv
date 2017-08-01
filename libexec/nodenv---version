@@ -14,8 +14,8 @@ set -e
 
 cd "${BASH_SOURCE%/*}" 2>/dev/null
 
+pkg_version=1.1.1
 git_revision=""
-pkg_version="$(grep -e '"version":' ../package.json | awk -v FS=': ' '{v=$2; gsub(/[",]/,"",v); print v}')"
 
 if git remote -v 2>/dev/null | grep -q nodenv; then
   git_revision="$(git describe --tags HEAD 2>/dev/null || true)"
