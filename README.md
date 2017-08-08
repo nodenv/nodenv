@@ -28,6 +28,8 @@ bulletproof deployments.
   See more [plugins on the
   wiki](https://github.com/nodenv/nodenv/wiki/Plugins).
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
 * [How It Works](#how-it-works)
@@ -55,6 +57,8 @@ bulletproof deployments.
 * [Environment variables](#environment-variables)
 * [Development](#development)
   * [Credits](#credits)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## How It Works
 
