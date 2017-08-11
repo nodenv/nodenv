@@ -25,6 +25,7 @@
   },
   "scripts": {
     "build": "src/configure && make -C src",
+    "install": "npm run build",
     "pretest": "test -z $NODENV_NATIVE_EXT || npm run build",
     "test": "bats ${CI:+--tap} test",
     "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
