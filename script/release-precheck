@@ -23,7 +23,7 @@ if [ "$current_branch" != master ]; then
 fi
 
 previous_tag="$(git describe --tags --abbrev=0)"
-if git diff --quiet "${previous_tag}..HEAD" -- bin share; then
+if git diff --quiet "${previous_tag}..HEAD" -- bin completions libexec; then
   echo "Aborting: No features to release since '${previous_tag}'" >&2
   exit 1
 fi
