@@ -18,9 +18,10 @@
     "url": "https://github.com/nodenv/nodenv/issues"
   },
   "directories": {
-    "bin": "bin",
-    "lib": "libexec",
-    "test": "test"
+    "bin": "./bin",
+    "lib": "./libexec",
+    "src": "./src",
+    "test": "./test"
   },
   "scripts": {
     "build": "src/configure && make -C src",
