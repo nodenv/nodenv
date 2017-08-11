@@ -25,7 +25,8 @@
   },
   "scripts": {
     "build": "src/configure && make -C src",
-    "pretest": "test -z $NODENV_NATIVE_EXT || npm run build",
+    "install": "npm run build",
+    "pretest": "test -z $CI || ! test -z $NODENV_NATIVE_EXT || rm libexec/nodenv-realpath.dylib",
     "test": "bats ${CI:+--tap} test",
     "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
     "publish:github": "git push --follow-tags && script/release-github",
