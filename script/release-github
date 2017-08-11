@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Usage: script/release-github <version>
+#
+# - creates a Release on github
+
+set -e
+
+new_version=${1:-$npm_package_version}
+
+previous_tag() {
+ git describe --tags --abbrev=0 HEAD^
+}
+
+release_message() {
+  echo "nodenv $new_version"
+  echo
+  git log --no-merges --format='%w(0,0,2)* %B' --reverse "$(previous_tag)..HEAD^" -- bin completions libexec
+}
+
+release_message | hub release create --file=- "v$new_version" || true
+
+hub browse -- "releases/v$new_version"
