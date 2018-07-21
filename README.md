@@ -170,6 +170,8 @@ easy to fork and contribute any changes back upstream.
     ~~~
 
     **Ubuntu Desktop note**: Modify your `~/.bashrc` instead of `~/.bash_profile`.
+    
+    **Windows Subsystem for Linux note**: Modify your `~/.profile` instead of `~/.bash_profile`.
 
     **Zsh note**: Modify your `~/.zshrc` file instead of `~/.bash_profile`.
 
