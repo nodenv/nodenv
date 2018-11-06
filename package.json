@@ -38,6 +38,6 @@
   "devDependencies": {
     "bats": "^0.4.2",
     "bats-assert": "^1.0.1",
-    "brew-publish": "^2.1.2"
+    "brew-publish": "^2.2.0"
   }
 }
