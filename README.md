@@ -165,13 +165,25 @@ easy to fork and contribute any changes back upstream.
 2. Add `~/.nodenv/bin` to your `$PATH` for access to the `nodenv`
    command-line utility.
 
-    ~~~ sh
-    $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
-    ~~~
+   * For **bash**:
+     ~~~ bash
+     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
+     ~~~
 
-    **Ubuntu Desktop note**: Modify your `~/.bashrc` instead of `~/.bash_profile`.
+   * For **Ubuntu Desktop**:
+     ~~~ bash
+     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bashrc
+     ~~~
 
-    **Zsh note**: Modify your `~/.zshrc` file instead of `~/.bash_profile`.
+   * For **Zsh**:
+     ~~~ zsh
+     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.zshrc
+     ~~~
+
+   * For **Fish shell**:
+     ~~~ fish
+     $ set -Ux fish_user_paths $HOME/.nodenv/bin $fish_user_paths
+     ~~~
 
 3. Run `~/.nodenv/bin/nodenv init` for shell-specific instructions on how to
    initialize nodenv to enable shims and autocompletion.
