@@ -197,6 +197,9 @@ $ brew upgrade nodenv node-build
 
 ### Basic GitHub Checkout
 
+For a more automated install, you can use [nodenv-installer][].
+If you prefer a manual approach, follow the steps below.
+
 This will get you going with the latest version of nodenv without needing
 a systemwide install.
 
@@ -511,8 +514,9 @@ Forked from [Sam Stephenson](https://github.com/sstephenson)'s
 McKenzie](https://github.com/oinutter) and modified for node.
 
 
-  [node-build]: https://github.com/nodenv/node-build#readme
   [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
+  [node-build]: https://github.com/nodenv/node-build#readme
+  [nodenv-doctor]: https://github.com/nodenv/nodenv-installer/blob/master/bin/nodenv-doctor
+  [nodenv-installer]: https://github.com/nodenv/nodenv-installer#nodenv-installer
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
   [package-rehash-plugin]: https://github.com/nodenv/nodenv-package-rehash
-  [nodenv-doctor]: https://github.com/nodenv/nodenv-installer/blob/master/bin/nodenv-doctor
