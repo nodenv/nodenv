@@ -2,6 +2,17 @@
 
 load test_helper
 
+@test "shell integration disabled" {
+  run nodenv shell
+  assert_failure "nodenv: shell integration not enabled. Run \`nodenv init' for instructions."
+}
+
+@test "shell integration enabled" {
+  eval "$(nodenv init -)"
+  run nodenv shell
+  assert_success "nodenv: no shell-specific version configured"
+}
+
 @test "no shell version" {
   mkdir -p "${NODENV_TEST_DIR}/myproject"
   cd "${NODENV_TEST_DIR}/myproject"

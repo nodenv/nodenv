@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e
-unset CDPATH
 
 if [ "$1" = "--debug" ]; then
   export NODENV_DEBUG=1
@@ -22,7 +21,8 @@ abort() {
 
 if enable -f "${BASH_SOURCE%/*}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
   abs_dirname() {
-    local path="$(realpath "$1")"
+    local path
+    path="$(realpath "$1")"
     echo "${path%/*}"
   }
 else
@@ -60,6 +60,7 @@ export NODENV_ROOT
 if [ -z "${NODENV_DIR}" ]; then
   NODENV_DIR="$PWD"
 else
+  [[ $NODENV_DIR == /* ]] || NODENV_DIR="$PWD/$NODENV_DIR"
   cd "$NODENV_DIR" 2>/dev/null || abort "cannot change working directory to \`$NODENV_DIR'"
   NODENV_DIR="$PWD"
   cd "$OLDPWD"
@@ -105,7 +106,13 @@ case "$command" in
   ;;
 * )
   command_path="$(command -v "nodenv-$command" || true)"
-  [ -n "$command_path" ] || abort "no such command \`$command'"
+  if [ -z "$command_path" ]; then
+    if [ "$command" == "shell" ]; then
+      abort "shell integration not enabled. Run \`nodenv init' for instructions."
+    else
+      abort "no such command \`$command'"
+    fi
+  fi
 
   shift 1
   if [ "$1" = --help ]; then
