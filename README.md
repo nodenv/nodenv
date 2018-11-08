@@ -167,11 +167,17 @@ If you're on macOS, we recommend installing nodenv with
 3. Close your Terminal window and open a new one so your changes take
    effect.
 
-4. Verify that nodenv is properly set up:
+4. Verify that nodenv is properly set up using this [nodenv-doctor][] script:
 
     ~~~ sh
-    $ type nodenv
-    #=> "nodenv is a function"
+    $ curl -fsSL https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-doctor | bash
+    Checking for `nodenv' in PATH: /usr/local/bin/nodenv
+    Checking for nodenv shims in PATH: OK
+    Checking `nodenv install' support: /usr/local/bin/nodenv-install (node-build 3.0.22-4-g49c4cb9)
+    Counting installed Node versions: none
+      There aren't any Node versions installed under `~/.nodenv/versions'.
+      You can install Node versions like so: nodenv install 2.2.4
+    Auditing installed plugins: OK
     ~~~
 
 5. That's it! Installing nodenv includes node-build, so now you're ready to
@@ -242,11 +248,17 @@ a systemwide install.
 4. Restart your shell so that PATH changes take effect. (Opening a new
    terminal tab will usually do it.)
 
-5. Verify that nodenv is properly set up:
+5. Verify that nodenv is properly set up using this [nodenv-doctor][] script:
 
     ~~~ sh
-    $ type nodenv
-    #=> "nodenv is a function"
+    $ curl -fsSL https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-doctor | bash
+    Checking for `nodenv' in PATH: /usr/local/bin/nodenv
+    Checking for nodenv shims in PATH: OK
+    Checking `nodenv install' support: /usr/local/bin/nodenv-install (node-build 3.0.22-4-g49c4cb9)
+    Counting installed Node versions: none
+      There aren't any Node versions installed under `~/.nodenv/versions'.
+      You can install Node versions like so: nodenv install 2.2.4
+    Auditing installed plugins: OK
     ~~~
 
 6. _(Optional)_ Install [node-build][], which provides the
@@ -503,3 +515,4 @@ McKenzie](https://github.com/oinutter) and modified for node.
   [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
   [package-rehash-plugin]: https://github.com/nodenv/nodenv-package-rehash
+  [nodenv-doctor]: https://github.com/nodenv/nodenv-installer/blob/master/bin/nodenv-doctor
