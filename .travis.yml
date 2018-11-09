@@ -1,12 +1,6 @@
-sudo: false
 language: node_js
 node_js: node
+cache: npm
 env:
   - NODENV_NATIVE_EXT=
   - NODENV_NATIVE_EXT=1
-branches:
-  only:
-    - master
-notifications:
-  email:
-    on_success: never
