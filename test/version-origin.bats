@@ -26,7 +26,7 @@ setup() {
 }
 
 @test "detects local file" {
-  touch .node-version
+  echo "system" > .node-version
   run nodenv-version-origin
   assert_success "${PWD}/.node-version"
 }

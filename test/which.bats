@@ -57,12 +57,11 @@ create_executable() {
 }
 
 @test "doesn't include current directory in PATH search" {
-  export PATH="$(path_without "kill-all-humans")"
   mkdir -p "$NODENV_TEST_DIR"
   cd "$NODENV_TEST_DIR"
   touch kill-all-humans
   chmod +x kill-all-humans
-  NODENV_VERSION=system run nodenv-which kill-all-humans
+  PATH="$(path_without "kill-all-humans")" NODENV_VERSION=system run nodenv-which kill-all-humans
   assert_failure "nodenv: kill-all-humans: command not found"
 }
 
@@ -79,8 +78,7 @@ create_executable() {
 }
 
 @test "no executable found for system version" {
-  export PATH="$(path_without "mocha")"
-  NODENV_VERSION=system run nodenv-which mocha
+  PATH="$(path_without "mocha")" NODENV_VERSION=system run nodenv-which mocha
   assert_failure "nodenv: mocha: command not found"
 }
 
