@@ -24,9 +24,10 @@
     "test": "./test"
   },
   "scripts": {
+    "clean": "rm -f ${npm_package_directories_lib:?}/*.dylib",
     "build": "src/configure && make -C src",
     "install": "npm run build",
-    "pretest": "test -z $CI || ! test -z $NODENV_NATIVE_EXT || rm libexec/nodenv-realpath.dylib",
+    "pretest": "! [ -z $NODENV_NATIVE_EXT ] || npm run clean",
     "test": "bats ${CI:+--tap} test",
     "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
     "publish:github": "git push --follow-tags && script/release-github",
