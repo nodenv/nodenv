@@ -39,6 +39,7 @@
   "devDependencies": {
     "bats": "^1.1.0",
     "bats-assert": "^1.1.1",
-    "brew-publish": "^2.2.0"
+    "brew-publish": "^2.2.0",
+    "scripty": "^1.8.0"
   }
 }
