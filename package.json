@@ -30,8 +30,8 @@
     "pretest": "! [ -z $NODENV_NATIVE_EXT ] || npm run clean",
     "test": "bats ${CI:+--tap} test",
     "preversion": "script/release-precheck",
-    "version": "npm run version:sync",
-    "version:sync": "perl -pi -e 's/^(version=).*$/$1$ENV{npm_package_version}/' -- libexec/nodenv---version && git add -- libexec/nodenv---version",
+    "version": "scripty",
+    "version:sync": "scripty",
     "postversion": "npm run publish:github && npm run publish:brew && npm publish",
     "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
     "publish:github": "git push --follow-tags && script/release-github"
@@ -41,5 +41,9 @@
     "bats-assert": "^1.1.1",
     "brew-publish": "^2.2.0",
     "scripty": "^1.8.0"
+  },
+  "scripty": {
+    "path": "./script",
+    "silent": true
   }
 }
