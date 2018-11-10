@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
-# Usage: script/release-precheck
+#
+# Ensures repo is ready to release.
+#
+# Usage: script/preversion
 #
 # - fetch from origin
 # - ensure it isn't already tagged

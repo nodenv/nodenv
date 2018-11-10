@@ -29,7 +29,7 @@
     "install": "npm run build",
     "pretest": "! [ -z $NODENV_NATIVE_EXT ] || npm run clean",
     "test": "bats ${CI:+--tap} test",
-    "preversion": "script/release-precheck",
+    "preversion": "scripty",
     "version": "scripty",
     "version:sync": "scripty",
     "postversion": "npm run publish:github && npm run publish:brew && npm publish",
