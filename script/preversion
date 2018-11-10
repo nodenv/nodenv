@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 #
 # Ensures repo is ready to release.
 #
@@ -9,7 +9,8 @@
 # - ensure currently on master branch
 # - ensure there are bin or definition changes to release
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
 git fetch --quiet --tags origin master
 
