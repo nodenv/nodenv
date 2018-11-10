@@ -22,6 +22,11 @@
     "src": "./src",
     "test": "./test"
   },
+  "files": [
+    "completions",
+    "libexec",
+    "src"
+  ],
   "scripts": {
     "clean": "scripty",
     "build": "src/configure && make -C src",
