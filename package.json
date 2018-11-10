@@ -27,7 +27,6 @@
     "clean": "scripty",
     "build": "scripty",
     "install": "npm run build",
-    "pretest": "! [ -z $NODENV_NATIVE_EXT ] || npm run clean",
     "test": "bats ${CI:+--tap} test",
     "preversion": "scripty",
     "version": "scripty",
