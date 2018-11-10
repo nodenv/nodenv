@@ -5,10 +5,10 @@
   "description": "Manage multiple NodeJS versions",
   "homepage": "https://github.com/nodenv/nodenv#readme",
   "license": "MIT",
-  "author": "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us)",
   "contributors": [
-    "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)",
-    "Jason Karns <jason@karns.name> (http://jason.karns.name)"
+    "Jason Karns <jason@karns.name> (http://jason.karns.name)",
+    "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us)",
+    "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)"
   ],
   "repository": {
     "type": "git",
