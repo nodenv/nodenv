@@ -24,7 +24,7 @@
   },
   "scripts": {
     "clean": "scripty",
-    "build": "scripty",
+    "build": "src/configure && make -C src",
     "install": "npm run build",
     "test": "bats ${CI:+--tap} test",
     "preversion": "scripty",
