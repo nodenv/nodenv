@@ -33,13 +33,13 @@
     "version": "scripty",
     "version:sync": "scripty",
     "postversion": "npm run publish:github && npm run publish:brew && npm publish",
-    "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
+    "publish:brew": "brew-publish",
     "publish:github": "scripty"
   },
   "devDependencies": {
     "bats": "^1.1.0",
     "bats-assert": "^1.1.1",
-    "brew-publish": "^2.2.0",
+    "brew-publish": "^2.3.1",
     "scripty": "^1.8.0"
   },
   "scripty": {
