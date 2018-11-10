@@ -1,5 +1,5 @@
 {
-  "name": "nodenv",
+  "name": "@nodenv/nodenv",
   "version": "1.1.2",
   "private": true,
   "description": "Manage multiple NodeJS versions",
@@ -24,20 +24,25 @@
     "test": "./test"
   },
   "scripts": {
-    "build": "src/configure && make -C src",
+    "clean": "scripty",
+    "build": "scripty",
     "install": "npm run build",
-    "pretest": "test -z $CI || ! test -z $NODENV_NATIVE_EXT || rm libexec/nodenv-realpath.dylib",
     "test": "bats ${CI:+--tap} test",
-    "publish:brew": "brew-publish $npm_package_name v$npm_package_version",
-    "publish:github": "git push --follow-tags && script/release-github",
-    "publish:version": "perl -pi -e 's/^(version=).*$/$1$ENV{npm_package_version}/' -- libexec/nodenv---version && git add -- libexec/nodenv---version",
-    "preversion": "script/release-precheck",
-    "version": "npm run publish:version",
-    "postversion": "npm run publish:github && npm run publish:brew"
+    "preversion": "scripty",
+    "version": "scripty",
+    "version:sync": "scripty",
+    "postversion": "npm run publish:github && npm run publish:brew && npm publish",
+    "publish:brew": "brew-publish",
+    "publish:github": "scripty"
   },
   "devDependencies": {
-    "bats": "^0.4.2",
-    "bats-assert": "^1.0.1",
-    "brew-publish": "^2.2.0"
+    "bats": "^1.1.0",
+    "bats-assert": "^1.1.1",
+    "brew-publish": "^2.3.1",
+    "scripty": "^1.8.0"
+  },
+  "scripty": {
+    "path": "./script",
+    "silent": true
   }
 }

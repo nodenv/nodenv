@@ -1,6 +1,8 @@
 language: node_js
 node_js: node
 cache: npm
-env:
-  - NODENV_NATIVE_EXT=
-  - NODENV_NATIVE_EXT=1
+
+jobs:
+  include:
+    - stage: test # test with native ext
+    - before_script: npm run clean # test without native ext
