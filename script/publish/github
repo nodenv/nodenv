@@ -1,12 +1,12 @@
-#!/usr/bin/env sh
-# Usage: script/publish/github <version>
+#!/usr/bin/env bash
+# Pushes to GitHub and creates a GitHub Release
 #
-# - pushes to github
-# - creates a Release on github
+# Usage: script/publish/github <version>
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
-new_version=${1:-$npm_package_version}
+new_version=${1:-${npm_package_version:?}}
 
 previous_tag() {
  git describe --tags --abbrev=0 HEAD^
