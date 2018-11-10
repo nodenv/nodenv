@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
-# Usage: script/release-github <version>
+# Usage: script/publish/github <version>
 #
+# - pushes to github
 # - creates a Release on github
 
 set -e
@@ -16,6 +17,8 @@ release_message() {
   echo
   git log --no-merges --format='%w(0,0,2)* %B' --reverse "$(previous_tag)..HEAD^" -- bin completions libexec
 }
+
+git push --follow-tags
 
 release_message | hub release create --file=- "v$new_version" || true
 
