@@ -11,3 +11,5 @@
 
 # from nodenv-default-packages plugin: https://github.com/nodenv/nodenv-default-packages
 /default-packages
+
+/nodenv-nodenv-*.tgz
