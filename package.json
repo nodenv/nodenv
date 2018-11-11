@@ -17,11 +17,11 @@
     "url": "https://github.com/nodenv/nodenv/issues"
   },
   "directories": {
-    "bin": "./bin",
     "lib": "./libexec",
     "src": "./src",
     "test": "./test"
   },
+  "bin": "./libexec/nodenv",
   "files": [
     "completions",
     "libexec",
