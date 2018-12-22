@@ -1,4 +1,5 @@
-load ../node_modules/bats-assert/all
+load ../node_modules/bats-support/load
+load ../node_modules/bats-assert/load
 
 unset NODENV_VERSION
 unset NODENV_DIR
@@ -6,10 +7,11 @@ unset NODENV_DIR
 # guard against executing this block twice due to bats internals
 if [ -z "$NODENV_TEST_DIR" ]; then
   NODENV_TEST_DIR="${BATS_TMPDIR}/nodenv"
-  export NODENV_TEST_DIR="$(mktemp -d "${NODENV_TEST_DIR}.XXX" 2>/dev/null || echo "$NODENV_TEST_DIR")"
+  NODENV_TEST_DIR="$(mktemp -d "${NODENV_TEST_DIR}.XXX" 2>/dev/null || echo "$NODENV_TEST_DIR")"
+  export NODENV_TEST_DIR
 
   if enable -f "${BATS_TEST_DIRNAME}"/../libexec/nodenv-realpath.dylib realpath 2>/dev/null; then
-    export NODENV_TEST_DIR="$(realpath "$NODENV_TEST_DIR")"
+    NODENV_TEST_DIR="$(realpath "$NODENV_TEST_DIR")"
   else
     if [ -n "$NODENV_NATIVE_EXT" ]; then
       echo "nodenv: failed to load \`realpath' builtin" >&2
@@ -28,7 +30,7 @@ if [ -z "$NODENV_TEST_DIR" ]; then
   PATH="${NODENV_ROOT}/shims:$PATH"
   export PATH
 
-  for xdg_var in `env 2>/dev/null | grep ^XDG_ | cut -d= -f1`; do unset "$xdg_var"; done
+  for xdg_var in $(env 2>/dev/null | grep ^XDG_ | cut -d= -f1); do unset "$xdg_var"; done
   unset xdg_var
 fi
 
