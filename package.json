@@ -44,9 +44,6 @@
     "bats": "^1.1.0",
     "bats-assert": "^1.1.1",
     "brew-publish": "^2.3.1",
-    "scripty": "^1.9.0"
-  },
-  "scripty": {
-    "silent": true
+    "scripty": "^2.0.0-0"
   }
 }
