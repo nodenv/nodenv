@@ -42,7 +42,8 @@
   },
   "devDependencies": {
     "bats": "^1.1.0",
-    "bats-assert": "^1.1.1",
+    "bats-assert": "jasonkarns/bats-assert-1",
+    "bats-support": "jasonkarns/bats-support",
     "brew-publish": "^2.3.1",
     "scripty": "^2.0.0-0"
   }
