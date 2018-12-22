@@ -35,7 +35,8 @@
     "preversion": "scripty",
     "version": "scripty",
     "version:sync": "scripty",
-    "postversion": "npm run publish:github && npm run publish:brew && npm publish",
+    "postversion": "npm publish",
+    "prepublishOnly": "npm run publish:github && npm run publish:brew",
     "publish:brew": "brew-publish",
     "publish:github": "scripty"
   },
