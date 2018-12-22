@@ -21,7 +21,8 @@ stub_system_node() {
   stub_system_node
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-versions
-  assert_success "* system (set by ${NODENV_ROOT}/version)"
+  assert_success
+  assert_output "* system (set by ${NODENV_ROOT}/version)"
 }
 
 @test "not even system node available" {
@@ -33,7 +34,8 @@ stub_system_node() {
 @test "bare output no versions installed" {
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-versions --bare
-  assert_success ""
+  assert_success
+  refute_output
 }
 
 @test "single version installed" {
@@ -50,7 +52,8 @@ OUT
 @test "single version bare" {
   create_version "1.9"
   run nodenv-versions --bare
-  assert_success "1.9"
+  assert_success
+  assert_output "1.9"
 }
 
 @test "multiple versions" {
@@ -125,7 +128,8 @@ OUT
   touch "${NODENV_ROOT}/versions/hello"
 
   run nodenv-versions --bare
-  assert_success "1.9"
+  assert_success
+  assert_output "1.9"
 }
 
 @test "lists symlinks under versions" {

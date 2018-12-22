@@ -12,7 +12,8 @@ create_executable() {
 @test "empty rehash" {
   assert [ ! -d "${NODENV_ROOT}/shims" ]
   run nodenv-rehash
-  assert_success ""
+  assert_success
+  refute_output
   assert [ -d "${NODENV_ROOT}/shims" ]
   rmdir "${NODENV_ROOT}/shims"
 }
@@ -21,14 +22,16 @@ create_executable() {
   mkdir -p "${NODENV_ROOT}/shims"
   chmod -w "${NODENV_ROOT}/shims"
   run nodenv-rehash
-  assert_failure "nodenv: cannot rehash: ${NODENV_ROOT}/shims isn't writable"
+  assert_failure
+  assert_output "nodenv: cannot rehash: ${NODENV_ROOT}/shims isn't writable"
 }
 
 @test "rehash in progress" {
   mkdir -p "${NODENV_ROOT}/shims"
   touch "${NODENV_ROOT}/shims/.nodenv-shim"
   run nodenv-rehash
-  assert_failure "nodenv: cannot rehash: ${NODENV_ROOT}/shims/.nodenv-shim exists"
+  assert_failure
+  assert_output "nodenv: cannot rehash: ${NODENV_ROOT}/shims/.nodenv-shim exists"
 }
 
 @test "creates shims" {
@@ -41,7 +44,8 @@ create_executable() {
   assert [ ! -e "${NODENV_ROOT}/shims/npm" ]
 
   run nodenv-rehash
-  assert_success ""
+  assert_success
+  refute_output
 
   run ls "${NODENV_ROOT}/shims"
   assert_success
@@ -60,7 +64,8 @@ OUT
   create_executable "2.0" "node"
 
   run nodenv-rehash
-  assert_success ""
+  assert_success
+  refute_output
 
   assert [ ! -e "${NODENV_ROOT}/shims/oldshim1" ]
 }
@@ -77,7 +82,8 @@ OUT
   chmod +x "$NODENV_ROOT"/shims/{rspec,rails,uni}
 
   run nodenv-rehash
-  assert_success ""
+  assert_success
+  refute_output
 
   assert [ ! -e "${NODENV_ROOT}/shims/rails" ]
   assert [ ! -e "${NODENV_ROOT}/shims/rake" ]
@@ -92,7 +98,8 @@ OUT
   assert [ ! -e "${NODENV_ROOT}/shims/npm" ]
 
   run nodenv-rehash
-  assert_success ""
+  assert_success
+  refute_output
 
   run ls "${NODENV_ROOT}/shims"
   assert_success
@@ -117,13 +124,15 @@ SH
 @test "sh-rehash in bash" {
   create_executable "2.0" "node"
   NODENV_SHELL=bash run nodenv-sh-rehash
-  assert_success "hash -r 2>/dev/null || true"
+  assert_success
+  assert_output "hash -r 2>/dev/null || true"
   assert [ -x "${NODENV_ROOT}/shims/node" ]
 }
 
 @test "sh-rehash in fish" {
   create_executable "2.0" "node"
   NODENV_SHELL=fish run nodenv-sh-rehash
-  assert_success ""
+  assert_success
+  refute_output
   assert [ -x "${NODENV_ROOT}/shims/node" ]
 }
