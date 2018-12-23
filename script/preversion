@@ -2,7 +2,10 @@
 #
 # Ensures repo is ready to release.
 #
-# Usage: script/preversion
+# Usage: script/preversion [--verbose]
+#
+# Options:
+#   --verbose  Print log since last tag
 #
 # - fetch from origin
 # - ensure it isn't already tagged
@@ -30,4 +33,8 @@ previous_tag="$(git describe --tags --abbrev=0)"
 if git diff --quiet "${previous_tag}..HEAD" -- bin completions libexec; then
   echo "Aborting: No features to release since '${previous_tag}'" >&2
   exit 1
+fi
+
+if [ "${1-}" = --verbose ]; then
+  git log "$previous_tag"... --oneline
 fi
