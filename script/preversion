@@ -60,5 +60,5 @@ if git diff --quiet "${previous_tag}..HEAD" -- "${files[@]}"; then
 fi
 
 if [ -n "${verbose-}" ]; then
-  git log "$previous_tag"... --oneline
+  git log "$previous_tag"... --oneline -- "${files[@]}"
 fi
