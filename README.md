@@ -27,6 +27,8 @@ bulletproof deployments.
   variables with [nodenv-vars](https://github.com/nodenv/nodenv-vars).
   See more [plugins on the
   wiki](https://github.com/nodenv/nodenv/wiki/Plugins).
+  
+[**Why choose nodenv?**](https://github.com/nodenv/nodenv/wiki/Why-nodenv%3F)
 
 ## Table of Contents
 
