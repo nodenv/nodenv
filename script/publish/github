@@ -1,11 +1,12 @@
-#!/usr/bin/env sh
-# Usage: script/release-github <version>
+#!/usr/bin/env bash
+# Pushes to GitHub and creates a GitHub Release
 #
-# - creates a Release on github
+# Usage: script/publish/github <version>
 
-set -e
+set -euo pipefail
+IFS=$'\n\t'
 
-new_version=${1:-$npm_package_version}
+new_version=${1:-${npm_package_version:?}}
 
 previous_tag() {
  git describe --tags --abbrev=0 HEAD^
@@ -16,6 +17,8 @@ release_message() {
   echo
   git log --no-merges --format='%w(0,0,2)* %B' --reverse "$(previous_tag)..HEAD^" -- bin completions libexec
 }
+
+git push --follow-tags
 
 release_message | hub release create --file=- "v$new_version" || true
 

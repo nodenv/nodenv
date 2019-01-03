@@ -22,7 +22,7 @@ elif [ -z "$NODENV_VERSION" ]; then
 fi
 
 if [ "$NODENV_VERSION" = "system" ]; then
-  if NODE_PATH="$(nodenv-which node 2>/dev/null)"; then
+  if NODE_PATH="$(nodenv-which node)"; then
     NODE_PATH="${NODE_PATH%/*}"
     NODENV_PREFIX_PATH="${NODE_PATH%/bin}"
     echo "${NODENV_PREFIX_PATH:-/}"

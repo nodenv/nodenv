@@ -37,7 +37,7 @@ fi
 NODENV_VERSION="${NODENV_VERSION:-$(nodenv-version-name)}"
 
 if [ "$NODENV_VERSION" = "system" ]; then
-  PATH="$(remove_from_path "${NODENV_ROOT}/shims")"
+  PATH="$(remove_from_path "${NODENV_ROOT}/shims")" \
   NODENV_COMMAND_PATH="$(command -v "$NODENV_COMMAND" || true)"
 else
   NODENV_COMMAND_PATH="${NODENV_ROOT}/versions/${NODENV_VERSION}/bin/${NODENV_COMMAND}"

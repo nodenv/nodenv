@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# Ensures repo is ready to release.
+#
+# Usage: script/preversion [-v] [--] [FILES...]
+#
+# Options:
+#   -v     Print log since last tag
+#   FILES  Files to check for changes.
+#          [default: package.json#files read via $npm_package_files_*]
+#
+# - fetch from origin
+# - ensure it isn't already tagged
+# - ensure currently on master branch
+# - ensure there are bin or definition changes to release
+
+set -euo pipefail
+IFS=$'\n\t'
+
+unset verbose
+while getopts "v" opt; do
+  case "$opt" in
+  v) verbose=1 ;;
+  *) break ;;
+  esac
+  shift
+done
+
+if [ "${1-}" = -- ]; then
+  shift
+fi
+
+declare -a files
+if [ "$#" -gt 0 ]; then
+  files=("$@")
+else
+  for file in $(env | grep -E '^npm_package_files_\d' | cut -d= -f1); do
+    files+=("${!file}")
+  done
+fi
+
+git fetch --quiet --tags origin master
+
+existing="$(git tag --points-at HEAD)"
+if [ -n "$existing" ]; then
+  echo "Aborting: HEAD is already tagged as '${existing}'" >&2
+  exit 1
+fi
+
+current_branch="$(git symbolic-ref --short HEAD)"
+if [ "$current_branch" != master ]; then
+  echo "Aborting: Not currently on master branch" >&2
+  exit 1
+fi
+
+previous_tag="$(git describe --tags --abbrev=0)"
+if git diff --quiet "${previous_tag}..HEAD" -- "${files[@]}"; then
+  echo "Aborting: No features to release since '${previous_tag}'" >&2
+  exit 1
+fi
+
+if [ -n "${verbose-}" ]; then
+  git log "$previous_tag"... --oneline -- "${files[@]}"
+fi

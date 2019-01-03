@@ -18,5 +18,6 @@ end
 
 complete -f -c nodenv -n '__fish_nodenv_needs_command' -a '(nodenv commands)'
 for cmd in (nodenv commands)
-  complete -f -c nodenv -n "__fish_nodenv_using_command $cmd" -a "(nodenv completions $cmd)"
+  complete -f -c nodenv -n "__fish_nodenv_using_command $cmd" -a \
+    "(nodenv completions (commandline -opc)[2..-1])"
 end

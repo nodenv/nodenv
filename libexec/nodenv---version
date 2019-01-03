@@ -14,7 +14,7 @@ set -e
 
 cd "${BASH_SOURCE%/*}" 2>/dev/null
 
-version=1.1.2
+version=1.2.0
 
 if git remote -v 2>/dev/null | grep -q nodenv; then
   git_revision="$(git describe --tags HEAD 2>/dev/null || true)"
