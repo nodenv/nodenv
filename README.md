@@ -227,7 +227,7 @@ a systemwide install.
      $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
      ~~~
 
-   * For **Ubuntu Desktop**:
+   * For **Ubuntu Desktop** and **Windows Subsystem for Linux (WSL)**:
      ~~~ bash
      $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bashrc
      ~~~
