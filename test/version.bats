@@ -6,6 +6,10 @@ create_version() {
   mkdir -p "${NODENV_ROOT}/versions/$1"
 }
 
+alias_version() {
+  ln -sf "$NODENV_ROOT/versions/$2" "$NODENV_ROOT/versions/$1"
+}
+
 setup() {
   mkdir -p "$NODENV_TEST_DIR"
   cd "$NODENV_TEST_DIR"
@@ -19,8 +23,8 @@ setup() {
 }
 
 @test "using a symlink/alias" {
-  create_version "1.9.3"
-  ln -sf "$NODENV_ROOT/versions/1.9.3" "$NODENV_ROOT/versions/1.9"
+  create_version 1.9.3
+  alias_version 1.9 1.9.3
 
   NODENV_VERSION=1.9 run nodenv-version
 
