@@ -32,6 +32,17 @@ setup() {
   assert_output "1.9 => 1.9.3 (set by NODENV_VERSION environment variable)"
 }
 
+@test "links to links resolve the final target" {
+  create_version 1.9.3
+  alias_version 1.9 1.9.3
+  alias_version 1 1.9
+
+  NODENV_VERSION=1 run nodenv-version
+
+  assert_success
+  assert_output "1 => 1.9.3 (set by NODENV_VERSION environment variable)"
+}
+
 @test "set by NODENV_VERSION" {
   create_version "1.9.3"
   NODENV_VERSION=1.9.3 run nodenv-version
