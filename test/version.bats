@@ -18,6 +18,16 @@ setup() {
   assert_output "system (set by ${NODENV_ROOT}/version)"
 }
 
+@test "using a symlink/alias" {
+  create_version "1.9.3"
+  ln -sf "$NODENV_ROOT/versions/1.9.3" "$NODENV_ROOT/versions/1.9"
+
+  NODENV_VERSION=1.9 run nodenv-version
+
+  assert_success
+  assert_output "1.9 => 1.9.3 (set by NODENV_VERSION environment variable)"
+}
+
 @test "set by NODENV_VERSION" {
   create_version "1.9.3"
   NODENV_VERSION=1.9.3 run nodenv-version
