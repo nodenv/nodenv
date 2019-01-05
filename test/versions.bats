@@ -71,6 +71,25 @@ OUT
 OUT
 }
 
+@test "sorts semantically" {
+  stub_system_node
+  create_version "8.0.0"
+  create_version "9.0.0"
+  create_version "10.0.0"
+  create_version "iojs-3.0.0"
+  create_version "chakracore-8.0.0"
+  run nodenv-versions
+  assert_success
+  assert_output - <<OUT
+* system (set by ${NODENV_ROOT}/version)
+  8.0.0
+  9.0.0
+  10.0.0
+  chakracore-8.0.0
+  iojs-3.0.0
+OUT
+}
+
 @test "indicates current version" {
   stub_system_node
   create_version "1.9.3"
