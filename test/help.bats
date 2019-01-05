@@ -27,7 +27,7 @@ SH
 
   run nodenv-help hello
   assert_success
-  assert_output <<SH
+  assert_output - <<SH
 Usage: nodenv hello <world>
 
 This command is useful for saying hello.
@@ -45,7 +45,7 @@ SH
 
   run nodenv-help hello
   assert_success
-  assert_output <<SH
+  assert_output - <<SH
 Usage: nodenv hello <world>
 
 Says "hello" to you, from nodenv
@@ -81,7 +81,7 @@ SH
 
   run nodenv-help hello
   assert_success
-  assert_output <<SH
+  assert_output - <<SH
 Usage: nodenv hello <world>
        nodenv hi [everybody]
        nodenv hola --translate
@@ -106,7 +106,7 @@ SH
 
   run nodenv-help hello
   assert_success
-  assert_output <<SH
+  assert_output - <<SH
 Usage: nodenv hello <world>
 
 This is extended help text.

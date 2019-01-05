@@ -99,7 +99,7 @@ create_executable() {
 
   NODENV_VERSION=1.8 run nodenv-which npm
   assert_failure
-  assert_output <<OUT
+  assert_output - <<OUT
 nodenv: npm: command not found
 
 The \`npm' command exists in these Node versions:

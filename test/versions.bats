@@ -43,7 +43,7 @@ stub_system_node() {
   create_version "1.9"
   run nodenv-versions
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 * system (set by ${NODENV_ROOT}/version)
   1.9
 OUT
@@ -63,7 +63,7 @@ OUT
   create_version "2.0.0"
   run nodenv-versions
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 * system (set by ${NODENV_ROOT}/version)
   1.8.7
   1.9.3
@@ -77,7 +77,7 @@ OUT
   create_version "2.0.0"
   NODENV_VERSION=1.9.3 run nodenv-versions
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
   system
 * 1.9.3 (set by NODENV_VERSION environment variable)
   2.0.0
@@ -89,7 +89,7 @@ OUT
   create_version "2.0.0"
   NODENV_VERSION=1.9.3 run nodenv-versions --bare
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 1.9.3
 2.0.0
 OUT
@@ -102,7 +102,7 @@ OUT
   cat > "${NODENV_ROOT}/version" <<<"1.9.3"
   run nodenv-versions
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
   system
 * 1.9.3 (set by ${NODENV_ROOT}/version)
   2.0.0
@@ -116,7 +116,7 @@ OUT
   cat > ".node-version" <<<"1.9.3"
   run nodenv-versions
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
   system
 * 1.9.3 (set by ${NODENV_TEST_DIR}/.node-version)
   2.0.0
@@ -138,7 +138,7 @@ OUT
 
   run nodenv-versions --bare
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 1.8
 1.8.7
 OUT
@@ -153,7 +153,7 @@ OUT
   run nodenv-versions --bare --skip-aliases
   assert_success
 
-  assert_output <<OUT
+  assert_output - <<OUT
 1.8.7
 1.9
 OUT

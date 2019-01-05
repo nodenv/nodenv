@@ -5,7 +5,7 @@ load test_helper
 @test "no shims" {
   run nodenv-shims
   assert_success
-  assert [ -z "$output" ]
+  refute_output
 }
 
 @test "shims" {

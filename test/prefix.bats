@@ -43,8 +43,8 @@ OUT
 @test "prefix for invalid system" {
   PATH="$(path_without node)" run nodenv-prefix system
   assert_failure
-  assert_output <<EOF
+  assert_output - <<EOF
 nodenv: node: command not found
-nodenv: system version not found in PATH"
+nodenv: system version not found in PATH
 EOF
 }

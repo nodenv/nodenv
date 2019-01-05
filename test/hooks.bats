@@ -21,7 +21,7 @@ load test_helper
 
   NODENV_HOOK_PATH="$path1:$path2" run nodenv-hooks exec
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 ${NODENV_TEST_DIR}/nodenv.d/exec/ahoy.bash
 ${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash
 ${NODENV_TEST_DIR}/etc/nodenv_hooks/exec/bueno.bash
@@ -38,7 +38,7 @@ OUT
 
   NODENV_HOOK_PATH="$path1:$path2" run nodenv-hooks exec
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 ${NODENV_TEST_DIR}/my hooks/nodenv.d/exec/hello.bash
 ${NODENV_TEST_DIR}/etc/nodenv hooks/exec/ahoy.bash
 OUT
@@ -65,7 +65,7 @@ OUT
 
   NODENV_HOOK_PATH="$path" run nodenv-hooks exec
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 ${HOME}/hola.bash
 ${NODENV_TEST_DIR}/nodenv.d/exec/bright.sh
 OUT
