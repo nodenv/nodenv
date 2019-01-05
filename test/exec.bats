@@ -38,7 +38,7 @@ create_executable() {
   nodenv-rehash
   run nodenv-completions exec
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 --help
 node
 npm
@@ -70,7 +70,7 @@ SH
 
   run nodenv-exec node -w "/path to/node script.rb" -- extra args
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 ${NODENV_ROOT}/versions/2.0/bin/node
   -w
   /path to/node script.rb

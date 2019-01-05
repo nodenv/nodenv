@@ -49,7 +49,7 @@ create_executable() {
 
   run ls "${NODENV_ROOT}/shims"
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 node
 npm
 OUT
@@ -103,7 +103,7 @@ OUT
 
   run ls "${NODENV_ROOT}/shims"
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 node
 npm
 OUT

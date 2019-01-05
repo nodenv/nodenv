@@ -27,7 +27,7 @@ else
 fi"
   run nodenv-completions hello
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 --help
 hello
 OUT
@@ -44,7 +44,7 @@ else
 fi"
   run nodenv-completions hello happy world
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 --help
 happy
 world

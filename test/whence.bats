@@ -16,7 +16,7 @@ create_executable() {
 
   run nodenv-whence node
   assert_success
-  assert_output <<OUT
+  assert_output - <<OUT
 1.8
 2.0
 OUT

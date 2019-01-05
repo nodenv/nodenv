@@ -53,7 +53,7 @@ OUT
 
 @test "fish instructions" {
   run nodenv-init fish
-  assert [ "$status" -eq 1 ]
+  assert_failure 1
   assert_line 'status --is-interactive; and source (nodenv init -|psub)'
 }
 
