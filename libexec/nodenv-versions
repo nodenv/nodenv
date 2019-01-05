@@ -82,8 +82,9 @@ print_version() {
 }
 
 sort_versions() {
-  sed -E 'h; s/[~^<>=]//g; s/^([[:digit:]])/a.\1/g; s/[+-]/./g; s/$/.0.0.0.0/; G; s/\n/ /' | \
-    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
+  sed -E 'h; s/[~^<>=[:space:]]//g; s/^([[:digit:]])/a.\1/g; s/[+-]/./g; s/$/.0.0.0.0/; G; s/\n/ /' \
+  | LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n \
+  | cut -d' ' -f 2-
 }
 
 # Include "system" in the non-bare output, if it exists
