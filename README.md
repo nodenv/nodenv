@@ -34,6 +34,35 @@ bulletproof deployments.
 
 <!-- toc -->
 
+- [How It Works](#how-it-works)
+  * [Understanding PATH](#understanding-path)
+  * [Understanding Shims](#understanding-shims)
+  * [Choosing the Node Version](#choosing-the-node-version)
+  * [Locating the Node Installation](#locating-the-node-installation)
+- [Installation](#installation)
+  * [Homebrew on macOS](#homebrew-on-macos)
+    + [Upgrading with Homebrew](#upgrading-with-homebrew)
+  * [Basic GitHub Checkout](#basic-github-checkout)
+    + [Upgrading with Git](#upgrading-with-git)
+  * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
+  * [Installing Node versions](#installing-node-versions)
+  * [Uninstalling Node versions](#uninstalling-node-versions)
+  * [Uninstalling nodenv](#uninstalling-nodenv)
+- [Command Reference](#command-reference)
+  * [nodenv local](#nodenv-local)
+  * [nodenv global](#nodenv-global)
+  * [nodenv shell](#nodenv-shell)
+  * [nodenv versions](#nodenv-versions)
+  * [nodenv version](#nodenv-version)
+  * [nodenv rehash](#nodenv-rehash)
+  * [nodenv which](#nodenv-which)
+  * [nodenv whence](#nodenv-whence)
+- [Environment variables](#environment-variables)
+- [Development](#development)
+  * [Credits](#credits)
+
+<!-- tocstop -->
+
 ## How It Works
 
 At a high level, nodenv intercepts Node commands using shim
