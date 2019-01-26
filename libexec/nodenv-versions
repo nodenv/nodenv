@@ -92,21 +92,24 @@ if [ -n "$include_system" ] && NODENV_VERSION=system nodenv-which node >/dev/nul
   print_version system
 fi
 
-{
-  shopt -s nullglob
-  for path in "$versions_dir"/*; do
-    if [ -d "$path" ]; then
-      if [ -n "$skip_aliases" ] && [ -L "$path" ]; then
-        target="$(realpath "$path")"
-        [ "${target%/*}" != "$versions_dir" ] || continue
+while read -r version; do
+  print_version "$version"
+done < <(
+  {
+    shopt -s nullglob
+    for path in "$versions_dir"/*; do
+      if [ -d "$path" ]; then
+        if [ -n "$skip_aliases" ] && [ -L "$path" ]; then
+          target="$(realpath "$path")"
+          [ "${target%/*}" != "$versions_dir" ] || continue
+        fi
+        echo "${path##*/}"
       fi
-      echo "${path##*/}"
-    fi
-  done
-  shopt -u nullglob
-} \
-| sort_versions \
-| while read -r version; do print_version "$version"; done
+    done
+    shopt -u nullglob
+  } \
+  | sort_versions
+)
 
 if [ "$num_versions" -eq 0 ] && [ -n "$include_system" ]; then
   echo "Warning: no Node detected on the system" >&2
