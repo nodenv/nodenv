@@ -71,6 +71,19 @@ OUT
 OUT
 }
 
+@test "multiple versions with no system node" {
+  create_version "1.8.7"
+  create_version "1.9.3"
+  create_version "2.0.0"
+  PATH="$(path_without node)" run nodenv-versions
+  assert_success
+  assert_output - <<OUT
+  1.8.7
+  1.9.3
+  2.0.0
+OUT
+}
+
 @test "sorts semantically" {
   stub_system_node
   create_version "8.0.0"
