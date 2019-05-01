@@ -23,7 +23,8 @@ if [ -z "$NODENV_TEST_DIR" ]; then
 
   export NODENV_ROOT="${NODENV_TEST_DIR}/root"
   export HOME="${NODENV_TEST_DIR}/home"
-  export NODENV_HOOK_PATH="${NODENV_ROOT}/nodenv.d"
+  TEST_NODENV_HOOK_PATH="${NODENV_ROOT}/nodenv.d"
+  export NODENV_HOOK_PATH=$TEST_NODENV_HOOK_PATH:$BATS_TEST_DIRNAME/../nodenv.d
 
   PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
   PATH="${NODENV_TEST_DIR}/bin:$PATH"
@@ -64,9 +65,9 @@ path_without() {
 }
 
 create_hook() {
-  mkdir -p "${NODENV_HOOK_PATH}/$1"
-  touch "${NODENV_HOOK_PATH}/$1/$2"
+  mkdir -p "${TEST_NODENV_HOOK_PATH}/$1"
+  touch "${TEST_NODENV_HOOK_PATH}/$1/$2"
   if [ ! -t 0 ]; then
-    cat > "${NODENV_HOOK_PATH}/$1/$2"
+    cat > "${TEST_NODENV_HOOK_PATH}/$1/$2"
   fi
 }
