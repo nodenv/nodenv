@@ -43,7 +43,7 @@ git_commit() {
 
   run nodenv---version
   assert_success
-  assert_output "nodenv 0.4.1-2-g$(git rev-parse --short HEAD)"
+  assert_output "nodenv 0.4.1+2.$(git rev-parse --short HEAD)"
 }
 
 @test "prints default version if no tags in git repo" {
