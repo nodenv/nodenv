@@ -1,6 +1,6 @@
 {
   "name": "@nodenv/nodenv",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Manage multiple NodeJS versions",
   "homepage": "https://github.com/nodenv/nodenv#readme",
   "license": "MIT",
