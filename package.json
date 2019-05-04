@@ -25,6 +25,7 @@
   "files": [
     "completions",
     "libexec",
+    "nodenv.d",
     "src"
   ],
   "scripts": {
