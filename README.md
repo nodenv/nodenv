@@ -165,8 +165,10 @@ If you're on macOS, we recommend installing nodenv with
 2. Set up nodenv in your shell.
 
     ~~~ sh
-    $ nodenv init
+    $ eval "$(nodenv init -)"
     ~~~
+
+    Add the above line to a rc file of your favorite shell and run `source RCFILE`
 
    Follow the printed instructions to [set up nodenv shell integration](#how-nodenv-hooks-into-your-shell).
 
