@@ -168,9 +168,10 @@ If you're on macOS, we recommend installing nodenv with
     $ eval "$(nodenv init -)"
     ~~~
 
-    Add the above line to a rc file of your favorite shell and run `source RCFILE`
+   Append the above line to your shell's rc/profile file and restart your shell.
 
-   Follow the printed instructions to [set up nodenv shell integration](#how-nodenv-hooks-into-your-shell).
+   For shell-specific instructions to [set up nodenv shell integration](#how-nodenv-hooks-into-your-shell),
+   run `nodenv init`.
 
 3. Close your Terminal window and open a new one so your changes take
    effect.
