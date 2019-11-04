@@ -39,15 +39,13 @@
     "version": "scripty",
     "version:sync": "scripty",
     "postversion": "npm publish",
-    "prepublishOnly": "npm run publish:github && npm run publish:brew",
-    "publish:brew": "brew-publish",
+    "prepublishOnly": "npm run publish:github",
     "publish:github": "scripty"
   },
   "devDependencies": {
     "bats": "^1.1.0",
     "bats-assert": "jasonkarns/bats-assert-1",
     "bats-support": "jasonkarns/bats-support",
-    "brew-publish": "^2.3.1",
     "scripty": "^2.0.0-0"
   }
 }
