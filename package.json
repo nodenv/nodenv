@@ -29,23 +29,19 @@
     "src"
   ],
   "scripts": {
-    "clean": "scripty",
     "build": "src/configure && make -C src",
+    "clean": "rm -f libexec/*.dylib",
     "install": "npm run build",
     "test": "bats ${CI:+--tap} test",
-    "test:with_native_ext": "scripty",
-    "test:without_native_ext": "scripty",
-    "preversion": "scripty",
-    "version": "scripty",
-    "version:sync": "scripty",
-    "postversion": "npm publish",
-    "prepublishOnly": "npm run publish:github",
-    "publish:github": "scripty"
+    "test:with_native_ext": "npm run build && npm test",
+    "test:without_native_ext": "npm run clean && npm test",
+    "preversion": "script/preversion",
+    "version": "script/version-sync",
+    "postversion": "git push --follow-tags && npm publish"
   },
   "devDependencies": {
     "bats": "^1.1.0",
     "bats-assert": "jasonkarns/bats-assert-1",
-    "bats-support": "jasonkarns/bats-support",
-    "scripty": "^2.0.0-0"
+    "bats-support": "jasonkarns/bats-support"
   }
 }
