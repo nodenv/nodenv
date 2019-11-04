@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/nodenv/nodenv.svg?branch=master)](https://travis-ci.org/nodenv/nodenv)
-
 # Groom your app’s Node environment with nodenv.
 
 Use nodenv to pick a Node version for your application and guarantee
@@ -27,7 +25,7 @@ bulletproof deployments.
   variables with [nodenv-vars](https://github.com/nodenv/nodenv-vars).
   See more [plugins on the
   wiki](https://github.com/nodenv/nodenv/wiki/Plugins).
-  
+
 [**Why choose nodenv?**](https://github.com/nodenv/nodenv/wiki/Why-nodenv%3F)
 
 ## Table of Contents
