@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Summary: List all Node versions available to nodenv
+# Summary: List installed Node versions
 # Usage: nodenv versions [--bare] [--skip-aliases]
 #
 # Lists all Node versions found in `$NODENV_ROOT/versions/*'.
