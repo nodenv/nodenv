@@ -4,6 +4,23 @@ on:
     tags: 'v*'
 
 jobs:
+  github:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: script/release-notes | tee relnotes.txt
+      - id: relname
+        run: echo "::set-output name=version::${TAG_REF##*/v}"
+        env:
+          TAG_REF: ${{ github.ref }}
+
+      - uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: nodenv ${{ steps.relname.outputs.version }}
+          body_path: relnotes.txt
+
   homebrew:
     runs-on: ubuntu-latest
     steps:
