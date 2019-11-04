@@ -44,6 +44,7 @@ bulletproof deployments.
     + [Upgrading with Homebrew](#upgrading-with-homebrew)
   * [Basic GitHub Checkout](#basic-github-checkout)
     + [Upgrading with Git](#upgrading-with-git)
+    + [Updating the list of available Node versions](#updating-the-list-of-available-node-versions)
   * [How nodenv hooks into your shell](#how-nodenv-hooks-into-your-shell)
   * [Installing Node versions](#installing-node-versions)
   * [Uninstalling Node versions](#uninstalling-node-versions)
