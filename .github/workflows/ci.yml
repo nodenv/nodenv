@@ -1,0 +1,24 @@
+name: CI
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        native_ext: [with_native_ext, without_native_ext]
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/cache@preview
+      id: cache
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-node-
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 13
+    - run: npm ci
+    - run: npm run test:${{ matrix.native_ext }}

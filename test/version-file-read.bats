@@ -80,3 +80,22 @@ IN
   assert_success
   assert_output "1.9.3"
 }
+
+@test "prevents directory traversal" {
+  cat > my-version <<<".."
+  run nodenv-version-file-read my-version
+  assert_failure
+  assert_output "nodenv: invalid version in \`my-version'"
+
+  cat > my-version <<<"../foo"
+  run nodenv-version-file-read my-version
+  assert_failure
+  assert_output "nodenv: invalid version in \`my-version'"
+}
+
+@test "allows path segments in version string" {
+  cat > my-version <<<"lts/carbon"
+  run nodenv-version-file-read my-version
+  assert_success
+  assert_output "lts/carbon"
+}

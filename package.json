@@ -33,6 +33,8 @@
     "build": "src/configure && make -C src",
     "install": "npm run build",
     "test": "bats ${CI:+--tap} test",
+    "test:with_native_ext": "scripty",
+    "test:without_native_ext": "scripty",
     "preversion": "scripty",
     "version": "scripty",
     "version:sync": "scripty",
