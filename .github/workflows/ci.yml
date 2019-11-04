@@ -8,7 +8,7 @@ jobs:
       matrix:
         native_ext: ['', '1']
         os: [ubuntu-latest, macOS-latest]
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: Install bats
