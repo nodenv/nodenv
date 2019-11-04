@@ -302,6 +302,16 @@ command to update nodenv along with all installed plugins.
 $ nodenv update
 ~~~
 
+#### Updating the list of available Node versions
+
+If you're using the `nodenv install` command, then the list of available Node versions is not automatically updated when pulling from the nodenv repo.
+To do this manually:
+
+~~~ sh
+$ cd ~/.nodenv/plugins/node-build
+$ git pull
+~~~
+
 ### How nodenv hooks into your shell
 
 Skip this section unless you must know what every line in your shell
