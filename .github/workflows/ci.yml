@@ -6,15 +6,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        native_ext: ['', '1']
         os: [ubuntu-latest, macOS-latest]
+        native_ext: [with_native_ext, without_native_ext]
 
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
       with:
         node-version: 13
-    - name: Run tests
-      env:
-        RBENV_NATIVE_EXT: ${{ matrix.native_ext }}
-      run: npm cit
+    - run: npm ci
+    - run: npm run test:${{ matrix.native_ext }}
