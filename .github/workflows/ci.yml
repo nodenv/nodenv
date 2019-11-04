@@ -11,9 +11,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Install bats
-      run: git clone --depth 1 https://github.com/sstephenson/bats.git
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 13
     - name: Run tests
       env:
         RBENV_NATIVE_EXT: ${{ matrix.native_ext }}
-      run: PATH="./bats/bin:$PATH" test/run
+      run: npm cit
