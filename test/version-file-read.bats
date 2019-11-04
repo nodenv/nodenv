@@ -93,9 +93,9 @@ IN
   assert_output "nodenv: invalid version in \`my-version'"
 }
 
-@test "disallows path segments in version string" {
-  cat > my-version <<<"foo/bar"
+@test "allows path segments in version string" {
+  cat > my-version <<<"lts/carbon"
   run nodenv-version-file-read my-version
-  assert_failure
-  assert_output "nodenv: invalid version in \`my-version'"
+  assert_success
+  assert_output "lts/carbon"
 }
