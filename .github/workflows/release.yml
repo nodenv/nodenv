@@ -1,15 +1,41 @@
 name: Release
 on:
   push:
-    tags: 'v*'
+    tags:
+      - 'v*'
+      - '!*-*' # skip prereleases
 
 jobs:
+  github:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: script/release-notes | tee relnotes.txt
+      - id: relname
+        env:
+          TAG_REF: ${{ github.ref }}
+        run: echo "::set-output name=version::${TAG_REF##*/v}"
+      - uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: nodenv ${{ steps.relname.outputs.version }}
+          body_path: relnotes.txt
+
   homebrew:
     runs-on: ubuntu-latest
     steps:
-      - uses: mislav/bump-homebrew-formula-action@v1.4
-        if: "!contains(github.ref, '-')" # skip prereleases
+      - uses: mislav/bump-homebrew-formula-action@v1
         with:
           formula-name: nodenv
         env:
           COMMITTER_TOKEN: ${{ secrets.HOMEBREW_BUMP_PR_COMMITTER_TOKEN }}
+
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
