@@ -1,7 +1,9 @@
 name: Release
 on:
   push:
-    tags: 'v*'
+    tags:
+      - 'v*'
+      - '!*-*' # skip prereleases
 
 jobs:
   github:
@@ -10,10 +12,9 @@ jobs:
       - uses: actions/checkout@v1
       - run: script/release-notes | tee relnotes.txt
       - id: relname
-        run: echo "::set-output name=version::${TAG_REF##*/v}"
         env:
           TAG_REF: ${{ github.ref }}
-
+        run: echo "::set-output name=version::${TAG_REF##*/v}"
       - uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -24,8 +25,7 @@ jobs:
   homebrew:
     runs-on: ubuntu-latest
     steps:
-      - uses: mislav/bump-homebrew-formula-action@v1.4
-        if: "!contains(github.ref, '-')" # skip prereleases
+      - uses: mislav/bump-homebrew-formula-action@v1
         with:
           formula-name: nodenv
         env:
