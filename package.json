@@ -37,7 +37,7 @@
     "test:without_native_ext": "npm run clean && npm test",
     "preversion": "script/preversion",
     "version": "script/version-sync",
-    "postversion": "git push --follow-tags && npm publish"
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "bats": "^1.1.0",
