@@ -11,15 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - run: script/release-notes | tee relnotes.txt
-      - id: relname
-        env:
-          TAG_REF: ${{ github.ref }}
-        run: echo "::set-output name=version::${TAG_REF##*/v}"
+      - uses: olegtarasov/get-tag@v1
+        id: tagname
       - uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: nodenv ${{ steps.relname.outputs.version }}
+          name: nodenv ${{ steps.tagname.outputs.tag }}
           body_path: relnotes.txt
 
   homebrew:
