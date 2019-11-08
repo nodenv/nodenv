@@ -3,18 +3,7 @@ on: [push]
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macOS-latest]
-        native_ext: [with_native_ext, without_native_ext]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/cache@v1
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-    - uses: actions/setup-node@v1
-    - run: npm ci
-    - run: npm run test:${{ matrix.native_ext }}
