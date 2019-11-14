@@ -5,6 +5,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        native_ext: [with_native_ext, without_native_ext]
+
     steps:
     - uses: actions/checkout@v1
     - uses: actions/cache@v1
@@ -12,4 +16,4 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
     - run: npm ci
-    - run: npm test
+    - run: npm run test:${{ matrix.native_ext }}
