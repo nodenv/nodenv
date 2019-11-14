@@ -1,8 +1,9 @@
 name: Test
-on: [push]
+on: push
 
 jobs:
-  - runs-on: ${{ matrix.os }}
+  test:
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
