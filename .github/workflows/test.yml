@@ -15,6 +15,5 @@ jobs:
       with:
         path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-    - uses: actions/setup-node@v1
     - run: npm ci
     - run: npm run test:${{ matrix.native_ext }}
