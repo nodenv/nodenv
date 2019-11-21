@@ -3,10 +3,10 @@ on: push
 
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu, macOS]
         native_ext: [with_native_ext, without_native_ext]
 
     steps:
