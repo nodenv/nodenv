@@ -37,7 +37,8 @@
     "test:without_native_ext": "npm run clean && npm test",
     "preversion": "script/preversion",
     "version": "script/version-sync",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "unmerged": "git for-each-ref refs/rbenv-tags --format='%(refname)' --merged"
   },
   "devDependencies": {
     "bats": "^1.1.0",
