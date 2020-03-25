@@ -3,7 +3,7 @@
 load test_helper
 
 create_version() {
-  mkdir -p "${NODENV_ROOT}/versions/$1"
+  mkdir -p "${NODENV_ROOT}/versions/$1/bin"
 }
 
 setup() {
@@ -116,14 +116,35 @@ OUT
 OUT
 }
 
+@test "indicates current version when using lts alias" {
+  stub_system_node
+  create_version "1.9.3"
+  create_version "2.0.0"
+  mkdir "${NODENV_ROOT}/versions/lts"
+  ln -s "../1.9.3" "${NODENV_ROOT}/versions/lts/bar"
+
+  NODENV_VERSION=lts/bar run nodenv-versions
+
+  assert_success
+  assert_output - <<OUT
+  system
+  1.9.3
+  2.0.0
+* lts/bar => 1.9.3 (set by NODENV_VERSION environment variable)
+OUT
+}
+
 @test "bare doesn't indicate current version" {
   create_version "1.9.3"
   create_version "2.0.0"
+  mkdir "${NODENV_ROOT}/versions/lts"
+  ln -s "../1.9.3" "${NODENV_ROOT}/versions/lts/bar"
   NODENV_VERSION=1.9.3 run nodenv-versions --bare
   assert_success
   assert_output - <<OUT
 1.9.3
 2.0.0
+lts/bar
 OUT
 }
 
@@ -155,6 +176,23 @@ OUT
 OUT
 }
 
+@test "per-project version when using lts alias" {
+  stub_system_node
+  create_version "1.9.3"
+  create_version "2.0.0"
+  mkdir "${NODENV_ROOT}/versions/lts"
+  ln -s "../1.9.3" "${NODENV_ROOT}/versions/lts/bar"
+  cat > ".node-version" <<<"lts/bar"
+  run nodenv-versions
+  assert_success
+  assert_output - <<OUT
+  system
+  1.9.3
+  2.0.0
+* lts/bar => 1.9.3 (set by ${NODENV_TEST_DIR}/.node-version)
+OUT
+}
+
 @test "ignores non-directories under versions" {
   create_version "1.9"
   touch "${NODENV_ROOT}/versions/hello"
@@ -167,12 +205,15 @@ OUT
 @test "lists symlinks under versions" {
   create_version "1.8.7"
   ln -s "1.8.7" "${NODENV_ROOT}/versions/1.8"
+  mkdir "${NODENV_ROOT}/versions/lts"
+  ln -s "../1.8.7" "${NODENV_ROOT}/versions/lts/foo"
 
   run nodenv-versions --bare
   assert_success
   assert_output - <<OUT
 1.8
 1.8.7
+lts/foo
 OUT
 }
 
