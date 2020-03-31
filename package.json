@@ -5,7 +5,7 @@
   "homepage": "https://github.com/nodenv/nodenv#readme",
   "license": "MIT",
   "contributors": [
-    "Jason Karns <jason@karns.name> (http://jason.karns.name)",
+    "Jason Karns <jason.karns@gmail.com> (http://jasonkarns.com)",
     "Sam Stephenson <sstephenson@gmail.com> (http://sstephenson.us)",
     "Will McKenzie <willmckenzie@oinutter.co.uk> (http://www.oinutter.co.uk)"
   ],
@@ -30,8 +30,9 @@
   ],
   "scripts": {
     "build": "src/configure && make -C src",
-    "clean": "rm -f libexec/*.dylib",
-    "install": "npm run build",
+    "clean": "src/configure && make -C src clean",
+    "preinstall": "npm run clean",
+    "postinstall": "npm run build",
     "test": "bats ${CI:+--tap} test",
     "test:with_native_ext": "npm run build && npm test",
     "test:without_native_ext": "npm run clean && npm test",
