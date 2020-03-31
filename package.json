@@ -37,7 +37,7 @@
     "test:with_native_ext": "npm run build && npm test",
     "test:without_native_ext": "npm run clean && npm test",
     "preversion": "script/preversion",
-    "version": "script/version-sync",
+    "version": "script/sync-version",
     "postversion": "git push --follow-tags",
     "unmerged": "git for-each-ref refs/rbenv-tags --format='%(refname)' --merged"
   },
