@@ -40,6 +40,8 @@ bulletproof deployments.
 - [Installation](#installation)
   * [Homebrew on macOS](#homebrew-on-macos)
     + [Upgrading with Homebrew](#upgrading-with-homebrew)
+  * [via ZPlug plugin manager for Zsh](#via-zplug-plugin-manager-for-zsh)
+    + [Upgrading with ZPlug](#upgrading-with-zplug)
   * [Basic GitHub Checkout](#basic-github-checkout)
     + [Upgrading with Git](#upgrading-with-git)
     + [Updating the list of available Node versions](#updating-the-list-of-available-node-versions)
@@ -202,6 +204,25 @@ Node versions, upgrade the Homebrew packages:
 $ brew upgrade nodenv node-build
 ~~~
 
+### via ZPlug plugin manager for Zsh
+Add the following line to your `.zshrc`:
+
+```zplug "RiverGlide/zsh-nodenv", from:gitlab```
+
+Then install the plugin
+~~~ zsh
+  $ source ~/.zshrc
+  $ zplug install
+~~~
+
+The ZPlug plugin will install and initialise `nodenv` and `node-build` and add `nodenv` and `nodenv-install` to your `PATH`
+
+#### Upgrading with ZPlug
+To update to the latest nodenv and update node-build with newly released
+Node versions, update the ZPlug plugin:
+~~~ sh
+$ zplug update RiverGlide/nodenv
+~~~
 
 ### Basic GitHub Checkout
 
