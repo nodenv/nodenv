@@ -99,7 +99,7 @@ done < <(
     shopt -s nullglob
     for path in "$versions_dir"/* "$versions_dir"/lts/*; do
       if [ -d "$path" ]; then
-        if [ "$(basename "$path")" == "lts" ]; then
+        if [[ $path =~ /lts(/bin)?$ && ! -L $path ]]; then
           continue
         fi
 

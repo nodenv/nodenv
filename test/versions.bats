@@ -116,7 +116,7 @@ OUT
 OUT
 }
 
-@test "indicates current version when using lts alias" {
+@test "indicates current version when using lts/<codename> alias" {
   stub_system_node
   create_version "1.9.3"
   create_version "2.0.0"
@@ -131,6 +131,23 @@ OUT
   1.9.3
   2.0.0
 * lts/bar => 1.9.3 (set by NODENV_VERSION environment variable)
+OUT
+}
+
+@test "indicates current version when using lts as a direct alias" {
+  stub_system_node
+  create_version "1.9.3"
+  create_version "2.0.0"
+  ln -s "./1.9.3" "${NODENV_ROOT}/versions/lts"
+
+  NODENV_VERSION=lts run nodenv-versions
+
+  assert_success
+  assert_output - <<OUT
+  system
+  1.9.3
+  2.0.0
+* lts => 1.9.3 (set by NODENV_VERSION environment variable)
 OUT
 }
 
