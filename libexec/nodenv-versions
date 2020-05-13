@@ -99,9 +99,7 @@ done < <(
     shopt -s nullglob
     for path in "$versions_dir"/* "$versions_dir"/lts/*; do
       if [ -d "$path" ]; then
-        if [[ $path =~ /lts(/bin)?$ && ! -L $path ]]; then
-          continue
-        fi
+        if [ ! -d "$path/bin" ]; then continue; fi
 
         if [ -n "$skip_aliases" ] && [ -L "$path" ]; then
           target="$(realpath "$path")"
