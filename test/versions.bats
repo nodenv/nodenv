@@ -3,7 +3,7 @@
 load test_helper
 
 create_version() {
-  mkdir -p "${NODENV_ROOT}/versions/$1"
+  mkdir -p "${NODENV_ROOT}/versions/$1/bin"
 }
 
 setup() {
@@ -167,19 +167,22 @@ OUT
 @test "lists symlinks under versions" {
   create_version "1.8.7"
   ln -s "1.8.7" "${NODENV_ROOT}/versions/1.8"
+  mkdir "${NODENV_ROOT}/versions/lts"
+  ln -s "../1.8.7" "${NODENV_ROOT}/versions/lts/argon"
 
   run nodenv-versions --bare
   assert_success
   assert_output - <<OUT
 1.8
 1.8.7
+lts/argon
 OUT
 }
 
 @test "doesn't list symlink aliases when --skip-aliases" {
   create_version "1.8.7"
   ln -s "1.8.7" "${NODENV_ROOT}/versions/1.8"
-  mkdir moo
+  mkdir -p moo/bin
   ln -s "${PWD}/moo" "${NODENV_ROOT}/versions/1.9"
 
   run nodenv-versions --bare --skip-aliases
@@ -188,5 +191,64 @@ OUT
   assert_output - <<OUT
 1.8.7
 1.9
+OUT
+}
+
+@test "recurses into lts subdirectory" {
+  create_version "2.0.0"
+  mkdir "${NODENV_ROOT}/versions/lts"
+  create_version "lts/argon"
+  ln -s "../2.0.0" "${NODENV_ROOT}/versions/lts/boron"
+
+  NODENV_VERSION=2.0.0 run nodenv-versions
+
+  assert_success
+  assert_output - <<OUT
+  system
+* 2.0.0 (set by NODENV_VERSION environment variable)
+  lts/argon
+  lts/boron
+OUT
+}
+
+@test "does not recurse into non-lts subdirectories" {
+  create_version "2.0.0"
+  mkdir "${NODENV_ROOT}/versions/other"
+  create_version "other/1.2.3"
+
+  NODENV_VERSION=2.0.0 run nodenv-versions
+
+  assert_success
+  assert_output - <<OUT
+  system
+* 2.0.0 (set by NODENV_VERSION environment variable)
+OUT
+}
+
+@test "lists version named lts" {
+  create_version "2.0.0"
+  create_version "lts"
+
+  NODENV_VERSION=2.0.0 run nodenv-versions
+
+  assert_success
+  assert_output - <<OUT
+  system
+* 2.0.0 (set by NODENV_VERSION environment variable)
+  lts
+OUT
+}
+
+@test "lists alias named lts" {
+  create_version "2.0.0"
+  ln -s "2.0.0" "${NODENV_ROOT}/versions/lts"
+
+  NODENV_VERSION=2.0.0 run nodenv-versions
+
+  assert_success
+  assert_output - <<OUT
+  system
+* 2.0.0 (set by NODENV_VERSION environment variable)
+  lts
 OUT
 }

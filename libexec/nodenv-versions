@@ -97,13 +97,15 @@ while read -r version; do
 done < <(
   {
     shopt -s nullglob
-    for path in "$versions_dir"/*; do
+    for path in "$versions_dir"/* "$versions_dir"/lts/*; do
       if [ -d "$path" ]; then
+        if [ ! -d "$path/bin" ]; then continue; fi
+
         if [ -n "$skip_aliases" ] && [ -L "$path" ]; then
           target="$(realpath "$path")"
           [ "${target%/*}" != "$versions_dir" ] || continue
         fi
-        echo "${path##*/}"
+        echo "${path#"${versions_dir}/"}"
       fi
     done
     shopt -u nullglob
