@@ -142,7 +142,7 @@ installed:
 * `~/.nodenv/versions/0.12.0/`
 * `~/.nodenv/versions/iojs-1.0.0/`
 
-Version names to nodenv are simply the names of the directories in
+Version names to nodenv are simply the names of the directories or symlinks in
 `~/.nodenv/versions`.
 
 ## Installation
