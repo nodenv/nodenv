@@ -361,6 +361,18 @@ Node manually as a subdirectory of `~/.nodenv/versions/`. An entry in
 that directory can also be a symlink to a Node version installed
 elsewhere on the filesystem. nodenv doesn't care; it will simply treat
 any entry in the `versions/` directory as a separate Node version.
+Additionally, `nodenv` has special support for an `lts/` subdirectory inside
+`versions/`. This works great with the
+[`nodenv-aliases`](https://github.com/nodenv/nodenv-aliases) plugin, for example:
+
+~~~ sh
+$ cd ~/.nodenv/versions
+$ mkdir lts
+
+# Create a symlink that allows to use "lts/erbium" as a nodenv version
+# that always points to the latest Node 12 version that is installed.
+$ ln -s 12 lts/erbium
+~~~
 
 ### Uninstalling Node versions
 
@@ -464,6 +476,8 @@ the currently active version.
       0.9.12
       * 0.10.0 (set by /Users/will/.nodenv/version)
 
+This will also list symlinks to specific Node versions inside the `~/.nodenv/versions` or `~/.nodenv/versions/lts` directories.
+
 ### nodenv version
 
 Displays the currently active Node version, along with information on
@@ -475,7 +489,7 @@ how it was set.
 ### nodenv rehash
 
 Installs shims for all Node executables known to nodenv (i.e.,
-`~/.nodenv/versions/*/bin/*`). Run this command after you install a new
+`~/.nodenv/versions/*/bin/*` and `~/.nodenv/versions/lts/*/bin/*`). Run this command after you install a new
 version of Node, or install an npm package that provides an executable binary.
 
     $ nodenv rehash
