@@ -7,7 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with: { fetch-depth: 0 }
-      - run: git fetch --tags
       - run: script/release-notes | tee relnotes.txt
       - uses: jasonkarns/create-release@master
         with: { body_file: relnotes.txt }
