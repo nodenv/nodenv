@@ -371,7 +371,7 @@ $ mkdir lts
 
 # Create a symlink that allows to use "lts/erbium" as a nodenv version
 # that always points to the latest Node 12 version that is installed.
-$ ln -s 12 lts/erbium
+$ ln -s ../12 lts/erbium
 ~~~
 
 ### Uninstalling Node versions
