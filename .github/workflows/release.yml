@@ -17,7 +17,7 @@ jobs:
       - uses: mislav/bump-homebrew-formula-action@v1
         with: { formula-name: nodenv }
         env:
-          COMMITTER_TOKEN: ${{ secrets.BREWTAP_TOKEN }}
+          COMMITTER_TOKEN: ${{ secrets.BOT_TOKEN }}
 
   npm:
     runs-on: ubuntu-latest
