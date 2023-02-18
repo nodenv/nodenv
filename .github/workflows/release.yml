@@ -5,7 +5,7 @@ jobs:
   github:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with: { fetch-depth: 0 }
       - run: script/release-notes | tee relnotes.txt
       - uses: jasonkarns/create-release@master
@@ -22,7 +22,7 @@ jobs:
   npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v1
         with:
           scope: nodenv
