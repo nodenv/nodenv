@@ -14,7 +14,7 @@ set -e
 
 cd "${BASH_SOURCE%/*}" 2>/dev/null
 
-version=1.4.0
+version=1.4.1
 
 semver_compliant() {
   sed -E 's/-([[:digit:]]+)-g([[:alnum:]]+)/+\1.\2/'
