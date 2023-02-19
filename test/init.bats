@@ -39,22 +39,29 @@ eval "\$(nodenv-init -)"
 echo \$NODENV_SHELL
 OUT
   chmod +x myscript.sh
-  run ./myscript.sh /bin/zsh
+  run ./myscript.sh
   assert_success
   assert_output "sh"
 }
 
-@test "setup shell completions (fish)" {
+@test "skip shell completions (fish)" {
   root="$(cd $BATS_TEST_DIRNAME/.. && pwd)"
   run nodenv-init - fish
   assert_success
-  assert_line "source '${root}/test/../libexec/../completions/nodenv.fish'"
+  local line="$(grep '^source' <<<"$output")"
+  [ -z "$line" ] || flunk "did not expect line: $line"
+}
+
+@test "posix shell instructions" {
+  run nodenv-init bash
+  assert [ "$status" -eq 1 ]
+  assert_line 'eval "$(nodenv init - bash)"'
 }
 
 @test "fish instructions" {
   run nodenv-init fish
   assert_failure 1
-  assert_line 'status --is-interactive; and source (nodenv init -|psub)'
+  assert_line 'status --is-interactive; and nodenv init - fish | source'
 }
 
 @test "option to skip rehash" {

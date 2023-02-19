@@ -19,7 +19,7 @@ setup() {
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-version
   assert_success
-  assert_output "system (set by ${NODENV_ROOT}/version)"
+  assert_output "system"
 }
 
 @test "using a symlink/alias" {

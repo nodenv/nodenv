@@ -147,12 +147,12 @@ Version names to nodenv are simply the names of the directories or symlinks in
 
 ## Installation
 
-### Homebrew on macOS
-
-If you're on macOS, we recommend installing nodenv with
-[Homebrew](https://brew.sh).
+### Using Package Managers
 
 1. Install nodenv.
+- **macOS**
+If you're on macOS, we recommend installing nodenv with
+[Homebrew](https://brew.sh).
 
     ~~~ sh
     $ brew install nodenv
@@ -160,6 +160,24 @@ If you're on macOS, we recommend installing nodenv with
 
    Note that this also installs `node-build`, so you'll be ready to
    install other Node versions out of the box.
+
+  - **Upgrading with Homebrew**
+
+    To upgrade to the latest nodenv and update node-build with newly released
+    Node versions, upgrade the Homebrew packages:
+
+    ~~~ sh
+    $ brew upgrade nodenv node-build
+    ~~~
+- **Debian, Ubuntu and their derivatives**
+    ~~~ sh
+    $ sudo apt install nodenv
+    ~~~
+- **Arch Linux and it's derivatives**
+
+  Archlinux has an [AUR Package](https://aur.archlinux.org/packages/nodenv/) for
+  nodenv and you can install it from the AUR using the instructions from this
+  [wiki page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
 
 2. Set up nodenv in your shell.
 
@@ -178,7 +196,7 @@ If you're on macOS, we recommend installing nodenv with
 4. Verify that nodenv is properly set up using this [nodenv-doctor][] script:
 
     ~~~ sh
-    $ curl -fsSL https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-doctor | bash
+    $ curl -fsSL https://github.com/nodenv/nodenv-installer/raw/main/bin/nodenv-doctor | bash
     Checking for `nodenv' in PATH: /usr/local/bin/nodenv
     Checking for nodenv shims in PATH: OK
     Checking `nodenv install' support: /usr/local/bin/nodenv-install (node-build 3.0.22-4-g49c4cb9)
@@ -191,16 +209,6 @@ If you're on macOS, we recommend installing nodenv with
 5. That's it! Installing nodenv includes node-build, so now you're ready to
    [install some other Node versions](#installing-node-versions) using
    `nodenv install`.
-
-
-#### Upgrading with Homebrew
-
-To upgrade to the latest nodenv and update node-build with newly released
-Node versions, upgrade the Homebrew packages:
-
-~~~ sh
-$ brew upgrade nodenv node-build
-~~~
 
 
 ### Basic GitHub Checkout
@@ -229,13 +237,15 @@ a systemwide install.
    command-line utility.
 
    * For **bash**:
-     ~~~ bash
-     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
-     ~~~
 
-   * For **Ubuntu Desktop** and **Windows Subsystem for Linux (WSL)**:
+     Ubuntu Desktop users should configure `~/.bashrc`:
      ~~~ bash
      $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bashrc
+     ~~~
+
+     On other platforms, bash is usually configured via `~/.bash_profile`:
+     ~~~ bash
+     $ echo 'export PATH="$HOME/.nodenv/bin:$PATH"' >> ~/.bash_profile
      ~~~
 
    * For **Zsh**:
@@ -262,7 +272,7 @@ a systemwide install.
 5. Verify that nodenv is properly set up using this [nodenv-doctor][] script:
 
     ~~~ sh
-    $ curl -fsSL https://github.com/nodenv/nodenv-installer/raw/master/bin/nodenv-doctor | bash
+    $ curl -fsSL https://github.com/nodenv/nodenv-installer/raw/main/bin/nodenv-doctor | bash
     Checking for `nodenv' in PATH: /usr/local/bin/nodenv
     Checking for nodenv shims in PATH: OK
     Checking `nodenv install' support: /usr/local/bin/nodenv-install (node-build 3.0.22-4-g49c4cb9)
@@ -349,12 +359,17 @@ provided by the [node-build][] project. If you installed it as part of GitHub
 checkout process outlined above you should be able to:
 
 ~~~ sh
-# list all available versions:
+# list latest stable versions:
 $ nodenv install -l
 
+# list all local versions:
+$ nodenv install -L
+
 # install a Node version:
-$ nodenv install 0.10.26
+$ nodenv install 16.13.2
 ~~~
+
+Set a Node version to finish installation and start using commands `nodenv global 18.14.1` or `rbenv local 18.14.1`
 
 Alternatively to the `install` command, you can download and compile
 Node manually as a subdirectory of `~/.nodenv/versions/`. An entry in
@@ -407,9 +422,17 @@ uninstall from the system.
         rm -rf `nodenv root`
 
    If you've installed nodenv using a package manager, as a final step
-   perform the nodenv package removal. For instance, for Homebrew:
+   perform the nodenv package removal.
+   - Homebrew:
 
-        brew uninstall nodenv
+        `brew uninstall nodenv`
+   - Debian, Ubuntu and their derivatives:
+        
+        `sudo apt purge nodenv`
+  
+   - Archlinux and it's derivatives:
+  
+          `sudo pacman -R nodenv`
 
 ## Command Reference
 
@@ -548,7 +571,7 @@ McKenzie](https://github.com/oinutter) and modified for node.
 
   [hooks]: https://github.com/rbenv/rbenv/wiki/Authoring-plugins#rbenv-hooks
   [node-build]: https://github.com/nodenv/node-build#readme
-  [nodenv-doctor]: https://github.com/nodenv/nodenv-installer/blob/master/bin/nodenv-doctor
+  [nodenv-doctor]: https://github.com/nodenv/nodenv-installer/blob/main/bin/nodenv-doctor
   [nodenv-installer]: https://github.com/nodenv/nodenv-installer#nodenv-installer
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
   [package-rehash-plugin]: https://github.com/nodenv/nodenv-package-rehash

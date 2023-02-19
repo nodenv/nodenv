@@ -8,15 +8,20 @@
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
 
-VERSION_NAME="$(nodenv-version-name)"
-VERSION_PATH="$(nodenv-prefix "$VERSION_NAME" 2>/dev/null || true)"
+version_name="$(nodenv-version-name)"
+version_origin="$(nodenv-version-origin)"
 
-while [ -L "$VERSION_PATH" ]; do
-  READLINK=$(type -p greadlink readlink | head -1)
+version_path="$(nodenv-prefix "$version_name" 2>/dev/null || true)"
+while [ -L "$version_path" ]; do
+  READLINK=$(type -p greadlink readlink 2>/dev/null | head -n1)
   [ -n "$READLINK" ] || break
 
-  VERSION_PATH=$($READLINK "$VERSION_PATH")
-  ALIAS=$(basename "$VERSION_PATH")
+  version_path=$($READLINK "$version_path")
+  ALIAS=$(basename "$version_path")
 done
 
-echo "$VERSION_NAME ${ALIAS+=> $ALIAS }(set by $(nodenv-version-origin))"
+if [ "$version_origin" = "${NODENV_ROOT}/version" ] && [ ! -e "$version_origin" ]; then
+  echo "$version_name${ALIAS+ => $ALIAS}"
+else
+  echo "$version_name${ALIAS+ => $ALIAS} (set by $version_origin)"
+fi

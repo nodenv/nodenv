@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# Summary: List installed Node versions
-# Usage: nodenv versions [--bare] [--skip-aliases]
+# Summary: List installed Ruby versions
+# Usage: rbenv versions [--bare] [--skip-aliases]
 #
-# Lists all Node versions found in `$NODENV_ROOT/versions/*'.
+# Lists all Ruby versions found in `$RBENV_ROOT/versions/*'.
 
 set -e
-[ -n "$NODENV_DEBUG" ] && set -x
+[ -n "$RBENV_DEBUG" ] && set -x
 
 unset bare
 unset skip_aliases
-# Provide nodenv completions
+# Provide rbenv completions
 for arg; do
   case "$arg" in
   --complete )
@@ -19,23 +19,23 @@ for arg; do
   --bare ) bare=1 ;;
   --skip-aliases ) skip_aliases=1 ;;
   * )
-    nodenv-help --usage versions >&2
+    rbenv-help --usage versions >&2
     exit 1
     ;;
   esac
 done
 
-versions_dir="${NODENV_ROOT}/versions"
+versions_dir="${RBENV_ROOT}/versions"
 
-if ! enable -f "${BASH_SOURCE%/*}"/nodenv-realpath.dylib realpath 2>/dev/null; then
-  if [ -n "$NODENV_NATIVE_EXT" ]; then
-    echo "nodenv: failed to load \`realpath' builtin" >&2
+if ! enable -f "${BASH_SOURCE%/*}"/rbenv-realpath.dylib realpath 2>/dev/null; then
+  if [ -n "$RBENV_NATIVE_EXT" ]; then
+    echo "rbenv: failed to load \`realpath' builtin" >&2
     exit 1
   fi
 
   READLINK=$(type -p greadlink readlink 2>/dev/null | head -n1)
   if [ -z "$READLINK" ]; then
-    echo "nodenv: cannot find readlink - are you missing GNU coreutils?" >&2
+    echo "rbenv: cannot find readlink - are you missing GNU coreutils?" >&2
     exit 1
   fi
 
@@ -65,15 +65,13 @@ fi
 
 list_versions() {
   shopt -s nullglob
-  for path in "$versions_dir"/* "$versions_dir"/lts/*; do
+  for path in "$versions_dir"/*; do
     if [ -d "$path" ]; then
-      if [ ! -d "$path/bin" ]; then continue; fi
-
       if [ -n "$skip_aliases" ] && [ -L "$path" ]; then
         target="$(realpath "$path")"
         [ "${target%/*}" != "$versions_dir" ] || continue
       fi
-      echo "${path#"${versions_dir}/"}"
+      echo "${path##*/}"
     fi
   done
   shopt -u nullglob
@@ -85,27 +83,26 @@ if [ -n "$bare" ]; then
 fi
 
 sort_versions() {
-  sed -E 'h; s/[~^<>=[:space:]]//g; s/^([[:digit:]])/a.\1/g; s/[+-]/./g; s/$/.0.0.0.0/; G; s/\n/ /' \
-  | LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n \
-  | cut -d' ' -f 2-
+  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z.\1/; s/$/.z/; G; s/\n/ /' | \
+    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
 }
 
 versions="$(
-  if NODENV_VERSION=system nodenv-which node >/dev/null 2>&1; then
+  if RBENV_VERSION=system rbenv-which ruby >/dev/null 2>&1; then
     echo system
   fi
   list_versions | sort_versions
 )"
 
 if [ -z "$versions" ]; then
-  echo "Warning: no Node detected on the system" >&2
+  echo "Warning: no Ruby detected on the system" >&2
   exit 1
 fi
 
-current_version="$(nodenv-version-name || true)"
+current_version="$(rbenv-version-name || true)"
 while read -r version; do
   if [ "$version" == "$current_version" ]; then
-    echo "* $(nodenv-version 2>/dev/null)"
+    echo "* $(rbenv-version 2>/dev/null)"
   else
     echo "  $version"
   fi

@@ -51,7 +51,7 @@ path_without() {
     if [ "$found" != "${NODENV_ROOT}/shims" ]; then
       alt="${NODENV_TEST_DIR}/$(echo "${found#/}" | tr '/' '-')"
       mkdir -p "$alt"
-      for util in bash head cut readlink greadlink; do
+      for util in bash head cut readlink greadlink sed sort awk; do
         if [ -x "${found}/$util" ]; then
           ln -s "${found}/$util" "${alt}/$util"
         fi

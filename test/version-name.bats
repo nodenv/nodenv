@@ -18,7 +18,7 @@ setup() {
   assert_output "system"
 }
 
-@test "system version is not checked for existance" {
+@test "system version is not checked for existence" {
   NODENV_VERSION=system run nodenv-version-name
   assert_success
   assert_output "system"

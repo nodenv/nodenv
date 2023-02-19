@@ -22,7 +22,7 @@ stub_system_node() {
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-versions
   assert_success
-  assert_output "* system (set by ${NODENV_ROOT}/version)"
+  assert_output "* system"
 }
 
 @test "not even system node available" {
@@ -44,7 +44,7 @@ stub_system_node() {
   run nodenv-versions
   assert_success
   assert_output - <<OUT
-* system (set by ${NODENV_ROOT}/version)
+* system
   1.9
 OUT
 }
@@ -64,7 +64,7 @@ OUT
   run nodenv-versions
   assert_success
   assert_output - <<OUT
-* system (set by ${NODENV_ROOT}/version)
+* system
   1.8.7
   1.9.3
   2.0.0

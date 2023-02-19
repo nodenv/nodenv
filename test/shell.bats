@@ -52,7 +52,7 @@ load test_helper
   NODENV_SHELL=bash run nodenv-sh-shell --unset
   assert_success
   assert_output - <<OUT
-NODENV_VERSION_OLD="\$NODENV_VERSION"
+NODENV_VERSION_OLD="\${NODENV_VERSION-}"
 unset NODENV_VERSION
 OUT
 }
@@ -80,7 +80,7 @@ SH
   NODENV_SHELL=bash run nodenv-sh-shell 1.2.3
   assert_success
   assert_output - <<OUT
-NODENV_VERSION_OLD="\$NODENV_VERSION"
+NODENV_VERSION_OLD="\${NODENV_VERSION-}"
 export NODENV_VERSION="1.2.3"
 OUT
 }
