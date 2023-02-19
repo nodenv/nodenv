@@ -1,15 +1,15 @@
 name: Release
-on: { push: { tags: 'v[0-9]+.[0-9]+.[0-9]+' } }
+on:
+  push: { tags: 'v[0-9]+.[0-9]+.[0-9]+' }
 
 jobs:
   github:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with: { fetch-depth: 0 }
-      - run: script/release-notes | tee relnotes.txt
-      - uses: jasonkarns/create-release@master
-        with: { body_file: relnotes.txt }
+      - run: gh release create --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
 
   homebrew:
     runs-on: ubuntu-latest
