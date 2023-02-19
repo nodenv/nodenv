@@ -5,7 +5,7 @@ jobs:
   github:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with: { fetch-depth: 0 }
       - run: script/release-notes | tee relnotes.txt
       - uses: jasonkarns/create-release@master
@@ -14,7 +14,7 @@ jobs:
   homebrew:
     runs-on: ubuntu-latest
     steps:
-      - uses: mislav/bump-homebrew-formula-action@v1
+      - uses: mislav/bump-homebrew-formula-action@v2
         with: { formula-name: nodenv }
         env:
           COMMITTER_TOKEN: ${{ secrets.BOT_TOKEN }}
@@ -22,8 +22,8 @@ jobs:
   npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           scope: nodenv
           registry-url: https://registry.npmjs.org
