@@ -89,7 +89,7 @@ OUT
 if [[ \$1 == "-S"* ]]; then
   found="\$(PATH="\${NODEPATH:-\$PATH}" which \$2)"
   # assert that the found executable has node for shebang
-  if head -1 "\$found" | grep node >/dev/null; then
+  if head -n1 "\$found" | grep node >/dev/null; then
     \$BASH "\$found"
   else
     echo "node: no Node script found in input (LoadError)" >&2

@@ -38,6 +38,7 @@ if [ -z "$shell" ]; then
   shell="${shell##-}"
   shell="${shell:-$SHELL}"
   shell="${shell##*/}"
+  shell="${shell%%-*}"
 fi
 
 root="${0%/*}/.."
@@ -70,10 +71,10 @@ if [ -z "$print" ]; then
     echo
     case "$shell" in
     fish )
-      echo 'status --is-interactive; and source (nodenv init -|psub)'
+      echo 'status --is-interactive; and nodenv init - fish | source'
       ;;
     * )
-      echo 'eval "$(nodenv init -)"'
+      printf 'eval "$(nodenv init - %s)"\n' "$shell"
       ;;
     esac
     echo
@@ -92,13 +93,13 @@ fish )
 * )
   echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
   echo "export NODENV_SHELL=$shell"
+
+  completion="${root}/completions/nodenv.${shell}"
+  if [ -r "$completion" ]; then
+    echo "source '$completion'"
+  fi
 ;;
 esac
-
-completion="${root}/completions/nodenv.${shell}"
-if [ -r "$completion" ]; then
-  echo "source '$completion'"
-fi
 
 if [ -z "$no_rehash" ]; then
   echo 'command nodenv rehash 2>/dev/null'
@@ -114,7 +115,7 @@ function nodenv
 
   switch "\$command"
   case ${commands[*]}
-    source (nodenv "sh-\$command" \$argv|psub)
+    nodenv "sh-\$command" \$argv|source
   case '*'
     command nodenv "\$command" \$argv
   end

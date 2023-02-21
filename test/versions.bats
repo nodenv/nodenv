@@ -22,7 +22,7 @@ stub_system_node() {
   assert [ ! -d "${NODENV_ROOT}/versions" ]
   run nodenv-versions
   assert_success
-  assert_output "* system (set by ${NODENV_ROOT}/version)"
+  assert_output "* system"
 }
 
 @test "not even system node available" {
@@ -44,7 +44,7 @@ stub_system_node() {
   run nodenv-versions
   assert_success
   assert_output - <<OUT
-* system (set by ${NODENV_ROOT}/version)
+* system
   1.9
 OUT
 }
@@ -64,7 +64,7 @@ OUT
   run nodenv-versions
   assert_success
   assert_output - <<OUT
-* system (set by ${NODENV_ROOT}/version)
+* system
   1.8.7
   1.9.3
   2.0.0
@@ -94,7 +94,7 @@ OUT
   run nodenv-versions
   assert_success
   assert_output - <<OUT
-* system (set by ${NODENV_ROOT}/version)
+* system
   8.0.0
   9.0.0
   10.0.0
@@ -195,6 +195,7 @@ OUT
 }
 
 @test "recurses into lts subdirectory" {
+  stub_system_node
   create_version "2.0.0"
   mkdir "${NODENV_ROOT}/versions/lts"
   create_version "lts/argon"
@@ -212,6 +213,7 @@ OUT
 }
 
 @test "does not recurse into non-lts subdirectories" {
+  stub_system_node
   create_version "2.0.0"
   mkdir "${NODENV_ROOT}/versions/other"
   create_version "other/1.2.3"
@@ -226,6 +228,7 @@ OUT
 }
 
 @test "lists version named lts" {
+  stub_system_node
   create_version "2.0.0"
   create_version "lts"
 
@@ -240,6 +243,7 @@ OUT
 }
 
 @test "lists alias named lts" {
+  stub_system_node
   create_version "2.0.0"
   ln -s "2.0.0" "${NODENV_ROOT}/versions/lts"
 

@@ -12,15 +12,14 @@
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
 
-cd "${BASH_SOURCE%/*}" 2>/dev/null
-
 version=1.4.1
+git_revision=""
 
 semver_compliant() {
   sed -E 's/-([[:digit:]]+)-g([[:alnum:]]+)/+\1.\2/'
 }
 
-if git remote -v 2>/dev/null | grep -q nodenv; then
+if cd "${BASH_SOURCE%/*}" 2>/dev/null && git remote -v 2>/dev/null | grep -q nodenv; then
   git_revision="$(git describe --tags HEAD 2>/dev/null | semver_compliant || true)"
   git_revision="${git_revision#v}"
 fi

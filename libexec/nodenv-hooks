@@ -22,30 +22,34 @@ if [ -z "$NODENV_COMMAND" ]; then
 fi
 
 if ! enable -f "${BASH_SOURCE%/*}"/nodenv-realpath.dylib realpath 2>/dev/null; then
-  READLINK=$(type -p greadlink readlink 2>/dev/null | head -1)
-  if [ -z "$READLINK" ]; then
-    echo "nodenv: cannot find readlink - are you missing GNU coreutils?" >&2
+  if [ -n "$NODENV_NATIVE_EXT" ]; then
+    echo "nodenv: failed to load \`realpath' builtin" >&2
     exit 1
   fi
+READLINK=$(type -p greadlink readlink 2>/dev/null | head -n1)
+if [ -z "$READLINK" ]; then
+  echo "nodenv: cannot find readlink - are you missing GNU coreutils?" >&2
+  exit 1
+fi
 
-  resolve_link() {
-    $READLINK "$1"
-  }
+resolve_link() {
+  $READLINK "$1"
+}
 
-  realpath() {
-    local cwd="$PWD"
-    local path="$1"
-    local name
+realpath() {
+  local cwd="$PWD"
+  local path="$1"
+  local name
 
-    while [ -n "$path" ]; do
-      name="${path##*/}"
-      [ "$name" = "$path" ] || cd "${path%/*}"
-      path="$(resolve_link "$name" || true)"
-    done
+  while [ -n "$path" ]; do
+    name="${path##*/}"
+    [ "$name" = "$path" ] || cd "${path%/*}"
+    path="$(resolve_link "$name" || true)"
+  done
 
-    echo "${PWD}/$name"
-    cd "$cwd"
-  }
+  echo "${PWD}/$name"
+  cd "$cwd"
+}
 fi
 
 IFS=: hook_paths=($NODENV_HOOK_PATH)

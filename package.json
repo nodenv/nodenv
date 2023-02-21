@@ -39,7 +39,7 @@
     "preversion": "script/preversion",
     "version": "script/sync-version",
     "postversion": "git push --follow-tags",
-    "unmerged": "git for-each-ref refs/rbenv-tags --format='%(refname)' --merged"
+    "behind-rbenv": "git for-each-ref refs/rbenv-tags --format='%(refname)' --no-merged"
   },
   "devDependencies": {
     "bats": "^1.9.0",
