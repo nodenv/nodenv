@@ -168,10 +168,6 @@ If you're on macOS, we recommend installing nodenv with
     ~~~ sh
     $ brew upgrade nodenv node-build
     ~~~
-- **Debian, Ubuntu and their derivatives**
-    ~~~ sh
-    $ sudo apt install nodenv
-    ~~~
 - **Arch Linux and it's derivatives**
 
   Archlinux has an [AUR Package](https://aur.archlinux.org/packages/nodenv/) for
@@ -425,10 +421,6 @@ uninstall from the system.
    - Homebrew:
 
         `brew uninstall nodenv`
-   - Debian, Ubuntu and their derivatives:
-        
-        `sudo apt purge nodenv`
-  
    - Archlinux and it's derivatives:
   
           `sudo pacman -R nodenv`
