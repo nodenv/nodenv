@@ -364,7 +364,7 @@ $ nodenv install -L
 $ nodenv install 16.13.2
 ~~~
 
-Set a Node version to finish installation and start using commands `nodenv global 18.14.1` or `rbenv local 18.14.1`
+Set a Node version to finish installation and start using commands `nodenv global 18.14.1` or `nodenv local 18.14.1`
 
 Alternatively to the `install` command, you can download and compile
 Node manually as a subdirectory of `~/.nodenv/versions/`. An entry in
@@ -422,7 +422,7 @@ uninstall from the system.
 
         `brew uninstall nodenv`
    - Archlinux and it's derivatives:
-  
+
           `sudo pacman -R nodenv`
 
 ## Command Reference
