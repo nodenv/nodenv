@@ -11,7 +11,7 @@
 #
 # - fetch from origin
 # - ensure it isn't already tagged
-# - ensure currently on master branch
+# - ensure currently on main branch
 # - ensure there are bin or definition changes to release
 
 set -euo pipefail
@@ -39,7 +39,7 @@ else
   done
 fi
 
-git fetch --quiet --tags origin master
+git fetch --quiet --tags origin main
 
 existing="$(git tag --points-at HEAD)"
 if [ -n "$existing" ]; then
@@ -48,8 +48,8 @@ if [ -n "$existing" ]; then
 fi
 
 current_branch="$(git symbolic-ref --short HEAD)"
-if [ "$current_branch" != master ]; then
-  echo "Aborting: Not currently on master branch" >&2
+if [ "$current_branch" != main ]; then
+  echo "Aborting: Not currently on main branch" >&2
   exit 1
 fi
 
