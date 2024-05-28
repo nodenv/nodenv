@@ -8,8 +8,8 @@ bulletproof deployments.
 **Powerful in development.** Specify your app's Node version once,
   in a single file. Keep all your teammates on the same page. No
   headaches running apps on different versions of Node. Just Works™
-  from the command line. Override the Node version anytime: just set
-  an environment variable.
+  from the command line.
+  Override the Node version anytime: just set an environment variable.
 
 **Rock-solid in production.** Your application's executables are its
   interface with ops. With nodenv and you'll never again need to `cd`
