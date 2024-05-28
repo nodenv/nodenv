@@ -10,14 +10,14 @@ jobs:
         native_ext: [with_native_ext, without_native_ext]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run test:${{ matrix.native_ext }}
 
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: github/super-linter/slim@v4
         env: # FIXME resolve failures for linters below and re-enable
           VALIDATE_BASH: false
