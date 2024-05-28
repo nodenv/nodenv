@@ -46,7 +46,7 @@ path_without() {
   local exe="$1"
   local path=":${PATH}:"
   local found alt util
-  for found in $(which -a "$exe"); do
+  for found in $(type -aP "$exe"); do
     found="${found%/*}"
     if [ "$found" != "${NODENV_ROOT}/shims" ]; then
       alt="${NODENV_TEST_DIR}/$(echo "${found#/}" | tr '/' '-')"

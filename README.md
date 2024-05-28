@@ -1,4 +1,4 @@
-# Groom your app’s Node environment with nodenv.
+# Seamlessly manage your app’s Node environment with nodenv.
 
 Use nodenv to pick a Node version for your application and guarantee
 that your development environment matches production. Put nodenv to work
@@ -148,38 +148,27 @@ Version names to nodenv are simply the names of the directories or symlinks in
 
 ### Using Package Managers
 
-1. Install nodenv.
-- **macOS**
-If you're on macOS, we recommend installing nodenv with
-[Homebrew](https://brew.sh).
+1. Install nodenv using one of the following approaches.
 
-    ```sh
-    brew install nodenv
-    ```
-
-   Note that this also installs `node-build`, so you'll be ready to
-   install other Node versions out of the box.
-
-  - **Upgrading with Homebrew**
-
-    To upgrade to the latest nodenv and update node-build with newly released
-    Node versions, upgrade the Homebrew packages:
-
-    ```sh
-    brew upgrade nodenv node-build
-    ```
-    
-- **Debian, Ubuntu and their derivatives**
-    
-    Presently, `nodenv` is not available in the Debian or Ubuntu package
-    repositories.
-    [Consider contributing!](https://github.com/nodenv/nodenv/issues/210) 
+   #### Homebrew
    
-- **Arch Linux and it's derivatives**
-
-  Archlinux has an [AUR Package](https://aur.archlinux.org/packages/nodenv/) for
-  nodenv and you can install it from the AUR using the instructions from this
-  [wiki page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
+   On macOS or Linux, we recommend installing nodenv with [Homebrew](https://brew.sh).
+   
+   ```sh
+   brew install nodenv
+   ```
+   
+   #### Debian, Ubuntu, and their derivatives
+       
+   Presently, `nodenv` is not available in the Debian or Ubuntu package
+   repositories.
+   [Consider contributing!](https://github.com/nodenv/nodenv/issues/210) 
+   
+   #### Arch Linux and its derivatives
+   
+   Archlinux has an [AUR Package](https://aur.archlinux.org/packages/nodenv/) for
+   nodenv and you can install it from the AUR using the instructions from this
+   [wiki page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
 
 2. Set up nodenv in your shell.
 
@@ -209,7 +198,7 @@ If you're on macOS, we recommend installing nodenv with
     ```
 
 5. That's it! Installing nodenv includes node-build, so now you're ready to
-   [install some other Node versions](#installing-node-versions) using
+   [install some Node versions](#installing-node-versions) using
    `nodenv install`.
 
 
