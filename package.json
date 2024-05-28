@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nodenv/nodenv.git"
+    "url": "git+https://github.com/nodenv/nodenv.git"
   },
   "bugs": {
     "url": "https://github.com/nodenv/nodenv/issues"
@@ -21,7 +21,9 @@
     "src": "./src",
     "test": "./test"
   },
-  "bin": "./libexec/nodenv",
+  "bin": {
+    "nodenv": "libexec/nodenv"
+  },
   "files": [
     "completions",
     "libexec",
@@ -43,7 +45,7 @@
   },
   "devDependencies": {
     "bats": "^1.11.0",
-    "bats-assert": "jasonkarns/bats-assert-1",
-    "bats-support": "jasonkarns/bats-support"
+    "bats-assert": "github:jasonkarns/bats-assert-1",
+    "bats-support": "github:jasonkarns/bats-support"
   }
 }
