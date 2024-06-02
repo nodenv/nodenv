@@ -1,28 +1,10 @@
 name: Release
 on:
   push: { tags: "v[0-9]+.[0-9]+.[0-9]+*" }
+  workflow_dispatch:
+permissions: {contents: read}
 
 jobs:
-  github:
-    permissions: { contents: write }
+  release:
+    permissions: {contents: write}
     uses: nodenv/.github/.github/workflows/release.yml@v4
-
-  homebrew:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: mislav/bump-homebrew-formula-action@v3
-        with: { formula-name: nodenv }
-        env:
-          COMMITTER_TOKEN: ${{ secrets.BOT_TOKEN }}
-
-  npm:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          scope: nodenv
-          registry-url: https://registry.npmjs.org
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
