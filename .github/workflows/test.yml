@@ -14,9 +14,9 @@ jobs:
         native_ext: [with_native_ext, without_native_ext]
 
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci
-      - run: npm run test:${{ matrix.native_ext }}
+    - uses: actions/checkout@v4
+    - run: npm ci
+    - run: npm run test:${{ matrix.native_ext }}
 
   test:
     uses: nodenv/.github/.github/workflows/test.yml@v4
@@ -31,11 +31,12 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/super-linter/slim@v6
-        env: # FIXME resolve failures for linters below and re-enable
-          VALIDATE_BASH: false
-          VALIDATE_CLANG_FORMAT: false
-          VALIDATE_CPP: false
-          VALIDATE_MARKDOWN: false
-          VALIDATE_NATURAL_LANGUAGE: false
+    - uses: actions/checkout@v4
+    - uses: github/super-linter/slim@v6
+      env: # FIXME resolve failures for linters below and re-enable
+        GITHUB_TOKEN: ${{ github.token }}
+        VALIDATE_BASH: false
+        VALIDATE_CLANG_FORMAT: false
+        VALIDATE_CPP: false
+        VALIDATE_MARKDOWN: false
+        VALIDATE_NATURAL_LANGUAGE: false
