@@ -1,8 +1,13 @@
 name: Test
-on: [push, pull_request]
+on:
+  pull_request:
+  push: {branches: main}
+  schedule: [{cron: '0 0 10 * *'}] # monthly https://crontab.guru/#0_0_10_*_*
+  workflow_dispatch:
+permissions: {contents: read}
 
 jobs:
-  test:
+  test_ext:
     runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
@@ -10,18 +15,33 @@ jobs:
         native_ext: [with_native_ext, without_native_ext]
 
     steps:
-      - uses: actions/checkout@v4
-      - run: npm ci
-      - run: npm run test:${{ matrix.native_ext }}
+    - uses: actions/checkout@v4
+    - run: npm ci
+    - run: npm run test:${{ matrix.native_ext }}
+
+  test:
+    uses: nodenv/.github/.github/workflows/test.yml@v4
+    with: {superlinter: false} # TODO renable superlinter
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+      security-events: write
+      statuses: write
 
   lint:
+    permissions: {contents: read, packages: read, statuses: write}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: github/super-linter/slim@v4
-        env: # FIXME resolve failures for linters below and re-enable
-          VALIDATE_BASH: false
-          VALIDATE_CLANG_FORMAT: false
-          VALIDATE_CPP: false
-          VALIDATE_MARKDOWN: false
-          VALIDATE_NATURAL_LANGUAGE: false
+    - uses: actions/checkout@v4
+      with: {fetch-depth: 0} # full history for files changed
+    - uses: github/super-linter/slim@v6
+      env: # FIXME resolve failures for linters below and re-enable
+        GITHUB_TOKEN: ${{ github.token }}
+        BASH_EXEC_IGNORE_LIBRARIES: true
+        VALIDATE_BASH: false
+        VALIDATE_CLANG_FORMAT: false
+        VALIDATE_CPP: false
+        VALIDATE_MARKDOWN: false
+        VALIDATE_NATURAL_LANGUAGE: false
+        VALIDATE_SHELL_SHFMT: false
