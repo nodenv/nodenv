@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test_ext:
     runs-on: ${{ matrix.os }}-latest
     strategy:
       matrix:
@@ -17,6 +17,16 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run test:${{ matrix.native_ext }}
+
+  test:
+    uses: nodenv/.github/.github/workflows/test.yml@v4
+    with: {superlinter: false} # TODO renable superlinter
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+      security-events: write
+      statuses: write
 
   lint:
     runs-on: ubuntu-latest
