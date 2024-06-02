@@ -4,7 +4,7 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: "/"
-    schedule: { interval: monthly }
+    schedule: { interval: weekly }
   - package-ecosystem: npm
     directory: "/"
-    schedule: { interval: monthly }
+    schedule: { interval: weekly }
