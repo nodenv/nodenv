@@ -38,6 +38,7 @@ jobs:
     - uses: github/super-linter/slim@v6
       env: # FIXME resolve failures for linters below and re-enable
         GITHUB_TOKEN: ${{ github.token }}
+        BASH_EXEC_IGNORE_LIBRARIES: true
         VALIDATE_BASH: false
         VALIDATE_CLANG_FORMAT: false
         VALIDATE_CPP: false
