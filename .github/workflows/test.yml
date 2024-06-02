@@ -32,6 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with: {fetch-depth: 0} # full history for files changed
     - uses: github/super-linter/slim@v6
       env: # FIXME resolve failures for linters below and re-enable
         GITHUB_TOKEN: ${{ github.token }}
