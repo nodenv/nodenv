@@ -82,7 +82,7 @@ if [ ! "${libexec_dir%/*}"/nodenv.d -ef "$NODENV_ROOT"/nodenv.d ]; then
   # Add nodenv's own `nodenv.d` unless nodenv was cloned to NODENV_ROOT
   NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${libexec_dir%/*}/nodenv.d"
 fi
-NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
+NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:/usr/etc/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
 for plugin_hook in "${NODENV_ROOT}/plugins/"*/etc/nodenv.d; do
   NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${plugin_hook}"
 done

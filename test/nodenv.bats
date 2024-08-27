@@ -65,7 +65,7 @@ load test_helper
 @test "NODENV_HOOK_PATH includes etc/nodenv.d folders" {
   mkdir -p "$NODENV_ROOT"/plugins/nodenv-foo/etc/nodenv.d
   run nodenv echo -F: "NODENV_HOOK_PATH"
-  assert_line 6 "${NODENV_ROOT}/plugins/nodenv-foo/etc/nodenv.d"
+  assert_line -n 8 "${NODENV_ROOT}/plugins/nodenv-foo/etc/nodenv.d"
 }
 
 @test "NODENV_HOOK_PATH preserves value from environment" {
@@ -80,5 +80,5 @@ load test_helper
   unset NODENV_HOOK_PATH
   run nodenv echo "NODENV_HOOK_PATH"
   assert_success
-  assert_output "${NODENV_ROOT}/nodenv.d:${BATS_TEST_DIRNAME%/*}/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
+  assert_output "${NODENV_ROOT}/nodenv.d:${BATS_TEST_DIRNAME%/*}/nodenv.d:/usr/etc/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
 }
