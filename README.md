@@ -1,5 +1,8 @@
 # Seamlessly manage your app’s Node environment with nodenv.
-
+git clone https://github.com/github/docs
+cd docs
+npm ci
+npm start
 Use nodenv to pick a Node version for your application and guarantee
 that your development environment matches production. Put nodenv to work
 with [npm](https://www.npmjs.com/) for painless Node upgrades and
