@@ -21,7 +21,7 @@ load test_helper
   root="$(cd $BATS_TEST_DIRNAME/.. && pwd)"
   run nodenv-init - bash
   assert_success
-  assert_line "source '${root}/test/../libexec/../completions/nodenv.bash'"
+  assert_line "source '${root}/test/../completions/nodenv.bash'"
 }
 
 @test "detect parent shell" {
