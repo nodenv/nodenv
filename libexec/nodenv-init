@@ -41,7 +41,9 @@ if [ -z "$shell" ]; then
   shell="${shell%%-*}"
 fi
 
-root="${0%/*}/.."
+root="${BASH_SOURCE:-$0}"
+root="${root%/*}"
+root="${root%/*}"
 
 if [ -z "$print" ]; then
   case "$shell" in
@@ -74,6 +76,7 @@ if [ -z "$print" ]; then
       echo 'status --is-interactive; and nodenv init - fish | source'
       ;;
     * )
+      # shellcheck disable=SC2016
       printf 'eval "$(nodenv init - %s)"\n' "$shell"
       ;;
     esac
@@ -85,18 +88,27 @@ fi
 
 mkdir -p "${NODENV_ROOT}/"{shims,versions}
 
+nodenv_in_path=true
+if [ -n "$NODENV_ORIG_PATH" ]; then
+  PATH="$NODENV_ORIG_PATH" command -v nodenv >/dev/null || nodenv_in_path=""
+fi
+
 case "$shell" in
 fish )
-  echo "set -gx PATH '${NODENV_ROOT}/shims' \$PATH"
-  echo "set -gx NODENV_SHELL $shell"
+  [ -n "$nodenv_in_path" ] || printf "set -gx PATH '%s/bin' \$PATH\n" "$root"
+  printf "set -gx PATH '%s/shims' \$PATH\n" "$NODENV_ROOT"
+  printf 'set -gx NODENV_SHELL %s\n' "$shell"
 ;;
 * )
-  echo 'export PATH="'${NODENV_ROOT}'/shims:${PATH}"'
-  echo "export NODENV_SHELL=$shell"
+  # shellcheck disable=SC2016
+  [ -n "$nodenv_in_path" ] || printf 'export PATH="%s/bin:${PATH}"\n' "$root"
+  # shellcheck disable=SC2016
+  printf 'export PATH="%s/shims:${PATH}"\n' "$NODENV_ROOT"
+  printf 'export NODENV_SHELL=%s\n' "$shell"
 
   completion="${root}/completions/nodenv.${shell}"
   if [ -r "$completion" ]; then
-    echo "source '$completion'"
+    printf "source '%s'\n" "$completion"
   fi
 ;;
 esac
