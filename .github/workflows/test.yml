@@ -1,10 +1,11 @@
 name: Test
 on:
+  push:
   pull_request:
-  push: {branches: main}
-  schedule: [{cron: '0 0 10 * *'}] # monthly https://crontab.guru/#0_0_10_*_*
+  schedule: [{ cron: "0 0 10 * *" }] # monthly https://crontab.guru/#0_0_10_*_*
   workflow_dispatch:
-permissions: {contents: read}
+
+permissions: {}
 
 jobs:
   test_ext:
@@ -25,7 +26,7 @@ jobs:
     - run: npm run test:${{ matrix.native_ext }}
 
   test:
-    uses: nodenv/.github/.github/workflows/test.yml@v4
+    uses: nodenv/.github/.github/workflows/test.yml@v5
     with: {superlinter: false} # TODO renable superlinter
     permissions:
       contents: read
