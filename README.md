@@ -4,13 +4,13 @@ nodenv is a version manager tool for the Node.js on Unix-like systems. It is use
 
 ## How It Works
 
-After nodenv injects itself into your PATH at installation time, any invocation of `node`, `gem`, `bundler`, or other Node.js-related executable will first activate nodenv. Then, nodenv scans the current project directory for a file named `.node-version`. If found, that file determines the version of Node.js that should be used within that directory. Finally, nodenv looks up that Node.js version among those installed under `~/.nodenv/versions/`.
+After nodenv injects itself into your PATH at installation time, any invocation of `node`, `npm`, `npx`, or other Node.js-related executable will first activate nodenv. Then, nodenv scans the current project directory for a file named `.node-version`. If found, that file determines the version of Node.js that should be used within that directory. Finally, nodenv looks up that Node.js version among those installed under `~/.nodenv/versions/`.
 
 You can choose the Node.js version for your project with, for example:
 ```sh
 cd myproject
-# choose Node.js version 3.1.2:
-nodenv local 3.1.2
+# choose Node.js version 24.1.0:
+nodenv local 24.1.0
 ```
 
 Doing so will create or update the `.node-version` file in the current directory with the version that you've chosen. A different project of yours that is another directory might be using a different version of Node.js altogether—nodenv will seamlessly transition from one Node.js version to another when you switch projects.
@@ -75,7 +75,7 @@ That's it! You are now ready to [install some Node.js versions](#installing-node
 </summary>
 
 > **Note**  
-> For a more automated install, you can use [nodenv-installer](https://github.com/nodenv/nodenv-installer#nodenv-installer). If you do not want to execute scripts downloaded from a web URL or simply prefer a manual approach, follow the steps below.
+> For a more automated install, you can use [nodenv-installer][]. If you do not want to execute scripts downloaded from a web URL or simply prefer a manual approach, follow the steps below.
 
 This will get you going with the latest version of nodenv without needing a system-wide install.
 
@@ -130,7 +130,7 @@ nodenv install -l
 nodenv install -L
 
 # install a Node.js version:
-nodenv install 3.1.2
+nodenv install 24.1.0
 ```
 
 > **Note**  
@@ -141,35 +141,32 @@ nodenv install 3.1.2
 
 Set a Node.js version to finish installation and start using Node.js:
 ```sh
-nodenv global 3.1.2   # set the default Node.js version for this machine
+nodenv global 24.1.0   # set the default Node.js version for this machine
 # or:
-nodenv local 3.1.2    # set the Node.js version for this directory
+nodenv local 24.1.0    # set the Node.js version for this directory
 ```
 
 Alternatively to the `nodenv install` command, you can download and compile Node.js manually as a subdirectory of `~/.nodenv/versions`. An entry in that directory can also be a symlink to a Node.js version installed elsewhere on the filesystem.
 
 #### Installing npm packages
 
-Select a Node.js version for your project using `nodenv local 3.1.2`, for example. Then, proceed to install gems as you normally would:
+Select a Node.js version for your project using `nodenv local 24.1.0`, for example. Then, proceed to install packages as you normally would:
 
 ```sh
-cd ~/.nodenv/versions
-mkdir lts
-
-# Create a symlink that allows to use "lts/erbium" as a nodenv version
-# that always points to the latest Node 12 version that is installed.
-ln -s ../12 lts/erbium
+npm install testdouble
 ```
 
-> **Warning**  
-> You _should not use sudo_ to install gems. Typically, the Node.js versions will be installed under your home directory and thus writeable by your user. If you get the “you don't have write permissions” error when installing gems, it's likely that your "system" Node.js version is still a global default. Change that with `nodenv global <version>` and try again.
+Packages installed globally are scoped to the currently-active Node.js version.
+If there is a set of npm packages that you wish to be installed (globally) in every Node.js version, you may be interested in the [nodenv-default-packages][] plugin.
 
-As time goes on, Node versions you install will accumulate in your
-`~/.nodenv/versions` directory.
+> **Warning**  
+> You _should not use sudo_ to install packages. Typically, the Node.js versions will be installed under your home directory and thus writeable by your user. If you get the “you don't have write permissions” error when installing packages, it's likely that your "system" Node.js version is still a global default. Change that with `nodenv global <version>` and try again.
+
+Check the location where packages are being installed with `npm prefix -g`:
 
 ```sh
-gem env home
-# => ~/.nodenv/versions/<version>/lib/node/gems/...
+npm prefix -g
+# => ~/.nodenv/versions/<version>
 ```
 
 #### Uninstalling Node.js versions
@@ -180,7 +177,7 @@ As time goes on, Node.js versions you install will accumulate in your
 To remove old Node.js versions, simply `rm -rf` the directory of the
 version you want to remove. You can find the directory of a particular
 Node.js version with the `nodenv prefix` command, e.g. `nodenv prefix
-2.7.0`.
+20.7.0`.
 
 The [node-build][] plugin provides an `nodenv uninstall` command to
 automate the removal process.
@@ -195,12 +192,11 @@ Lists all Node.js versions known to nodenv, and shows an asterisk next to
 the currently active version.
 
     $ nodenv versions
-      1.8.7-p352
-      1.9.2-p290
-    * 1.9.3-p327 (set by /Users/sam/.nodenv/version)
-      jruby-1.7.1
-      rbx-1.2.4
-      ree-1.8.7-2011.03
+      20.19.4
+      22.17.1
+    * 24.4.1 (set by /Users/jasonkarns/code/testdouble/.node-version)
+      graal+ce-19.2.1
+      iojs-3.3.1
 
 ### nodenv version
 
@@ -208,7 +204,7 @@ Displays the currently active Node.js version, along with information on
 how it was set.
 
     $ nodenv version
-    1.9.3-p327 (set by /Users/sam/.nodenv/version)
+    24.4.1 (set by /Users/jasonkarns/code/testdouble/.node-version)
 
 ### nodenv local
 
@@ -218,7 +214,7 @@ overrides the global version, and can be overridden itself by setting
 the `NODENV_VERSION` environment variable or with the `nodenv shell`
 command.
 
-    nodenv local 3.1.2
+    nodenv local 24.1.0
 
 When run without a version number, `nodenv local` reports the currently
 configured local version. You can also unset the local version:
@@ -232,7 +228,7 @@ the version name to the `~/.nodenv/version` file. This version can be
 overridden by an application-specific `.node-version` file, or by
 setting the `NODENV_VERSION` environment variable.
 
-    nodenv global 3.1.2
+    nodenv global 24.1.0
 
 The special version name `system` tells nodenv to use the system Node
 (detected by searching your `$PATH`).
@@ -246,7 +242,7 @@ Sets a shell-specific Node version by setting the `NODENV_VERSION`
 environment variable in your shell. This version overrides
 application-specific versions and the global version.
 
-    nodenv shell 0.11.11
+    nodenv shell 20.7.0
 
 When run without a version number, `nodenv shell` reports the current
 value of `NODENV_VERSION`. You can also unset the shell version:
@@ -258,11 +254,11 @@ the installation instructions) in order to use this command. If you
 prefer not to use shell integration, you may simply set the
 `NODENV_VERSION` variable yourself:
 
-    export NODENV_VERSION=0.10.26
+    export NODENV_VERSION=20.7.0
 
 ### nodenv rehash
 
-Installs shims for all Node.js executables known to nodenv (`~/.nodenv/versions/*/bin/*`). Typically you do not need to run this command, as it will run automatically after installing gems.
+Installs shims for all Node.js executables known to nodenv (`~/.nodenv/versions/*/bin/*`). You may need to run this command after installing/uninstalling packages. Or see the [nodenv-package-rehash][] plugin.
 
     nodenv rehash
 
@@ -274,16 +270,15 @@ Displays the full path to the executable that nodenv will invoke when
 you run the given command.
 
     $ nodenv which npm
-    /Users/will/.nodenv/versions/0.10.26/bin/npm
+    /Users/will/.nodenv/versions/24.1.0/bin/npm
 
 ### nodenv whence
 
 Lists all Node.js versions that contain the specified executable name.
 
-    $ nodenv whence npm
-    0.10.0
-    0.9.12
-    0.8.22
+    $ nodenv whence yarn
+    24.1.0
+    20.7.0
 
 ## Environment variables
 
@@ -334,9 +329,9 @@ uninstall from the system.
 
 ## Development
 
-Tests are executed using [Bats](https://github.com/sstephenson/bats):
+Tests are executed using [Bats][]:
 
-    $ bats test
+    $ npm test
     $ bats test/<file>.bats
 
 Please feel free to submit pull requests and file bugs on the [issue
@@ -346,7 +341,7 @@ tracker](https://github.com/nodenv/nodenv/issues).
 
 Forked from [Sam Stephenson](https://github.com/sstephenson)'s
 [rbenv](https://github.com/rbenv/rbenv) by [Will
-McKenzie](https://github.com/oinutter) and modified for node.
+McKenzie](https://github.com/oinutter) and modified for Node.js.
 
 
   [hooks]: https://github.com/nodenv/nodenv/wiki/Authoring-plugins#nodenv-hooks
@@ -354,5 +349,7 @@ McKenzie](https://github.com/oinutter) and modified for node.
   [nodenv-doctor]: https://github.com/nodenv/nodenv-installer/blob/main/bin/nodenv-doctor
   [nodenv-installer]: https://github.com/nodenv/nodenv-installer#nodenv-installer
   [nodenv-update]: https://github.com/charlesbjohnson/nodenv-update
-  [package-rehash-plugin]: https://github.com/nodenv/nodenv-package-rehash
+  [nodenv-package-rehash]: https://github.com/nodenv/nodenv-package-rehash
   [alternatives]: https://github.com/rbenv/rbenv/wiki/Other-version-managers
+  [nodenv-default-packages]: https://github.com/nodenv/nodenv-default-packages 
+  [bats]: https://github.com/bats-core/bats-core

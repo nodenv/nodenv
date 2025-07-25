@@ -1,5 +1,4 @@
 ---
-
 name: Lint
 on:
   pull_request:
