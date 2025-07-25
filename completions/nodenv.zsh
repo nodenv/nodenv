@@ -8,6 +8,8 @@ _nodenv() {
   local words completions
   read -cA words
 
+  emulate -L zsh
+
   if [ "${#words}" -eq 2 ]; then
     completions="$(nodenv commands)"
   else

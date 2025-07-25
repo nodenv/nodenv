@@ -7,20 +7,6 @@ on:
 
 permissions: {}
 jobs:
-  test_ext:
-    runs-on: ${{ matrix.os }}-latest
-    strategy:
-      matrix:
-        os: [ubuntu, macOS]
-        native_ext: [with_native_ext, without_native_ext]
-
-    steps:
-      - uses: step-security/harden-runner@ec9f2d5744a09debf3a187a3f4f675c53b671911 # v2.13.0
-        with: { egress-policy: audit }
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - run: npm ci
-      - run: npm run test:${{ matrix.native_ext }}
-
   test:
     uses: nodenv/.github/.github/workflows/test.yml@v6
     with: { superlinter: false } # TODO renable superlinter
