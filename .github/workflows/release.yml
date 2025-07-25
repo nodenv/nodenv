@@ -2,9 +2,9 @@ name: Release
 on:
   push: { tags: "v[0-9]+.[0-9]+.[0-9]+*" }
   workflow_dispatch:
-permissions: {contents: read}
+permissions: { contents: read }
 
 jobs:
   release:
-    permissions: {contents: write}
+    permissions: { contents: write }
     uses: nodenv/.github/.github/workflows/release.yml@v4
