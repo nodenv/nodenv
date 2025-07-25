@@ -31,7 +31,7 @@ jobs:
       security-events: write
       statuses: write
 
-  lint:
+  super-lint:
     permissions: { contents: read, packages: read, statuses: write }
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +42,8 @@ jobs:
       - uses: github/super-linter/slim@4e51915f4a812abf59fed160bb14595c0a38a9e7 # v6
         env: # FIXME resolve failures for linters below and re-enable
           GITHUB_TOKEN: ${{ github.token }}
-          BASH_EXEC_IGNORE_LIBRARIES: true
+          BASH_EXEC_IGNORE_LIBRARIES: true # superlinter bug
+          VALIDATE_JSCPD: false # jscpd is false-positive prone and generally not useful
           VALIDATE_BASH: false
           VALIDATE_CLANG_FORMAT: false
           VALIDATE_CPP: false
