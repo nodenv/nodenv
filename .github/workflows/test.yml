@@ -22,7 +22,7 @@ jobs:
       - run: npm run test:${{ matrix.native_ext }}
 
   test:
-    uses: nodenv/.github/.github/workflows/test.yml@v5
+    uses: nodenv/.github/.github/workflows/test.yml@v6
     with: { superlinter: false } # TODO renable superlinter
     permissions:
       contents: read
