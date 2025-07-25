@@ -48,5 +48,6 @@ jobs:
           VALIDATE_CLANG_FORMAT: false
           VALIDATE_CPP: false
           VALIDATE_MARKDOWN: false
+          VALIDATE_MARKDOWN_PRETTIER: false
           VALIDATE_NATURAL_LANGUAGE: false
           VALIDATE_SHELL_SHFMT: false
