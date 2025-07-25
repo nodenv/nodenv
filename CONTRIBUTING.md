@@ -14,9 +14,9 @@ The configuration assumes nodenv's remote is `origin`, and rbenv's remote is `rb
 
    **Beware:** the `--tags` option to `fetch` et. al. will override this setting.
 
-2. Fetch rbenv's tags to their own refspec namespace (`rbenv-tags`, in this case):
+2. Fetch rbenv's tags to their own refspec namespace (`rbtags`, in this case):
 
-        git config --add remote.rbenv.fetch '+refs/tags/*:refs/rbenv-tags/*'
+        git config --add remote.rbenv.fetch '+refs/tags/*:refs/rbtags/*'
 
 
 Resulting snippet in `.git/config`:
@@ -28,13 +28,13 @@ Resulting snippet in `.git/config`:
 [remote "rbenv"]
 	url = git@github.com:rbenv/rbenv.git
 	fetch = +refs/heads/*:refs/remotes/rbenv/*
-	fetch = +refs/tags/*:refs/rbenv-tags/*
+	fetch = +refs/tags/*:refs/rbtags/*
 	tagopt = --no-tags
 ```
 
-To reference rbenv's tags, use the fully qualified refspec: `refs/rbenv-tags/vX.Y.Z`
+To reference rbenv's tags, use the fully qualified refspec: `refs/rbtags/vX.Y.Z`
 
-    git show refs/rbenv-tags/v1.1.2
-    git checkout refs/rbenv-tags/v1.1.2
-    git merge refs/rbenv-tags/v1.1.2
+    git show refs/rbtags/v1.1.2
+    git checkout refs/rbtags/v1.1.2
+    git merge refs/rbtags/v1.1.2
 
