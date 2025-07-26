@@ -1,15 +1,24 @@
+# npm ignores
+/node_modules
+/package*/
+/tmp
+/nodenv-nodenv-*.tgz
+
+# built files
+/src/Makefile
+
+# ignores that would affect installation (via git)
+
+# nodenv
 /plugins
 /shims
 /version
 /versions
+/.node-version
+
+# node-build ignores
 /sources
 /cache
-/libexec/*.dylib
-/src/Makefile
-/src/*.o
-/node_modules
 
-# from nodenv-default-packages plugin: https://github.com/nodenv/nodenv-default-packages
+# nodenv-default-packages plugin
 /default-packages
-
-/nodenv-nodenv-*.tgz
