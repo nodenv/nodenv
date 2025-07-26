@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: nodenv completions <command> [arg1 arg2...]
+# Usage: nodenv completions <command> [<args>...]
 
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
@@ -15,7 +15,7 @@ if [ "$COMMAND" = "--complete" ]; then
   exec nodenv-commands
 fi
 
-COMMAND_PATH="$(command -v "nodenv-$COMMAND" || command -v "nodenv-sh-$COMMAND")"
+COMMAND_PATH="$(type -P "nodenv-$COMMAND" "nodenv-sh-$COMMAND" | head -n1)"
 
 # --help is provided automatically
 echo --help

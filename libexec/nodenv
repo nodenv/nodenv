@@ -7,7 +7,7 @@ if [ "$1" = "--debug" ]; then
 fi
 
 if [ -n "$NODENV_DEBUG" ]; then
-  # https://wiki-dev.bash-hackers.org/scripting/debuggingtips#making_xtrace_more_useful
+  # https://web.archive.org/web/20221105082147/https://wiki-dev.bash-hackers.org/scripting/debuggingtips#making_xtrace_more_useful
   export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
   set -x
 fi
@@ -39,21 +39,50 @@ export NODENV_DIR
 
 [ -n "$NODENV_ORIG_PATH" ] || export NODENV_ORIG_PATH="$PATH"
 
+canonicalize() {
+  local readlink resolved_path
+  if readlink="$(type -P greadlink)" || readlink="$(type -P readlink)"; then
+    # happy path: GNU & BSD readlink, macOS 12.3+
+    if resolved_path="$("$readlink" -f "$1" 2>/dev/null)"; then
+      printf "%s\n" "$resolved_path"
+      return 0
+    fi
+    # likely macOS < 12.3 with old readlink
+    local path="$1"
+    while [ -L "$path" ]; do
+      resolved_path="$("$readlink" "$path" 2>/dev/null)"
+      [[ $resolved_path == /* ]] || resolved_path="$(cd "${path%/*}/${resolved_path%/*}" && pwd)/${resolved_path##*/}"
+      path="$resolved_path"
+    done
+    printf "%s\n" "$path"
+    return 0
+  fi
+  # fail if the argument is a symlink and was not canonicalized
+  [ ! -L "$1" ] || return 1
+}
+
 shopt -s nullglob
 
+# all this trouble just to find out where nodenv's executables live
 nodenv_bin="${BASH_SOURCE:-$0}"
-bin_path="$(cd "${nodenv_bin%/*}"/../libexec && pwd -P)"
+if libexec_dir="$(canonicalize "$nodenv_bin")"; then
+  libexec_dir="${libexec_dir%/*}"
+else
+  libexec_dir="${nodenv_bin%/*}"
+  [ "$libexec_dir" != "." ] || libexec_dir="$PWD"
+fi
+
 for plugin_bin in "${NODENV_ROOT}/plugins/"*/bin; do
   PATH="${plugin_bin}:${PATH}"
 done
-export PATH="${bin_path}:${PATH}"
+export PATH="${libexec_dir}:${PATH}"
 
 NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${NODENV_ROOT}/nodenv.d"
-if [ "${bin_path%/*}" != "$NODENV_ROOT" ]; then
+if [ ! "${libexec_dir%/*}"/nodenv.d -ef "$NODENV_ROOT"/nodenv.d ]; then
   # Add nodenv's own `nodenv.d` unless nodenv was cloned to NODENV_ROOT
-  NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${bin_path%/*}/nodenv.d"
+  NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${libexec_dir%/*}/nodenv.d"
 fi
-NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
+NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:/usr/etc/nodenv.d:/usr/local/etc/nodenv.d:/etc/nodenv.d:/usr/lib/nodenv/hooks"
 for plugin_hook in "${NODENV_ROOT}/plugins/"*/etc/nodenv.d; do
   NODENV_HOOK_PATH="${NODENV_HOOK_PATH}:${plugin_hook}"
 done
@@ -77,7 +106,7 @@ case "$command" in
   exec nodenv-help
   ;;
 * )
-  command_path="$(command -v "nodenv-$command" || true)"
+  command_path="$(type -P "nodenv-$command" || true)"
   if [ -z "$command_path" ]; then
     if [ "$command" == "shell" ]; then
       abort "shell integration not enabled. Run \`nodenv init' for instructions."

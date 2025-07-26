@@ -52,16 +52,70 @@ OUT
   [ -z "$line" ] || flunk "did not expect line: $line"
 }
 
-@test "posix shell instructions" {
+@test "set up bash" {
+  assert [ ! -e ~/.bash_profile ]
   run nodenv-init bash
-  assert [ "$status" -eq 1 ]
-  assert_line 'eval "$(nodenv init - bash)"'
+  assert_success
+  assert_output "writing ~/.bash_profile: now configured for nodenv."
+  run cat ~/.bash_profile
+  # shellcheck disable=SC2016
+  assert_line 'eval "$(nodenv init - --no-rehash bash)"'
 }
 
-@test "fish instructions" {
+@test "set up bash (bashrc)" {
+  mkdir -p "$HOME"
+  touch ~/.bashrc
+  assert [ ! -e ~/.bash_profile ]
+  run nodenv-init bash
+  assert_success
+  assert_output "writing ~/.bashrc: now configured for nodenv."
+  run cat ~/.bashrc
+  # shellcheck disable=SC2016
+  assert_line 'eval "$(nodenv init - --no-rehash bash)"'
+}
+
+@test "set up zsh" {
+  unset ZDOTDIR
+  assert [ ! -e ~/.zprofile ]
+  run nodenv-init zsh
+  assert_success
+  assert_output "writing ~/.zprofile: now configured for nodenv."
+  run cat ~/.zprofile
+  # shellcheck disable=SC2016
+  assert_line 'eval "$(nodenv init - --no-rehash zsh)"'
+}
+
+@test "set up zsh (zshrc)" {
+  unset ZDOTDIR
+  mkdir -p "$HOME"
+  cat > ~/.zshrc <<<"# nodenv"
+  run nodenv-init zsh
+  assert_success
+  assert_output "writing ~/.zshrc: now configured for nodenv."
+  run cat ~/.zshrc
+  # shellcheck disable=SC2016
+  assert_line 'eval "$(nodenv init - --no-rehash zsh)"'
+}
+
+@test "set up fish" {
+  unset XDG_CONFIG_HOME
   run nodenv-init fish
-  assert_failure 1
-  assert_line 'status --is-interactive; and nodenv init - fish | source'
+  assert_success
+  assert_output "writing ~/.config/fish/config.fish: now configured for nodenv."
+  run cat ~/.config/fish/config.fish
+  assert_line 'status --is-interactive; and nodenv init - --no-rehash fish | source'
+}
+
+@test "set up multiple shells at once" {
+  unset ZDOTDIR
+  unset XDG_CONFIG_HOME
+  run nodenv-init bash zsh fish
+  assert_success
+  assert_output - <<OUT
+writing ~/.bash_profile: now configured for nodenv.
+writing ~/.zprofile: now configured for nodenv.
+writing ~/.config/fish/config.fish: now configured for nodenv.
+OUT
 }
 
 @test "option to skip rehash" {

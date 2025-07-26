@@ -85,6 +85,16 @@ export NODENV_VERSION="1.2.3"
 OUT
 }
 
+@test "shell change version (zsh)" {
+  mkdir -p "${NODENV_ROOT}/versions/1.2.3"
+  NODENV_SHELL=zsh run nodenv-sh-shell 1.2.3
+  assert_success
+  assert_output - <<OUT
+typeset -g NODENV_VERSION_OLD="\${NODENV_VERSION-}"
+export NODENV_VERSION="1.2.3"
+OUT
+}
+
 @test "shell change version (fish)" {
   mkdir -p "${NODENV_ROOT}/versions/1.2.3"
   NODENV_SHELL=fish run nodenv-sh-shell 1.2.3

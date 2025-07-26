@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
-# Summary: Rehash nodenv shims (run this after installing executables)
+# Summary: Regenerate nodenv shims
+#
+# Regenerate shims for every Node.js executable in `$NODENV_ROOT/versions/*/bin'
+# and write them to the `$NODENV_ROOT/shims' directory. A shell environment
+# properly set up for nodenv will have this shims directory in PATH, which is
+# the core mechanism for Node.js version switching.
+#
+# Running nodenv rehash should only be necessary after installing new Node.js
+# versions or gems. Note that this is sometimes done automatically: the
+# `nodenv install' command from the node-build plugin runs rehash after
+# every successful installation, and an npm plugin that ships separately
+# runs rehash after every `npm install -g' command.
 
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
@@ -38,15 +49,14 @@ remove_prototype_shim() {
 # absolute path to the nodenv executable itself.
 nodenv_path() {
   local found
-  found="$(PATH="$NODENV_ORIG_PATH" command -v nodenv)"
+  found="$(PATH="$NODENV_ORIG_PATH" type -P nodenv)"
   if [[ $found == /* ]]; then
     echo "$found"
   elif [[ -n "$found" ]]; then
     echo "$PWD/${found#./}"
   else
     # Assume nodenv isn't in PATH.
-    local here="${BASH_SOURCE%/*}"
-    echo "${here%/*}/bin/nodenv"
+    echo "${BASH_SOURCE%/*}/nodenv"
   fi
 }
 
@@ -104,6 +114,11 @@ list_executable_names() {
       echo "${file##*/}"
     done
   done
+  # if [ -n "$GEM_HOME" ]; then
+  #   for file in "$GEM_HOME"/bin/*; do
+  #     echo "${file##*/}"
+  #   done
+  # fi
 }
 
 # The basename of each argument passed to `make_shims` will be
@@ -155,11 +170,9 @@ remove_outdated_shims
 registered_shims=( $(list_executable_names | sort -u) )
 
 # Allow plugins to register shims.
-OLDIFS="$IFS"
-IFS=$'\n' scripts=(`nodenv-hooks rehash`)
-IFS="$OLDIFS"
-
+IFS=$'\n' read -d '' -r -a scripts <<<"$(nodenv-hooks rehash)" || true
 for script in "${scripts[@]}"; do
+  # shellcheck disable=SC1090
   source "$script"
 done
 

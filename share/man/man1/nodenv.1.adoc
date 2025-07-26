@@ -1,0 +1,87 @@
+= nodenv(1)
+Mislav Marohnić
+:doctype: manpage
+:man manual: Nodenv Manual
+:man source: nodenv {version}
+:man-linkstyle: pass:[blue R < >]
+
+== Name
+
+nodenv - manage your application's Node.js environment
+
+== Synopsis
+
+*nodenv* _<command>_ [_<args>_...]
+
+== Description
+
+nodenv respects the _.node-version_ file in a project directory by making sure that any *node*, *npm*, *npx*, or other Node.js command invocation automatically invokes the Node.js version configured for that project.
+
+It does so by generating shims for all Node.js executables. As long as nodenv shims directory is prepended to PATH, nodenv automatically ensures transparent switching between Node.js versions.
+
+nodenv looks for available Node.js versions in the _$NODENV_ROOT/versions_ directory.
+
+== Commands
+
+*nodenv global* [_<version>_]::
+  View or change the global Node.js version
+
+*nodenv local* [_<version>_]::
+  View or change the local Node.js version
+
+*nodenv shell* [_<version>_]::
+  View or change the Node.js version for the current shell session
+
+*nodenv version*::
+  View the currently active Node.js version and where it is set from
+
+*nodenv versions*::
+  List all locally installed Node.js versions known to nodenv
+
+*nodenv install* [_<version>_]::
+  (Provided by the *node-build* plugin) Download and install a new Node.js version
+
+*nodenv rehash*::
+  Regenerate shims for all known Node.js executables
+
+*nodenv which* [_<command>_]::
+  View the executable path that a command resolves to
+
+*nodenv init*::
+  Help bootstrap nodenv into the current shell environment
+
+*nodenv help* [_<command>_]::
+  View help text for any nodenv command
+
+== Environment Variables
+
+*NODENV_VERSION* (default: read from _.node-version_ file)::
+  The Node.js version name to be used
+
+*NODENV_ROOT* (default: _~/.nodenv_)::
+  The location where nodenv discovers Node.js versions, plugins, and other configuration
+
+*NODENV_DEBUG*::
+  Activates printing debug information about nodenv internals to standard error
+
+*NODENV_HOOK_PATH*::
+  Colon-separated list of paths searched for nodenv plugin scripts
+
+*NODENV_DIR* (default: _$PWD_)::
+  Directory to traverse bottom-up to locate the _.node-version_ file
+
+== Plugins
+
+As its core functionality, nodenv only switches between Node.js versions and does nothing else, but offers a plugin mechanism to hook into and override almost any aspect of its default behavior.
+
+The most common plugin for nodenv is *node-build* which facilitates installing new Node.js versions into the _$NODENV_ROOT/versions_ directory.
+
+Read more at https://github.com/nodenv/nodenv/wiki/Plugins
+
+== Notes
+
+* https://github.com/nodenv/nodenv/discussions
+
+* https://github.com/nodenv/nodenv/wiki
+
+* https://github.com/nodenv/node-build#readme

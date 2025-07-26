@@ -5,8 +5,14 @@ load test_helper
 @test "without args shows summary of common commands" {
   run nodenv-help
   assert_success
-  assert_line "Usage: nodenv <command> [<args>]"
-  assert_line "Some useful nodenv commands are:"
+  assert_line "Usage: nodenv <command> [<args>...]"
+  assert_line "Commands to manage available Node.js versions:"
+}
+
+@test "usage flag" {
+  run nodenv-help --usage
+  assert_success
+  assert_output "Usage: nodenv <command> [<args>...]"
 }
 
 @test "invalid command" {
@@ -65,6 +71,19 @@ SH
   run nodenv-help --usage hello
   assert_success
   assert_output "Usage: nodenv hello <world>"
+}
+
+@test "empty usage section" {
+  mkdir -p "${NODENV_TEST_DIR}/bin"
+  cat > "${NODENV_TEST_DIR}/bin/nodenv-hello" <<SH
+#!shebang
+# Summary: Says "hello" to you, from nodenv
+echo hello
+SH
+
+  run nodenv-help --usage hello
+  assert_success
+  assert_output "Usage: nodenv hello"
 }
 
 @test "multiline usage section" {

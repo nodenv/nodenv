@@ -1,0 +1,13 @@
+#compdef nodenv
+
+_nodenv() {
+  local completions
+
+  if [ "${#words}" -eq 2 ]; then
+    completions=(${(f)"$(nodenv help --complete-commands "${words[2]}")"})
+    _describe 'nodenv commands' completions
+  else
+    completions="$(nodenv completions ${words[2,-2]})"
+    compadd - "${(ps:\n:)completions}"
+  fi
+}

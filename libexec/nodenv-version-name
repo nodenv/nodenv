@@ -8,10 +8,9 @@ if [ -z "$NODENV_VERSION" ]; then
   NODENV_VERSION="$(nodenv-version-file-read "$NODENV_VERSION_FILE" || true)"
 fi
 
-OLDIFS="$IFS"
-IFS=$'\n' scripts=(`nodenv-hooks version-name`)
-IFS="$OLDIFS"
+IFS=$'\n' read -d '' -r -a scripts <<<"$(nodenv-hooks version-name)" || true
 for script in "${scripts[@]}"; do
+  # shellcheck disable=SC1090
   source "$script"
 done
 
