@@ -102,7 +102,7 @@ This will get you going with the latest version of nodenv without needing a syst
    ```
 
 2. Configure your shell to load nodenv:
-   - For **bash**:
+   - For **Bash**:
 
      _Ubuntu Desktop_ users should configure `~/.bashrc`:
 
@@ -110,7 +110,7 @@ This will get you going with the latest version of nodenv without needing a syst
      echo 'eval "$(~/.nodenv/bin/nodenv init - bash)"' >> ~/.bashrc
      ```
 
-     On _other platforms_, bash is usually configured via `~/.bash_profile`:
+     On _other platforms_, Bash is usually configured via `~/.bash_profile`:
 
      ```bash
      echo 'eval "$(~/.nodenv/bin/nodenv init - bash)"' >> ~/.bash_profile
