@@ -31,7 +31,5 @@ jobs:
           BASH_EXEC_IGNORE_LIBRARIES: true # superlinter bug
           VALIDATE_JSCPD: false # jscpd is false-positive prone and generally not useful
           VALIDATE_BASH: false
-          VALIDATE_CLANG_FORMAT: false
-          VALIDATE_CPP: false
           VALIDATE_MARKDOWN: false
           VALIDATE_SHELL_SHFMT: false
