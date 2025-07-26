@@ -57,8 +57,8 @@ of ensuring that you are always installing the latest version of nodenv.
 
    > [!CAUTION]
    > Presently, `nodenv` is not available in the Debian or Ubuntu package
-   > repositories.  To install the latest version, it is recommended to
-   > [install nodenv using Git](#basic-git-checkout).  [Consider
+   > repositories. To install the latest version, it is recommended to
+   > [install nodenv using Git](#basic-git-checkout). [Consider
    > contributing!](https://github.com/nodenv/nodenv/issues/210)
 
    #### Arch Linux and its derivatives
@@ -92,9 +92,9 @@ This will get you going with the latest version of nodenv without needing a syst
 
 2. Set up your shell to load nodenv.
 
-    ```sh
-    ~/.nodenv/bin/nodenv init
-    ```
+   ```sh
+   ~/.nodenv/bin/nodenv init
+   ```
 
    - For **Fish shell**:
      ```fish
@@ -113,9 +113,9 @@ commands by expanding partially entered nodenv command names and option flags;
 typically this is invoked by pressing <kbd>Tab</kbd> key in an interactive
 shell.
 
-- The **bash** completion script for nodenv ships with the project and gets [loaded by the `nodenv init` mechanism](#how-nodenv-hooks-into-your-shell).
+- The **Bash** completion script for nodenv ships with the project and gets [loaded by the `nodenv init` mechanism](#how-nodenv-hooks-into-your-shell).
 
-- The **zsh** completion script ships with the project, but needs to be added to FPATH in zsh before it can be discovered by the shell. One way to do this would be to edit `~/.zshrc`:
+- The **Zsh** completion script ships with the project, but needs to be added to FPATH in Zsh before it can be discovered by the shell. One way to do this would be to edit `~/.zshrc`:
 
   ```sh
   # assuming that nodenv was installed to `~/.nodenv`
