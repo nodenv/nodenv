@@ -10,17 +10,6 @@ if [ -z "$NODENV_TEST_DIR" ]; then
   NODENV_TEST_DIR="$(mktemp -d "${NODENV_TEST_DIR}.XXX" 2>/dev/null || echo "$NODENV_TEST_DIR")"
   export NODENV_TEST_DIR
 
-  NODENV_REALPATH=$BATS_TEST_DIRNAME/../libexec/nodenv-realpath.dylib
-
-  if enable -f "$NODENV_REALPATH" realpath 2>/dev/null; then
-    NODENV_TEST_DIR="$(realpath "$NODENV_TEST_DIR")"
-  else
-    if [ -x "$NODENV_REALPATH" ]; then
-      echo "nodenv: failed to load \`realpath' builtin" >&2
-      exit 1
-    fi
-  fi
-
   export NODENV_ROOT="${NODENV_TEST_DIR}/root"
   export HOME="${NODENV_TEST_DIR}/home"
   export NODENV_HOOK_PATH=$NODENV_ROOT/nodenv.d:$BATS_TEST_DIRNAME/../nodenv.d

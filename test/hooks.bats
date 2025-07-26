@@ -44,17 +44,17 @@ ${NODENV_TEST_DIR}/etc/nodenv hooks/exec/ahoy.bash
 OUT
 }
 
-@test "resolves relative paths" {
+@test "does not canonicalize paths" {
   NODENV_HOOK_PATH="${NODENV_TEST_DIR}/nodenv.d"
   create_hook exec "hello.bash"
   mkdir -p "$HOME"
 
   NODENV_HOOK_PATH="${HOME}/../nodenv.d" run nodenv-hooks exec
   assert_success
-  assert_output "${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash"
+  assert_output "${NODENV_TEST_DIR}/home/../nodenv.d/exec/hello.bash"
 }
 
-@test "resolves symlinks" {
+@test "does not resolve symlinks" {
   path="${NODENV_TEST_DIR}/nodenv.d"
   mkdir -p "${path}/exec"
   mkdir -p "$HOME"
@@ -66,7 +66,7 @@ OUT
   NODENV_HOOK_PATH="$path" run nodenv-hooks exec
   assert_success
   assert_output - <<OUT
-${HOME}/hola.bash
-${NODENV_TEST_DIR}/nodenv.d/exec/bright.sh
+${NODENV_TEST_DIR}/nodenv.d/exec/hello.bash
+${NODENV_TEST_DIR}/nodenv.d/exec/world.bash
 OUT
 }

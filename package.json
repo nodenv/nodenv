@@ -31,13 +31,7 @@
     "src"
   ],
   "scripts": {
-    "build": "src/configure && make -C src",
-    "clean": "src/configure && make -C src clean",
-    "preinstall": "npm run clean",
-    "postinstall": "npm run build",
     "test": "bats ${CI:+--tap} test",
-    "test:with_native_ext": "npm run build && npm test",
-    "test:without_native_ext": "npm run clean && npm test",
     "preversion": "script/preversion",
     "version": "script/sync-version",
     "postversion": "git push --follow-tags",

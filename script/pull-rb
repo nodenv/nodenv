@@ -1,0 +1,85 @@
+#! /usr/bin/env bash
+
+# This is intended to help automate the process of pull changes down from rbenv
+# upstream. It uses custom 'rbtags' ref namespace for rbenv's tags (that way
+# rbenvs tags don't pollute nodenv's tags). It re-uses a staging branch where
+# rbenv's tags will be merged into. It finds only the very "next" un-merged
+# rbenv tag; diffs against that and merges it.  Then removes known scripts
+# that don't apply to nodenv. Should leave the working copy in a MERGING
+# state.
+
+set -euo pipefail
+
+confirm() { read -rp "Press Enter to continue or Ctrl-C to quit"; }
+fail() { echo "Aborting: ${1-$(cat -)}" >&2; false; }
+trace() { (set -x; "$@"); }
+usage() { sed -ne "/^#/ !q; s/^#$/# /; /^# / { s/^# //; p; }"; }
+
+rbtags='refs/rbtags/'
+rbrepo='https://github.com/rbenv/rbenv.git'
+branch='pull-rb'
+
+fetch_rbtags() {
+  git fetch --no-tags $rbrepo "refs/tags/*:$rbtags*"
+}
+
+clean_branch() {
+  git diff --stat --exit-code HEAD || fail "Unclean working directory"
+
+  [ "$branch" = "$(git rev-parse --abbrev-ref HEAD)" ] ||
+  git checkout --no-track -b "$branch" 'origin/main'
+}
+
+rbtag(){
+  merged=$1
+  main=${2:-HEAD}
+  case $merged in
+  --merged) only='tail' ;;
+  --no-merged) only='head' ;;
+  *) exit 1 ;;
+  esac
+
+  trace git for-each-ref $rbtags \
+  --format '%(refname)' --sort=refname "$merged" "$main" | $only -1
+}
+
+next_unmerged_rbtag(){
+  {
+    upstream=${1:-rbenv/master}
+    main=${2:-HEAD}
+
+    trace git describe --all --exact-match \
+      "$(trace git merge-base "$main" "$upstream")"
+
+    vlast=$(rbtag --merged)
+    vnext=$(rbtag --no-merged)
+
+    trace git diff "${vlast:?}"..."${vnext:?}" \
+      -- ':!share/' ':!script/*ruby*'
+  } >&2
+
+  echo "$vnext"
+}
+
+merge(){
+  ref=${1:?}
+
+  # FIXME: find better way to handle the expected errexit
+  # TODO: improve commit message
+  git merge --no-commit --quiet "$ref" || true
+
+  # TODO: this stuff should be a custom merge-driver
+  git rm -rf share/ruby-build
+  git rm -rf script/update-*ruby
+}
+
+# TODO accept --log flag
+# TODO accept --diff flag
+
+fetch_rbtags
+clean_branch
+
+rbtag=${1:-$(next_unmerged_rbtag rbenv/master)}
+rbtag=$rbtags${rbtag#"$rbtags"} # ensure prefixed
+
+merge "$rbtag"
