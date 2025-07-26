@@ -29,7 +29,7 @@ altogether—nodenv will seamlessly transition from one Node.js version to
 another when you switch projects.
 
 Finally, almost every aspect of nodenv's mechanism is [customizable via
-plugins][plugins] written in bash.
+plugins][plugins] written in Bash.
 
 The simplicity of nodenv has its benefits, but also some downsides. See the
 [comparison of version managers][alternatives] for more details and some
