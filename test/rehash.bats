@@ -3,10 +3,11 @@
 load test_helper
 
 create_executable() {
-  local bin="${NODENV_ROOT}/versions/${1}/bin"
-  mkdir -p "$bin"
-  touch "${bin}/$2"
-  chmod +x "${bin}/$2"
+  local exe="${NODENV_ROOT}/versions/${1}/bin/${2}"
+  [ -n "$2" ] || exe="$1"
+  mkdir -p "${exe%/*}"
+  touch "$exe"
+  chmod +x "$exe"
 }
 
 @test "empty rehash" {

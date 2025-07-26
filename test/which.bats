@@ -128,7 +128,7 @@ SH
   mkdir -p "$NODENV_TEST_DIR"
   cd "$NODENV_TEST_DIR"
 
-  NODENV_VERSION= run nodenv-which node
+  NODENV_VERSION='' run nodenv-which node
   assert_success
   assert_output "${NODENV_ROOT}/versions/1.8/bin/node"
 }
