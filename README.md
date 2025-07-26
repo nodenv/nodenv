@@ -67,6 +67,22 @@ of ensuring that you are always installing the latest version of nodenv.
    nodenv and you can install it from the AUR using the instructions from this
    [wiki page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
 
+   #### Fedora
+
+   > [!CAUTION]
+   > Presently, `nodenv` is not available in the Fedora package
+   > repositories. To install the latest version, it is recommended to
+   > [install nodenv using Git](#basic-git-checkout). [Consider
+   > contributing!](https://github.com/nodenv/nodenv/issues/210)
+
+   <!--
+   Fedora has an [official package](https://packages.fedoraproject.org/pkgs/nodenv/nodenv/) which you can install:
+
+   ```sh
+   sudo dnf install nodenv
+   ```
+   -->
+
 2. Set up your shell to load nodenv.
 
    ```sh
@@ -145,8 +161,8 @@ nodenv install 24.1.0
 ```
 
 <!--
-For troubleshooting `BUILD FAILED` scenarios, check the [ruby-build Discussions
-section](https://github.com/rbenv/ruby-build/discussions/categories/build-failures).
+For troubleshooting `BUILD FAILED` scenarios, check the [node-build Discussions
+section](https://github.com/nodenv/node-build/discussions/categories/build-failures).
 -->
 
 > [!NOTE]
@@ -344,10 +360,20 @@ You can affect how nodenv operates with the following settings:
 
 ### How nodenv hooks into your shell
 
-`nodenv init` is a helper command to bootstrap nodenv into a shell. This helper
-is part of the recommended installation instructions, but optional, as an
-advanced user can set up the following tasks manually. Here is what the command
-does when its output is `eval`'d by a shell during its startup:
+`nodenv init` is a helper command to hook nodenv into a shell. This helper is part of the recommended installation instructions, but optional, as an experienced user can set up the following tasks manually. The `nodenv init` command has two modes of operation:
+
+1. `nodenv init`: made for humans, this command edits your shell initialization files on disk to add nodenv to shell startup. (Prior to nodenv 1.6.0, this mode only printed user instructions to the terminal, but did nothing else.)
+
+2. `nodenv init -`: made for machines, this command outputs a shell script suitable to be eval'd by the user's shell.
+
+When `nodenv init` is invoked from a Bash shell, for example, it will add the following to the user's `~/.bashrc` or `~/.bash_profile`:
+
+```sh
+# Added by `nodenv init` on <DATE>
+eval "$(nodenv init - --no-rehash bash)"
+```
+
+You may add this line to your shell initialization files manually if you want to avoid running `nodenv init` as part of the setup process. Here is what the eval'd script does:
 
 0. Adds `nodenv` executable to PATH if necessary.
 
@@ -362,8 +388,6 @@ does when its output is `eval`'d by a shell during its startup:
 4. Installs the "sh" dispatcher. This bit is also optional, but allows nodenv
    and plugins to change variables in your current shell, making commands like
    `nodenv shell` possible.
-
-You can run `nodenv init -` for yourself to inspect the generated script.
 
 ### Uninstalling nodenv
 
