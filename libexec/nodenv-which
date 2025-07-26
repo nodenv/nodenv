@@ -43,10 +43,13 @@ else
   NODENV_COMMAND_PATH="${NODENV_ROOT}/versions/${NODENV_VERSION}/bin/${NODENV_COMMAND}"
 fi
 
-OLDIFS="$IFS"
-IFS=$'\n' scripts=(`nodenv-hooks which`)
-IFS="$OLDIFS"
+# if [[ ! -x "$RBENV_COMMAND_PATH" && -n "$GEM_HOME" && -x "${GEM_HOME}/bin/${RBENV_COMMAND}" ]]; then
+#   RBENV_COMMAND_PATH="${GEM_HOME}/bin/${RBENV_COMMAND}"
+# fi
+
+IFS=$'\n' read -d '' -r -a scripts <<<"$(nodenv-hooks which)" || true
 for script in "${scripts[@]}"; do
+  # shellcheck disable=SC1090
   source "$script"
 done
 

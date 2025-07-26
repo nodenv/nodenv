@@ -65,3 +65,13 @@ setup() {
   assert_success
   assert_output "1.9.3 (set by ${NODENV_ROOT}/version)"
 }
+
+@test "prefer local over global file" {
+  create_version "1.9.3"
+  create_version "3.0.0"
+  cat > ".node-version" <<<"1.9.3"
+  cat > "${NODENV_ROOT}/version" <<<"3.0.0"
+  run nodenv-version
+  assert_success
+  assert_output "1.9.3 (set by ${PWD}/.node-version)"
+}

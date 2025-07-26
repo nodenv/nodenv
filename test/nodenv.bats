@@ -62,6 +62,12 @@ load test_helper
   assert_line -n 2 "${NODENV_ROOT}/plugins/node-build/bin"
 }
 
+@test "NODENV_HOOK_PATH includes etc/nodenv.d folders" {
+  mkdir -p "$NODENV_ROOT"/plugins/nodenv-foo/etc/nodenv.d
+  run nodenv echo -F: "NODENV_HOOK_PATH"
+  assert_line 6 "${NODENV_ROOT}/plugins/nodenv-foo/etc/nodenv.d"
+}
+
 @test "NODENV_HOOK_PATH preserves value from environment" {
   NODENV_HOOK_PATH=/my/hook/path:/other/hooks run nodenv echo -F: "NODENV_HOOK_PATH"
   assert_success

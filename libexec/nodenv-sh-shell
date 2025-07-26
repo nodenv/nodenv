@@ -48,6 +48,10 @@ if [ "$version" = "--unset" ]; then
     echo 'set -gu NODENV_VERSION_OLD "$NODENV_VERSION"'
     echo "set -e NODENV_VERSION"
     ;;
+  zsh )
+    echo "typeset -g NODENV_VERSION_OLD=\"\${NODENV_VERSION-}\""
+    echo "unset NODENV_VERSION"
+    ;;
   * )
     echo 'NODENV_VERSION_OLD="${NODENV_VERSION-}"'
     echo "unset NODENV_VERSION"
@@ -74,6 +78,24 @@ else
   echo "nodenv: NODENV_VERSION_OLD is not set" >&2
   false
 end
+EOS
+    ;;
+  zsh )
+    cat <<EOS
+if [ -n "\${NODENV_VERSION_OLD+x}" ]; then
+  if [ -n "\$NODENV_VERSION_OLD" ]; then
+    local NODENV_VERSION_OLD_="\$NODENV_VERSION"
+    export NODENV_VERSION="\$NODENV_VERSION_OLD"
+    NODENV_VERSION_OLD="\$NODENV_VERSION_OLD_"
+    unset NODENV_VERSION_OLD_
+  else
+    typeset -g NODENV_VERSION_OLD="\$NODENV_VERSION"
+    unset NODENV_VERSION
+  fi
+else
+  echo "nodenv: NODENV_VERSION_OLD is not set" >&2
+  false
+fi
 EOS
     ;;
   * )
@@ -105,6 +127,10 @@ if nodenv-prefix "$version" >/dev/null; then
     fish )
       echo 'set -gu NODENV_VERSION_OLD "$NODENV_VERSION"'
       echo "set -gx NODENV_VERSION \"$version\""
+      ;;
+    zsh )
+      echo "typeset -g NODENV_VERSION_OLD=\"\${NODENV_VERSION-}\""
+      echo "export NODENV_VERSION=\"$version\""
       ;;
     * )
       echo 'NODENV_VERSION_OLD="${NODENV_VERSION-}"'

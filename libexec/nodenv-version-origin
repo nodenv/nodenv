@@ -5,10 +5,9 @@ set -e
 
 unset NODENV_VERSION_ORIGIN
 
-OLDIFS="$IFS"
-IFS=$'\n' scripts=(`nodenv-hooks version-origin`)
-IFS="$OLDIFS"
+IFS=$'\n' read -d '' -r -a scripts <<<"$(nodenv-hooks version-origin)" || true
 for script in "${scripts[@]}"; do
+  # shellcheck disable=SC1090
   source "$script"
 done
 

@@ -23,7 +23,7 @@ fi
 
 command_path() {
   local command="$1"
-  command -v nodenv-"$command" || command -v nodenv-sh-"$command" || true
+  type -P nodenv-"$command" nodenv-sh-"$command" | head -n1
 }
 
 extract_initial_comment_block() {
@@ -43,7 +43,7 @@ extract_initial_comment_block() {
 
 collect_documentation() {
   local awk
-  awk="$(type -p gawk awk 2>/dev/null | head -n1)"
+  awk="$(type -P gawk)" || awk="$(type -P awk)" || true
   if [ -z "$awk" ]; then
     echo "nodenv: cannot find awk" >&2
     return 1
@@ -144,8 +144,33 @@ print_usage() {
   local command="$1"
   local summary usage help
   eval "$(documentation_for "$command")"
-  [ -z "$usage" ] || echo "$usage"
+  if [ -n "$usage" ]; then
+    echo "$usage"
+  else
+    echo "Usage: nodenv ${command}"
+  fi
 }
+
+if [ "$1" = "--complete-commands" ]; then
+  command_prefix="${2:-}"
+  seen=()
+  IFS=: read -d '' -r -a paths <<<"$PATH" || true
+  shopt -s nullglob
+  for path in "${paths[@]}"; do
+    for command in "${path}/nodenv-${command_prefix}"*; do
+      command_name="${command##*/}"
+      command_name="${command_name#nodenv-}"
+      command_name="${command_name#sh-}"
+      [[ " ${seen[*]} " != *" ${command_name} "* ]] || continue
+      seen+=("$command_name")
+      summary=""
+      eval "$(extract_initial_comment_block < "$command" | collect_documentation)"
+      [ -n "$summary" ] || continue
+      printf "%s:%s\n" "$command_name" "$summary"
+    done
+  done
+  exit 0
+fi
 
 unset usage
 if [ "$1" = "--usage" ]; then
@@ -154,11 +179,17 @@ if [ "$1" = "--usage" ]; then
 fi
 
 if [ -z "$1" ] || [ "$1" == "nodenv" ]; then
-  echo "Usage: nodenv <command> [<args>]"
-  [ -z "$usage" ] || exit
+  if [ -z "$usage" ] && [ -t 1 ] && type -P man >/dev/null; then
+    MANPATH="${BASH_SOURCE%/*}/../share/man:$MANPATH" exec man nodenv
+  fi
+  echo "Usage: nodenv <command> [<args>...]"
+  [ -n "$usage" ] && exit
   echo
-  echo "Some useful nodenv commands are:"
-  print_summaries commands local global shell install uninstall rehash version versions which whence
+  echo "Commands to manage available Node.js versions:"
+  print_summaries versions install uninstall rehash
+  echo
+  echo "Commands to view or change the current Node.js version:"
+  print_summaries version local global shell
   echo
   echo "See \`nodenv help <command>' for information on a specific command."
   echo "For full documentation, see: https://github.com/nodenv/nodenv#readme"

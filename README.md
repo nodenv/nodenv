@@ -55,12 +55,11 @@ of ensuring that you are always installing the latest version of nodenv.
 
    #### Debian, Ubuntu, and their derivatives
 
-   Presently, `nodenv` is not available in the Debian or Ubuntu package
-   repositories.
-   [Consider contributing!](https://github.com/nodenv/nodenv/issues/210)
-
-   To install the latest
-   version, it is recommended to [install nodenv using Git](#basic-git-checkout).
+   > [!CAUTION]
+   > Presently, `nodenv` is not available in the Debian or Ubuntu package
+   > repositories.  To install the latest version, it is recommended to
+   > [install nodenv using Git](#basic-git-checkout).  [Consider
+   > contributing!](https://github.com/nodenv/nodenv/issues/210)
 
    #### Arch Linux and its derivatives
 
@@ -68,10 +67,9 @@ of ensuring that you are always installing the latest version of nodenv.
    nodenv and you can install it from the AUR using the instructions from this
    [wiki page](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
 
-2. Learn how to load nodenv in your shell.
+2. Set up your shell to load nodenv.
 
    ```sh
-   # run this and follow the printed instructions:
    nodenv init
    ```
 
@@ -81,7 +79,7 @@ That's it! You are now ready to [install some Node.js versions](#installing-node
 
 ### Basic Git Checkout
 
-> **Note**
+> [!NOTE]
 > For a more automated install, you can use [nodenv-installer][]. If you do not want to execute scripts downloaded from a web URL or simply prefer a manual approach, follow the steps below.
 
 This will get you going with the latest version of nodenv without needing a system-wide install.
@@ -92,26 +90,11 @@ This will get you going with the latest version of nodenv without needing a syst
    git clone https://github.com/nodenv/nodenv.git ~/.nodenv
    ```
 
-2. Configure your shell to load nodenv:
-   - For **Bash**:
+2. Set up your shell to load nodenv.
 
-     _Ubuntu Desktop_ users should configure `~/.bashrc`:
-
-     ```bash
-     echo 'eval "$(~/.nodenv/bin/nodenv init - bash)"' >> ~/.bashrc
-     ```
-
-     On _other platforms_, Bash is usually configured via `~/.bash_profile`:
-
-     ```bash
-     echo 'eval "$(~/.nodenv/bin/nodenv init - bash)"' >> ~/.bash_profile
-     ```
-
-   - For **Zsh**:
-
-     ```zsh
-     echo 'eval "$(~/.nodenv/bin/nodenv init - zsh)"' >> ~/.zshrc
-     ```
+    ```sh
+    ~/.nodenv/bin/nodenv init
+    ```
 
    - For **Fish shell**:
      ```fish
@@ -121,6 +104,28 @@ This will get you going with the latest version of nodenv without needing a syst
    If you are curious, see here to [understand what `init` does](#how-nodenv-hooks-into-your-shell).
 
 3. Restart your shell so that these changes take effect. (Opening a new terminal tab will usually do it.)
+
+#### Shell completions
+
+When _manually_ installing nodenv, it might be useful to note how completion
+scripts for various shells work. Completion scripts help with typing nodenv
+commands by expanding partially entered nodenv command names and option flags;
+typically this is invoked by pressing <kbd>Tab</kbd> key in an interactive
+shell.
+
+- The **bash** completion script for nodenv ships with the project and gets [loaded by the `nodenv init` mechanism](#how-nodenv-hooks-into-your-shell).
+
+- The **zsh** completion script ships with the project, but needs to be added to FPATH in zsh before it can be discovered by the shell. One way to do this would be to edit `~/.zshrc`:
+
+  ```sh
+  # assuming that nodenv was installed to `~/.nodenv`
+  FPATH=~/.nodenv/completions:"$FPATH"
+
+  autoload -U compinit
+  compinit
+  ```
+
+- The **fish** completion script for nodenv ships with the fish shell itself and is not maintained by the nodenv project.
 
 ### Installing Node versions
 
@@ -144,7 +149,7 @@ For troubleshooting `BUILD FAILED` scenarios, check the [ruby-build Discussions
 section](https://github.com/rbenv/ruby-build/discussions/categories/build-failures).
 -->
 
-> **Note**
+> [!NOTE]
 > If the `nodenv install` command wasn't found, you can install node-build as a plugin:
 >
 > ```sh
@@ -178,7 +183,7 @@ If there is a set of npm packages that you wish to be installed (globally) in
 every Node.js version, you may be interested in the [nodenv-default-packages][]
 plugin.
 
-> **Warning**
+> [!NOTE]
 > You _should not use sudo_ to install packages. Typically, the Node.js
 > versions will be installed under your home directory and thus writeable by
 > your user. If you get the “you don't have write permissions” error when
@@ -342,14 +347,14 @@ You can affect how nodenv operates with the following settings:
 `nodenv init` is a helper command to bootstrap nodenv into a shell. This helper
 is part of the recommended installation instructions, but optional, as an
 advanced user can set up the following tasks manually. Here is what the command
-does when its output is `eval`'d:
+does when its output is `eval`'d by a shell during its startup:
 
 0. Adds `nodenv` executable to PATH if necessary.
 
 1. Prepends `~/.nodenv/shims` directory to PATH. This is basically the only
    requirement for nodenv to function properly.
 
-2. Installs shell completion for nodenv commands.
+2. Installs Bash shell completion for nodenv commands.
 
 3. Regenerates nodenv shims. If this step slows down your shell startup, you
    can invoke `nodenv init -` with the `--no-rehash` flag.
@@ -365,7 +370,7 @@ You can run `nodenv init -` for yourself to inspect the generated script.
 The simplicity of nodenv makes it easy to temporarily disable it, or
 uninstall from the system.
 
-1. To **disable** nodenv managing your Node.js versions, simply remove the
+1. To **disable** nodenv managing your Node.js versions, simply comment or remove the
    `nodenv init` line from your shell startup configuration. This will remove
    nodenv shims directory from PATH, and future invocations like `node` will
    execute the system Node.js version, bypassing nodenv completely.
@@ -389,7 +394,7 @@ uninstall from the system.
 
 ## Development
 
-Tests are executed using [Bats][]:
+Tests are executed using [Bats](https://github.com/bats-core/bats-core):
 
 ```console
 npm test
@@ -408,7 +413,6 @@ McKenzie](https://github.com/oinutter) and modified for Node.js.
 [nodenv-installer]: https://github.com/nodenv/nodenv-installer#nodenv-installer
 [nodenv-package-rehash]: https://github.com/nodenv/nodenv-package-rehash
 [nodenv-default-packages]: https://github.com/nodenv/nodenv-default-packages
-[bats]: https://github.com/bats-core/bats-core
 [node-build]: https://github.com/nodenv/node-build#readme
 [hooks]: https://github.com/nodenv/nodenv/wiki/Authoring-plugins#nodenv-hooks
 [alternatives]: https://github.com/nodenv/nodenv/wiki/Alternatives

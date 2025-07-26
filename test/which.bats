@@ -108,6 +108,28 @@ The \`npm' command exists in these Node versions:
 OUT
 }
 
+# @test "executable not found in user gems" {
+#   create_executable "2.7.6" "ruby"
+#   create_executable "${HOME}/.gem/ruby/2.7.0/bin" "rake"
+#   GEM_HOME='' RBENV_VERSION=2.7.6 run rbenv-which rake
+#   assert_failure
+# }
+#
+# @test "executable found in gem home" {
+#   create_executable "2.7.6" "ruby"
+#   create_executable "${HOME}/mygems/bin" "rake"
+#   create_executable "${HOME}/.gem/ruby/2.7.0/bin" "rake"
+#   GEM_HOME="${HOME}/mygems" RBENV_VERSION=2.7.6 run rbenv-which rake
+#   assert_success "${HOME}/mygems/bin/rake"
+# }
+#
+# @test "executable found in gem home (system ruby)" {
+#   create_executable "${HOME}/mygems/bin" "rbenv-test-lolcat"
+#   create_executable "${HOME}/.gem/ruby/2.6.0/bin" "rbenv-test-lolcat"
+#   GEM_HOME="${HOME}/mygems" RBENV_VERSION=system run rbenv-which rbenv-test-lolcat
+#   assert_success "${HOME}/mygems/bin/rbenv-test-lolcat"
+# }
+
 @test "carries original IFS within hooks" {
   create_hook which hello.bash <<SH
 hellos=(\$(printf "hello\\tugly world\\nagain"))

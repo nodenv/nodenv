@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Summary: List all available nodenv commands
 # Usage: nodenv commands [--sh|--no-sh]
+#
+# List names of all nodenv commands, including 3rd-party ones found in the
+# PATH or in nodenv plugins. With `--sh`, list only shell commands.
+#
+# This functionality is mainly meant for scripting. To see usage help for
+# nodenv, run `nodenv help`.
 
 set -e
 [ -n "$NODENV_DEBUG" ] && set -x
@@ -20,7 +26,7 @@ elif [ "$1" = "--no-sh" ]; then
   shift
 fi
 
-IFS=: paths=($PATH)
+IFS=: read -d '' -r -a paths <<<"$PATH" || true
 
 shopt -s nullglob
 
