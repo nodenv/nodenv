@@ -28,6 +28,9 @@ that is another directory might be using a different version of Node.js
 altogether—nodenv will seamlessly transition from one Node.js version to
 another when you switch projects.
 
+Finally, almost every aspect of nodenv's mechanism is [customizable via
+plugins][plugins] written in bash.
+
 The simplicity of nodenv has its benefits, but also some downsides. See the
 [comparison of version managers][alternatives] for more details and some
 alternatives.
@@ -38,12 +41,7 @@ On systems with Homebrew package manager, the “Using Package Managers” metho
 is recommended. On other systems, “Basic Git Checkout” might be the easiest way
 of ensuring that you are always installing the latest version of nodenv.
 
-<details>
-<summary>
-
 ### Using Package Managers
-
-</summary>
 
 1. Install nodenv using one of the following approaches.
 
@@ -81,14 +79,7 @@ of ensuring that you are always installing the latest version of nodenv.
 
 That's it! You are now ready to [install some Node.js versions](#installing-node-versions).
 
-</details>
-
-<details>
-<summary>
-
 ### Basic Git Checkout
-
-</summary>
 
 > **Note**
 > For a more automated install, you can use [nodenv-installer][]. If you do not want to execute scripts downloaded from a web URL or simply prefer a manual approach, follow the steps below.
@@ -131,8 +122,6 @@ This will get you going with the latest version of nodenv without needing a syst
 
 3. Restart your shell so that these changes take effect. (Opening a new terminal tab will usually do it.)
 
-</details>
-
 ### Installing Node versions
 
 The `nodenv install` command does not ship with nodenv out-of-the-box, but is provided by the [node-build][] plugin.
@@ -150,6 +139,11 @@ nodenv install -L
 nodenv install 24.1.0
 ```
 
+<!--
+For troubleshooting `BUILD FAILED` scenarios, check the [ruby-build Discussions
+section](https://github.com/rbenv/ruby-build/discussions/categories/build-failures).
+-->
+
 > **Note**
 > If the `nodenv install` command wasn't found, you can install node-build as a plugin:
 >
@@ -165,21 +159,31 @@ nodenv global 24.1.0   # set the default Node.js version for this machine
 nodenv local 24.1.0    # set the Node.js version for this directory
 ```
 
-Alternatively to the `nodenv install` command, you can download and compile Node.js manually as a subdirectory of `~/.nodenv/versions`. An entry in that directory can also be a symlink to a Node.js version installed elsewhere on the filesystem.
+Alternatively to the `nodenv install` command, you can download and compile
+Node.js manually as a subdirectory of `~/.nodenv/versions`. An entry in that
+directory can also be a symlink to a Node.js version installed elsewhere on the
+filesystem.
 
 #### Installing npm packages
 
-Select a Node.js version for your project using `nodenv local 24.1.0`, for example. Then, proceed to install packages as you normally would:
+Select a Node.js version for your project using `nodenv local 24.1.0`, for
+example. Then, proceed to install packages as you normally would:
 
 ```sh
 npm install testdouble
 ```
 
 Packages installed globally are scoped to the currently-active Node.js version.
-If there is a set of npm packages that you wish to be installed (globally) in every Node.js version, you may be interested in the [nodenv-default-packages][] plugin.
+If there is a set of npm packages that you wish to be installed (globally) in
+every Node.js version, you may be interested in the [nodenv-default-packages][]
+plugin.
 
 > **Warning**
-> You _should not use sudo_ to install packages. Typically, the Node.js versions will be installed under your home directory and thus writeable by your user. If you get the “you don't have write permissions” error when installing packages, it's likely that your "system" Node.js version is still a global default. Change that with `nodenv global <version>` and try again.
+> You _should not use sudo_ to install packages. Typically, the Node.js
+> versions will be installed under your home directory and thus writeable by
+> your user. If you get the “you don't have write permissions” error when
+> installing packages, it's likely that your "system" Node.js version is still
+> a global default. Change that with `nodenv global <version>` and try again.
 
 Check the location where packages are being installed with `npm prefix -g`:
 
@@ -401,10 +405,11 @@ Forked from [Sam Stephenson](https://github.com/sstephenson)'s
 [rbenv](https://github.com/rbenv/rbenv) by [Will
 McKenzie](https://github.com/oinutter) and modified for Node.js.
 
-[hooks]: https://github.com/nodenv/nodenv/wiki/Authoring-plugins#nodenv-hooks
-[node-build]: https://github.com/nodenv/node-build#readme
 [nodenv-installer]: https://github.com/nodenv/nodenv-installer#nodenv-installer
 [nodenv-package-rehash]: https://github.com/nodenv/nodenv-package-rehash
-[alternatives]: https://github.com/rbenv/rbenv/wiki/Other-version-managers
 [nodenv-default-packages]: https://github.com/nodenv/nodenv-default-packages
 [bats]: https://github.com/bats-core/bats-core
+[node-build]: https://github.com/nodenv/node-build#readme
+[hooks]: https://github.com/nodenv/nodenv/wiki/Authoring-plugins#nodenv-hooks
+[alternatives]: https://github.com/nodenv/nodenv/wiki/Alternatives
+[plugins]: https://github.com/nodenv/nodenv/wiki/Plugins
