@@ -63,11 +63,12 @@ create_executable() {
 }
 
 @test "doesn't include current directory in PATH search" {
+  bats_require_minimum_version 1.5.0
   mkdir -p "$NODENV_TEST_DIR"
   cd "$NODENV_TEST_DIR"
   touch kill-all-humans
   chmod +x kill-all-humans
-  PATH="$(path_without "kill-all-humans")" NODENV_VERSION=system run nodenv-which kill-all-humans
+  PATH="$(path_without "kill-all-humans")" NODENV_VERSION=system run -127 nodenv-which kill-all-humans
   assert_failure
   assert_output "nodenv: kill-all-humans: command not found"
 }
@@ -80,24 +81,27 @@ create_executable() {
 }
 
 @test "no executable found" {
+  bats_require_minimum_version 1.5.0
   create_executable "1.8" "npm"
-  NODENV_VERSION=1.8 run nodenv-which node
+  NODENV_VERSION=1.8 run -127 nodenv-which node
   assert_failure
   assert_output "nodenv: node: command not found"
 }
 
 @test "no executable found for system version" {
-  PATH="$(path_without "mocha")" NODENV_VERSION=system run nodenv-which mocha
+  bats_require_minimum_version 1.5.0
+  PATH="$(path_without "mocha")" NODENV_VERSION=system run -127 nodenv-which mocha
   assert_failure
   assert_output "nodenv: mocha: command not found"
 }
 
 @test "executable found in other versions" {
+  bats_require_minimum_version 1.5.0
   create_executable "1.8" "node"
   create_executable "1.9" "npm"
   create_executable "2.0" "npm"
 
-  NODENV_VERSION=1.8 run nodenv-which npm
+  NODENV_VERSION=1.8 run -127 nodenv-which npm
   assert_failure
   assert_output - <<OUT
 nodenv: npm: command not found
@@ -109,9 +113,10 @@ OUT
 }
 
 # @test "executable not found in user gems" {
+#   bats_require_minimum_version 1.5.0
 #   create_executable "2.7.6" "ruby"
 #   create_executable "${HOME}/.gem/ruby/2.7.0/bin" "rake"
-#   GEM_HOME='' RBENV_VERSION=2.7.6 run rbenv-which rake
+#   GEM_HOME='' RBENV_VERSION=2.7.6 run -127 rbenv-which rake
 #   assert_failure
 # }
 #
