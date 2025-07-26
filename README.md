@@ -74,6 +74,7 @@ of ensuring that you are always installing the latest version of nodenv.
    > repositories. To install the latest version, it is recommended to
    > [install nodenv using Git](#basic-git-checkout). [Consider
    > contributing!](https://github.com/nodenv/nodenv/issues/210)
+
    <!--
    Fedora has an [official package](https://packages.fedoraproject.org/pkgs/nodenv/nodenv/) which you can install:
 
@@ -365,7 +366,7 @@ You can affect how nodenv operates with the following settings:
 
 2. `nodenv init -`: made for machines, this command outputs a shell script suitable to be eval'd by the user's shell.
 
-When `nodenv init` is invoked from a bash shell, for example, it will add the following to the user's `~/.bashrc` or `~/.bash_profile`:
+When `nodenv init` is invoked from a Bash shell, for example, it will add the following to the user's `~/.bashrc` or `~/.bash_profile`:
 
 ```sh
 # Added by `nodenv init` on <DATE>
