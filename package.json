@@ -27,6 +27,9 @@
   "bin": {
     "nodenv": "libexec/nodenv"
   },
+  "man": [
+    "share/man/man1/nodenv.1"
+  ],
   "files": [
     "completions",
     "libexec",
