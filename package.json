@@ -17,27 +17,39 @@
     "url": "https://github.com/nodenv/nodenv/issues"
   },
   "directories": {
-    "lib": "./libexec",
-    "src": "./src",
-    "test": "./test"
+    "completions": "completions",
+    "lib": "libexec",
+    "man": "share/man",
+    "hooks": "nodenv.d",
+    "src": "src",
+    "test": "test"
   },
   "bin": {
     "nodenv": "libexec/nodenv"
   },
+  "man": [
+    "share/man/man1/nodenv.1"
+  ],
   "files": [
     "completions",
     "libexec",
     "nodenv.d",
+    "share",
     "src"
   ],
   "scripts": {
+    "prepare": "npm run man && npm run version:sync",
     "test": "bats ${CI:+--tap} test",
+    "man": "asciidoctor -b manpage -a version=$npm_package_version -r @asciidoctor/manpage-converter share/man/**/*.adoc",
     "preversion": "script/preversion",
-    "version": "script/sync-version",
+    "version": "npm run prepare && git add -u",
+    "version:sync": "perl -pi -e 's/^(version=).*$/$1$ENV{npm_package_version}/' -- libexec/nodenv---version",
     "postversion": "git push --follow-tags",
     "behind-rbenv": "git for-each-ref refs/rbtags --format='%(refname)' --no-merged"
   },
   "devDependencies": {
+    "@asciidoctor/manpage-converter": "^1.0.0",
+    "asciidoctor": "^3.0.4",
     "bats": "^1.12.0",
     "bats-assert": "github:jasonkarns/bats-assert-1",
     "bats-support": "github:jasonkarns/bats-support"
