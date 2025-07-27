@@ -38,11 +38,11 @@
     "src"
   ],
   "scripts": {
-    "prepare": "npm run man",
+    "prepare": "script/sync-version && npm run man",
     "test": "bats ${CI:+--tap} test",
     "man": "asciidoctor -b manpage -a version=$npm_package_version -r @asciidoctor/manpage-converter share/man/**/*.adoc",
     "preversion": "script/preversion",
-    "version": "script/sync-version",
+    "version": "npm run prepare && git add -u",
     "postversion": "git push --follow-tags",
     "behind-rbenv": "git for-each-ref refs/rbtags --format='%(refname)' --no-merged"
   },
