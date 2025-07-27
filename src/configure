@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-# Warning: this configure script is obsolete and kept only for backwards compatibility.
-set -e
-
-src_dir="${0%/*}"
-
-cp "$src_dir"/Makefile.in "$src_dir"/Makefile
