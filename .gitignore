@@ -4,9 +4,6 @@
 /tmp
 /nodenv-nodenv-*.tgz
 
-# built files
-/src/Makefile
-
 # ignores that would affect installation (via git)
 
 # nodenv

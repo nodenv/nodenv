@@ -21,7 +21,6 @@
     "lib": "libexec",
     "man": "share/man",
     "hooks": "nodenv.d",
-    "src": "src",
     "test": "test"
   },
   "bin": {
@@ -34,8 +33,7 @@
     "completions",
     "libexec",
     "nodenv.d",
-    "share",
-    "src"
+    "share"
   ],
   "scripts": {
     "prepare": "npm run man && npm run version:sync",
