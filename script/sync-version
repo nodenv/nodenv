@@ -6,5 +6,3 @@ export version=${npm_package_version:-$(node -p "require('./package').version")}
 versionfile=libexec/nodenv---version
 
 perl -pi -e 's/^(version=).*$/$1$ENV{version}/' -- "$versionfile"
-
-git add -- "$versionfile"
