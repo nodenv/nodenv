@@ -152,6 +152,11 @@ fish )
   [ -n "$nodenv_in_path" ] || printf "set -gx PATH '%s/bin' \$PATH\n" "$root"
   printf "set -gx PATH '%s/shims' \$PATH\n" "$NODENV_ROOT"
   printf 'set -gx NODENV_SHELL %s\n' "$shell"
+
+  completion="${root}/completions/nodenv.${shell}"
+  if [ -r "$completion" ]; then
+    printf "source '%s'\n" "$completion"
+  fi
 ;;
 * )
   # shellcheck disable=SC2016
