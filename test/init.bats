@@ -44,12 +44,11 @@ OUT
   assert_output "sh"
 }
 
-@test "skip shell completions (fish)" {
+@test "setup shell completions (fish)" {
   root="$(cd $BATS_TEST_DIRNAME/.. && pwd)"
   run nodenv-init - fish
   assert_success
-  local line="$(grep '^source' <<<"$output")"
-  [ -z "$line" ] || flunk "did not expect line: $line"
+  assert_line "source '${root}/test/../completions/nodenv.fish'"
 }
 
 @test "set up bash" {
