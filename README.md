@@ -141,7 +141,7 @@ shell.
   compinit
   ```
 
-- The **fish** completion script for nodenv ships with the fish shell itself and is not maintained by the nodenv project.
+- The **fish** completion script for nodenv ships with the project and gets [loaded by the `nodenv init` mechanism](#how-nodenv-hooks-into-your-shell).
 
 ### Installing Node versions
 
