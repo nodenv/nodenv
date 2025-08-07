@@ -1,0 +1,20 @@
+on:
+  gollum
+
+permissions: { issues: write }
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: >
+          gh issue new --label wiki -R ${{ github.repository }}
+          --title "wiki edit by @${{ github.event.sender.login }}"
+          --body-file - <<BODY
+
+          ${{ toJson(github.event.pages) }}
+
+          ${{ join(github.event.pages.*.html_url) }}
+
+          BODY
+        env:
+          GH_TOKEN: ${{ github.token }}
