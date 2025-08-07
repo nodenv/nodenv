@@ -1,5 +1,4 @@
-on:
-  gollum
+on: gollum
 
 permissions: { issues: write }
 jobs:
