@@ -7,7 +7,7 @@ permissions: { contents: read }
 jobs:
   sync:
     permissions: { contents: write }
-    uses: nodenv/.github/.github/workflows/sync-default-branch.yml@v4
+    uses: nodenv/.github/.github/workflows/sync-default-branch.yml@v6
 # One-time commands for users to switch-over:
 #
 # ```console
