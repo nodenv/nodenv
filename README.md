@@ -1,5 +1,10 @@
 # Seamlessly manage your app’s Node environment with nodenv
 
+[![Tests](https://img.shields.io/github/actions/workflow/status/nodenv/nodenv/test.yml?label=tests&logo=github)](https://github.com/nodenv/nodenv/actions/workflows/test.yml)
+[![Latest GitHub Release](https://img.shields.io/github/v/release/nodenv/nodenv?label=github&logo=github&sort=semver)](https://github.com/nodenv/nodenv/releases/latest)
+[![Latest Homebrew Release](https://img.shields.io/homebrew/v/nodenv?logo=homebrew&logoColor=white)](https://formulae.brew.sh/formula/nodenv)
+[![Latest npm Release](https://img.shields.io/npm/v/@nodenv/nodenv?logo=npm&logoColor=white)](https://www.npmjs.com/package/@nodenv/nodenv/v/latest)
+
 nodenv is a version manager tool for the Node.js on Unix-like systems. It is
 useful for switching between multiple Node.js versions on the same machine and
 for ensuring that each project you are working on always runs on the correct
