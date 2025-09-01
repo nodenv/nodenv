@@ -1,7 +1,7 @@
 {
   "name": "@nodenv/nodenv",
   "version": "1.6.2",
-  "description": "Manage multiple NodeJS versions",
+  "description": "Seamlessly manage your app’s Node environment with nodenv",
   "homepage": "https://github.com/nodenv/nodenv#readme",
   "license": "MIT",
   "contributors": [
