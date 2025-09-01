@@ -32,5 +32,4 @@ jobs:
           FILTER_REGEX_EXCLUDE: node_modules
           VALIDATE_JSCPD: false # jscpd is false-positive prone and generally not useful
           # TODO remove deviations from reusable superlinter config
-          VALIDATE_BASH: false
           VALIDATE_SHELL_SHFMT: false
