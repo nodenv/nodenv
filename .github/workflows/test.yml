@@ -17,6 +17,11 @@ jobs:
       security-events: write
       statuses: write
 
+  toc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jasonkarns/toc-me@action
+
   super-lint:
     permissions: { contents: read, packages: read, statuses: write }
     runs-on: ubuntu-latest
