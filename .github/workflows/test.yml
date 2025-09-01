@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with: { fetch-depth: 0 } # full history for files changed
-      - uses: jasonkarns/toc-me@action
+      - uses: jasonkarns/toc-me@51353d62069ce570a3b23916b763c74cfb0b0a71
 
   super-lint:
     permissions: { contents: read, packages: read, statuses: write }
