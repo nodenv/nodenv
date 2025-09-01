@@ -29,7 +29,8 @@ jobs:
         env: # FIXME resolve failures for linters below and re-enable
           GITHUB_TOKEN: ${{ github.token }}
           BASH_EXEC_IGNORE_LIBRARIES: true # superlinter bug
+          FILTER_REGEX_EXCLUDE: node_modules
           VALIDATE_JSCPD: false # jscpd is false-positive prone and generally not useful
+          # TODO remove deviations from reusable superlinter config
           VALIDATE_BASH: false
-          VALIDATE_MARKDOWN: false
           VALIDATE_SHELL_SHFMT: false
