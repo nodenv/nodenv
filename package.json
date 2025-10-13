@@ -49,7 +49,7 @@
     "@asciidoctor/manpage-converter": "^1.0.0",
     "asciidoctor": "^3.0.4",
     "bats": "^1.12.0",
-    "bats-assert": "^2.2.0",
+    "bats-assert": "^2.2.2",
     "bats-support": "^0.3.0"
   }
 }
