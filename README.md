@@ -150,7 +150,7 @@ shell.
 
 ### Installing Node versions
 
-The `nodenv install` command does not ship with nodenv out-of-the-box, but is provided by the [node-build][] plugin.
+The `nodenv install` command does not ship with Node.js out-of-the-box, but is provided by the [node-build][] plugin.
 
 Before attempting to install Node.js, **check that [your build environment](https://github.com/nodenv/node-build/wiki#suggested-build-environment) has the necessary tools and libraries**. Then:
 
