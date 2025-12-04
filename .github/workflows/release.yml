@@ -6,5 +6,5 @@ permissions: {}
 jobs:
   release:
     permissions: { contents: write, id-token: write }
-    uses: nodenv/.github/.github/workflows/release.yml@v6
+    uses: nodenv/.github/.github/workflows/release.yml@v7
     secrets: inherit
