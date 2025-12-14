@@ -6,14 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: >
-          gh issue new --label wiki -R ${{ github.repository }}
-          --title "wiki edit by @${{ github.event.sender.login }}"
-          --body-file - <<BODY
-
-          ${{ toJson(github.event.pages) }}
-
-          ${{ join(github.event.pages.*.html_url) }}
-
-          BODY
+          gh issue new --label wiki -R "$GITHUB_REPOSITORY"
+          -t "$TITLE" -b "$BODY"
         env:
           GH_TOKEN: ${{ github.token }}
+          TITLE: "wiki edit by @${{ github.event.sender.login }}"
+          BODY: |
+            ${{ toJson(github.event.pages) }}
+
+            ${{ join(github.event.pages.*.html_url) }}
