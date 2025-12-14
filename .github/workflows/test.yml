@@ -34,3 +34,4 @@ jobs:
           # TODO remove deviations from reusable superlinter config
           VALIDATE_BASH: false
           VALIDATE_SHELL_SHFMT: false
+          VALIDATE_BIOME_FORMAT: false # biome is broken out of the box
