@@ -25,11 +25,20 @@ load test_helper
   assert_output "1.2.3"
 }
 
+@test "set partial NODENV_ROOT/version" {
+  mkdir -p "$NODENV_ROOT/versions/26.3.1/bin"
+  run nodenv-global "26"
+  assert_success
+  run nodenv-global
+  assert_success
+  assert_output "26"
+}
+
 @test "fail setting invalid NODENV_ROOT/version" {
   mkdir -p "$NODENV_ROOT"
   run nodenv-global "1.2.3"
   assert_failure
-  assert_output "nodenv: version \`1.2.3' not installed"
+  assert_output "nodenv: no installed version matches \`1.2.3'"
 }
 
 @test "unset (remove) NODENV_ROOT/version" {

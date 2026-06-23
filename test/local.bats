@@ -46,6 +46,14 @@ setup() {
   assert [ "$(cat .node-version)" = "1.2.3" ]
 }
 
+@test "sets local partial version" {
+  mkdir -p "${NODENV_ROOT}/versions/26.3.1/bin"
+  run nodenv-local 26
+  assert_success
+  refute_output
+  assert [ "$(cat .node-version)" = "26" ]
+}
+
 @test "changes local version" {
   echo "1.0-pre" > .node-version
   mkdir -p "${NODENV_ROOT}/versions/1.2.3"

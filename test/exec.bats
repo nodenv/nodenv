@@ -18,7 +18,7 @@ create_executable() {
   export NODENV_VERSION="2.0"
   run nodenv-exec node -v
   assert_failure
-  assert_output "nodenv: version \`2.0' is not installed (set by NODENV_VERSION environment variable)"
+  assert_output "nodenv: no installed version matches \`2.0' (set by NODENV_VERSION environment variable)"
 }
 
 @test "fails with invalid version set from file" {
@@ -27,7 +27,7 @@ create_executable() {
   echo 1.9 > .node-version
   run nodenv-exec npm
   assert_failure
-  assert_output "nodenv: version \`1.9' is not installed (set by $PWD/.node-version)"
+  assert_output "nodenv: no installed version matches \`1.9' (set by $PWD/.node-version)"
 }
 
 @test "completes with names of executables" {
