@@ -2,7 +2,7 @@
 
 # This is intended to help automate the process of pull changes down from rbenv
 # upstream. It uses custom 'rbtags' ref namespace for rbenv's tags (that way
-# rbenvs tags don't pollute nodenv's tags). It re-uses a staging branch where
+# rbenvs tags don't pollute nodenv's tags). It reuses a staging branch where
 # rbenv's tags will be merged into. It finds only the very "next" un-merged
 # rbenv tag; diffs against that and merges it.  Then removes known scripts
 # that don't apply to nodenv. Should leave the working copy in a MERGING
