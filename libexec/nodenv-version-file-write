@@ -12,8 +12,11 @@ if [ -z "$NODENV_VERSION" ] || [ -z "$NODENV_VERSION_FILE" ]; then
   exit 1
 fi
 
-# Make sure the specified version is installed.
-nodenv-prefix "$NODENV_VERSION" >/dev/null
+# Make sure the specified version is installed, resolving partials like "26".
+if ! NODENV_VERSION="$NODENV_VERSION" nodenv-version-name >/dev/null 2>&1; then
+  echo "nodenv: no installed version matches \`$NODENV_VERSION'" >&2
+  exit 1
+fi
 
 # Write the version out to disk.
 echo "$NODENV_VERSION" > "$NODENV_VERSION_FILE"

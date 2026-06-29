@@ -70,7 +70,7 @@ OUT
   run nodenv-sh-shell 1.2.3
   assert_failure
   assert_output - <<SH
-nodenv: version \`1.2.3' not installed
+nodenv: no installed version matches \`1.2.3'
 false
 SH
 }
@@ -82,6 +82,17 @@ SH
   assert_output - <<OUT
 NODENV_VERSION_OLD="\${NODENV_VERSION-}"
 export NODENV_VERSION="1.2.3"
+OUT
+}
+
+@test "shell change partial version" {
+  mkdir -p "${NODENV_ROOT}/versions/26.0.0/bin"
+  mkdir -p "${NODENV_ROOT}/versions/26.3.1/bin"
+  NODENV_SHELL=bash run nodenv-sh-shell 26
+  assert_success
+  assert_output - <<OUT
+NODENV_VERSION_OLD="\${NODENV_VERSION-}"
+export NODENV_VERSION="26.3.1"
 OUT
 }
 

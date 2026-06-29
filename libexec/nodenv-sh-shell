@@ -120,25 +120,27 @@ EOS
   exit
 fi
 
-# Make sure the specified version is installed.
-if nodenv-prefix "$version" >/dev/null; then
-  if [ "$version" != "$NODENV_VERSION" ]; then
+# Make sure the specified version is installed, resolving partials like "26"
+# to the latest matching installed version.
+if resolved="$(NODENV_VERSION="$version" nodenv-version-name 2>/dev/null)"; then
+  if [ "$resolved" != "$NODENV_VERSION" ]; then
     case "$shell" in
     fish )
       echo 'set -gu NODENV_VERSION_OLD "$NODENV_VERSION"'
-      echo "set -gx NODENV_VERSION \"$version\""
+      echo "set -gx NODENV_VERSION \"$resolved\""
       ;;
     zsh )
       echo "typeset -g NODENV_VERSION_OLD=\"\${NODENV_VERSION-}\""
-      echo "export NODENV_VERSION=\"$version\""
+      echo "export NODENV_VERSION=\"$resolved\""
       ;;
     * )
       echo 'NODENV_VERSION_OLD="${NODENV_VERSION-}"'
-      echo "export NODENV_VERSION=\"$version\""
+      echo "export NODENV_VERSION=\"$resolved\""
       ;;
     esac
   fi
 else
+  echo "nodenv: no installed version matches \`$version'" >&2
   echo "false"
   exit 1
 fi

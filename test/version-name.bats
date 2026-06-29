@@ -3,7 +3,7 @@
 load test_helper
 
 create_version() {
-  mkdir -p "${NODENV_ROOT}/versions/$1"
+  mkdir -p "${NODENV_ROOT}/versions/$1/bin"
 }
 
 setup() {
@@ -78,7 +78,7 @@ SH
 @test "missing version" {
   NODENV_VERSION=1.2 run nodenv-version-name
   assert_failure
-  assert_output "nodenv: version \`1.2' is not installed (set by NODENV_VERSION environment variable)"
+  assert_output "nodenv: no installed version matches \`1.2' (set by NODENV_VERSION environment variable)"
 }
 
 @test "version with prefix in name" {
@@ -111,4 +111,73 @@ SH
   run nodenv-version-name
   assert_success
   assert_output "iojs-3.1.0"
+}
+
+@test "partial major version resolves to highest matching install" {
+  create_version "26.0.0"
+  create_version "26.3.1"
+  create_version "26.10.0"
+  create_version "27.0.0"
+  cat > ".node-version" <<<"26"
+  run nodenv-version-name
+  assert_success
+  assert_output "26.10.0"
+}
+
+@test "partial major version compares numerically not lexically" {
+  create_version "26.9.0"
+  create_version "26.10.0"
+  cat > ".node-version" <<<"26"
+  run nodenv-version-name
+  assert_success
+  assert_output "26.10.0"
+}
+
+@test "partial major version does not match across dot boundary" {
+  create_version "260.0.0"
+  NODENV_VERSION=26 run nodenv-version-name
+  assert_failure
+  assert_output "nodenv: no installed version matches \`26' (set by NODENV_VERSION environment variable)"
+}
+
+@test "partial major.minor version resolves to highest matching patch" {
+  create_version "26.3.0"
+  create_version "26.3.5"
+  create_version "26.4.0"
+  cat > ".node-version" <<<"26.3"
+  run nodenv-version-name
+  assert_success
+  assert_output "26.3.5"
+}
+
+@test "partial version with 'v' prefix resolves to highest matching install" {
+  create_version "26.3.1"
+  cat > ".node-version" <<<"v26"
+  run nodenv-version-name
+  assert_success
+  assert_output "26.3.1"
+}
+
+@test "exact version directory wins over partial match" {
+  create_version "26"
+  create_version "26.3.1"
+  cat > ".node-version" <<<"26"
+  run nodenv-version-name
+  assert_success
+  assert_output "26"
+}
+
+@test "partial version applies to NODENV_VERSION" {
+  create_version "26.0.0"
+  create_version "26.10.0"
+  NODENV_VERSION=26 run nodenv-version-name
+  assert_success
+  assert_output "26.10.0"
+}
+
+@test "partial version with no matching install fails" {
+  create_version "27.0.0"
+  NODENV_VERSION=26 run nodenv-version-name
+  assert_failure
+  assert_output "nodenv: no installed version matches \`26' (set by NODENV_VERSION environment variable)"
 }

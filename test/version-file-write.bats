@@ -19,7 +19,7 @@ setup() {
   assert [ ! -e ".node-version" ]
   run nodenv-version-file-write ".node-version" "1.8.7"
   assert_failure
-  assert_output "nodenv: version \`1.8.7' not installed"
+  assert_output "nodenv: no installed version matches \`1.8.7'"
   assert [ ! -e ".node-version" ]
 }
 
@@ -30,4 +30,21 @@ setup() {
   assert_success
   refute_output
   assert [ "$(cat my-version)" = "1.8.7" ]
+}
+
+@test "writes a partial version that matches an install" {
+  mkdir -p "${NODENV_ROOT}/versions/26.3.1/bin"
+  assert [ ! -e "my-version" ]
+  run nodenv-version-file-write "${PWD}/my-version" "26"
+  assert_success
+  refute_output
+  assert [ "$(cat my-version)" = "26" ]
+}
+
+@test "setting partial version with no match fails" {
+  mkdir -p "${NODENV_ROOT}/versions/27.0.0/bin"
+  run nodenv-version-file-write ".node-version" "26"
+  assert_failure
+  assert_output "nodenv: no installed version matches \`26'"
+  assert [ ! -e ".node-version" ]
 }
