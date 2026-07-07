@@ -6,6 +6,6 @@ permissions: {}
 jobs:
   release:
     permissions: { contents: write, id-token: write }
-    uses: nodenv/.github/.github/workflows/release.yml@v7
+    uses: nodenv/.github/.github/workflows/release.yml@v7.0.7
     secrets:
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
