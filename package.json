@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@asciidoctor/manpage-converter": "1",
-    "asciidoctor": "3",
+    "asciidoctor": "4",
     "bats": "1",
     "bats-assert": "2",
     "bats-support": "^0.3.0"
