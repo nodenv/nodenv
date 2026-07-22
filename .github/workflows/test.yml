@@ -8,7 +8,7 @@ on:
 permissions: {}
 jobs:
   test:
-    uses: nodenv/.github/.github/workflows/test.yml@v7
+    uses: nodenv/.github/.github/workflows/test.yml@bd27009d5f178c0a88d42f7b07e6a3c7623ed768 # v7.0.8
     with: { superlinter: false } # TODO re-enable superlinter
     permissions:
       contents: read
