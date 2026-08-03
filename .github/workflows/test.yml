@@ -7,6 +7,19 @@ on:
 
 permissions: {}
 jobs:
+  build:
+    permissions: { contents: read }
+    runs-on: ubuntu-latest
+    steps:
+      - uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with: { egress-policy: audit }
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with: { persist-credentials: false }
+      - run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - run: npm run prepare && git diff --exit-code
+
   test:
     uses: nodenv/.github/.github/workflows/test.yml@bd27009d5f178c0a88d42f7b07e6a3c7623ed768 # v7.0.8
     with: { superlinter: false } # TODO re-enable superlinter
