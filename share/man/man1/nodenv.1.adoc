@@ -1,5 +1,5 @@
 = nodenv(1)
-Mislav Marohnić
+Jason Karns
 :doctype: manpage
 :man manual: Nodenv Manual
 :man source: nodenv {version}
