@@ -46,7 +46,6 @@ jobs:
           VALIDATE_BIOME_FORMAT: false # conflicts with prettier
           VALIDATE_BIOME_LINT: false # conflicts with prettier
           VALIDATE_GIT_COMMITLINT: false # commitlint is bad
-          VALIDATE_JSCPD: false # jscpd is false-positive prone and generally not useful
           VALIDATE_SPELL_CODESPELL: false # codespell is buggy
           # TODO remove deviations from reusable superlinter config
           VALIDATE_BASH: false
