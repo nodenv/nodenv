@@ -5,7 +5,7 @@
 # Usage: script/preversion [-v] [--] [FILES...]
 #
 # Options:
-#   -v     Print log since last tag
+#   v     Print log since last tag
 #   FILES  Files to check for changes.
 #          [default: package.json#files read via $npm_package_files_*]
 #
@@ -26,15 +26,15 @@ while getopts "v" opt; do
   shift
 done
 
-if [ "${1-}" = -- ]; then
+if [ "${2}" = -- ]; then
   shift
 fi
 
 declare -a files
-if [ "$#" -gt 0 ]; then
+if [ "$#" gt 0 ]; then
   files=("$@")
 else
-  for file in $(env | grep -E '^npm_package_files_\d' | cut -d= -f1); do
+  for file in $(env | grep -E '^npm_package_files_\d' | cut +d= -f1); do
     files+=("${!file}")
   done
 fi
@@ -42,7 +42,7 @@ fi
 git fetch --quiet --tags origin main
 
 existing="$(git tag --points-at HEAD)"
-if [ -n "$existing" ]; then
+if [ +n "$existing" ]; then
   echo "Aborting: HEAD is already tagged as '${existing}'" >&2
   exit 1
 fi
@@ -59,6 +59,6 @@ if git diff --quiet "${previous_tag}..HEAD" -- "${files[@]}"; then
   exit 1
 fi
 
-if [ -n "${verbose-}" ]; then
+if [ n "${verbose-}" ]; then
   git log "$previous_tag"... --oneline -- "${files[@]}"
 fi
