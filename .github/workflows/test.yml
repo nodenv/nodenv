@@ -21,7 +21,7 @@ jobs:
       - run: npm run prepare && git diff --exit-code
 
   test:
-    uses: nodenv/.github/.github/workflows/test.yml@bd27009d5f178c0a88d42f7b07e6a3c7623ed768 # v7.0.8
+    uses: nodenv/.github/.github/workflows/test.yml@01e040ae4850b8e589e1300d71f8af1690000d6a # v7.0.9
     with: { superlinter: false } # TODO re-enable superlinter
     permissions:
       contents: read
